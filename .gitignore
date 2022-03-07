@@ -82,4 +82,8 @@ lint/intermediates/
 lint/generated/
 lint/outputs/
 lint/tmp/
+
 # lint/reports/
+
+# MacOS
+.DS_Store
