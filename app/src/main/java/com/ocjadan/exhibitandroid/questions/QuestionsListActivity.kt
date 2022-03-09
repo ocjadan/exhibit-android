@@ -11,6 +11,7 @@ import com.ocjadan.exhibitandroid.BaseActivity
 import com.ocjadan.exhibitandroid.ui.theme.ExhibitAndroidTheme
 
 class QuestionsListActivity : BaseActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Move out of Activity

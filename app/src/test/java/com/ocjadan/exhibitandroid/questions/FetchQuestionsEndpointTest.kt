@@ -1,7 +1,8 @@
 package com.ocjadan.exhibitandroid.questions
 
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

@@ -1,7 +1,9 @@
 package com.ocjadan.exhibitandroid.questions
 
 import com.ocjadan.exhibitandroid.BaseObservable
-import com.ocjadan.exhibitandroid.questions.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
+import com.ocjadan.exhibitandroid.questions.networking.QuestionSchema
 
 open class FetchQuestionsUseCase(private val fetchQuestionsEndpoint: FetchQuestionsEndpoint) :
     BaseObservable<FetchQuestionsUseCase.Listener>() {
@@ -15,15 +17,22 @@ open class FetchQuestionsUseCase(private val fetchQuestionsEndpoint: FetchQuesti
     open suspend fun fetchQuestionsAndNotify() {
         val result = fetchQuestionsEndpoint.fetchQuestions()
         when (result.status) {
-            FetchQuestionsEndpointStatus.SUCCESS -> notifySuccess()
+            FetchQuestionsEndpointStatus.SUCCESS -> {
+                val questions = mapQuestionSchemaToQuestion(result.questions)
+                notifySuccess(questions)
+            }
             FetchQuestionsEndpointStatus.NETWORK_ERROR -> notifyNetworkError()
             else -> notifyFailure()
         }
     }
 
-    private fun notifySuccess() {
+    private fun mapQuestionSchemaToQuestion(questions: List<QuestionSchema>): List<Question> {
+        return questions.map { Question(it.title) }
+    }
+
+    private fun notifySuccess(questions: List<Question>) {
         for (listener in listenersMap) {
-            listener.onFetchQuestionsUseCaseSuccess(listOf(Question("")))
+            listener.onFetchQuestionsUseCaseSuccess(questions)
         }
     }
 
