@@ -1,12 +1,14 @@
 package com.ocjadan.exhibitandroid.networking
 
 import com.ocjadan.exhibitandroid.questions.networking.QuestionSchemaTestData
+import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import retrofit2.Response
+import java.net.UnknownHostException
 
 @ExperimentalCoroutinesApi
 class StackOverflowApiMock {
@@ -20,17 +22,17 @@ class StackOverflowApiMock {
             )
     }
 
-    fun generalError() = runTest {
+    fun jsonError() = runTest {
         `when`(mock.getQuestions())
             .thenThrow(
-                RuntimeException("general")
+                JsonDataException()
             )
     }
 
     fun networkError() = runTest {
         `when`(mock.getQuestions())
             .thenThrow(
-                RuntimeException("network")
+                UnknownHostException()
             )
     }
 }

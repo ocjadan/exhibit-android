@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
+import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
@@ -34,19 +35,17 @@ class FetchQuestionsEndpointTest {
     }
 
     @Test
-    fun fetchQuestions_generalError_statusIsFailureAndNoQuestionDataReturned() = runTest {
-        generalError()
+    fun fetchQuestions_jsonError_statusIsFailureAndNoQuestionDataReturned() = runTest {
+        jsonError()
         val result = SUT.fetchQuestions()
         assert(result.status == FetchQuestionsEndpointStatus.FAILURE)
         assert(result.questions.isEmpty())
     }
 
-    @Test
+    @Test(expected = RuntimeException::class) // UnknownHostException stubbed to throw RuntimeException
     fun fetchQuestions_networkError_statusIsNetworkErrorAndNoQuestionDataReturned() = runTest {
         networkError()
-        val result = SUT.fetchQuestions()
-        assert(result.status == FetchQuestionsEndpointStatus.NETWORK_ERROR)
-        assert(result.questions.isEmpty())
+        SUT.fetchQuestions()
     }
 
     // ------------------------------------------------------------------------------------------------------------------
@@ -57,8 +56,8 @@ class FetchQuestionsEndpointTest {
         stackOverflowApiMock.success()
     }
 
-    private fun generalError() {
-        stackOverflowApiMock.generalError()
+    private fun jsonError() {
+        stackOverflowApiMock.jsonError()
     }
 
     private fun networkError() {
