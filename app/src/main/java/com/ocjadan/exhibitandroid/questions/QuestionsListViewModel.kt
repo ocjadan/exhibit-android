@@ -1,5 +1,6 @@
 package com.ocjadan.exhibitandroid.questions
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
@@ -10,11 +11,11 @@ class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUs
         NETWORK, FAILURE
     }
 
-    private val _questions: MutableList<Question> by lazy { mutableListOf() }
-    val questions: List<Question> = _questions
+    private val _questions: MutableLiveData<List<Question>> by lazy { MutableLiveData(listOf()) }
+    val questions: LiveData<List<Question>> get() = _questions
 
     private val _error: MutableLiveData<QuestionsListError> by lazy { MutableLiveData(null) }
-    val error: QuestionsListError? get() = _error.value
+    val error: LiveData<QuestionsListError> get() = _error
 
     init {
         fetchQuestionsUseCase.addListener(this)
@@ -30,7 +31,7 @@ class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUs
     }
 
     override fun onFetchQuestionsUseCaseSuccess(questions: List<Question>) {
-        _questions.addAll(questions)
+        _questions.value = questions
         _error.value = null
     }
 

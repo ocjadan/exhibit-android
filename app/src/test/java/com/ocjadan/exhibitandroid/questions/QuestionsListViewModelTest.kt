@@ -9,6 +9,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
 internal class QuestionsListViewModelTest {
@@ -30,24 +31,30 @@ internal class QuestionsListViewModelTest {
     @Test
     fun loadQuestions_success_questionsReturnedAndNoError() = runTest {
         SUT.loadQuestions()
-        assert(SUT.questions.isNotEmpty())
-        assert(SUT.error == null)
+        val questions = SUT.questions.value ?: throw RuntimeException()
+        val error = SUT.error.value
+        assert(questions.isNotEmpty())
+        assert(error == null)
     }
 
     @Test
     fun loadQuestions_networkError_noQuestionsAndNetworkError() = runTest {
         networkError()
         SUT.loadQuestions()
-        assert(SUT.questions.isEmpty())
-        assert(SUT.error == QuestionsListViewModel.QuestionsListError.NETWORK)
+        val questions = SUT.questions.value ?: throw RuntimeException()
+        val error = SUT.error.value
+        assert(questions.isEmpty())
+        assert(error == QuestionsListViewModel.QuestionsListError.NETWORK)
     }
 
     @Test
     fun loadQuestions_generalError_noQuestionsAndGeneralError() = runTest {
         generalError()
         SUT.loadQuestions()
-        assert(SUT.questions.isEmpty())
-        assert(SUT.error == QuestionsListViewModel.QuestionsListError.FAILURE)
+        val questions = SUT.questions.value ?: throw RuntimeException()
+        val error = SUT.error.value
+        assert(questions.isEmpty())
+        assert(error == QuestionsListViewModel.QuestionsListError.FAILURE)
     }
 
     // ------------------------------------------------------------------------------------------------------------------
