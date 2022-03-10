@@ -15,7 +15,7 @@ import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class FetchQuestionsEndpointTest {
+internal class FetchQuestionsEndpointTest {
 
     private lateinit var SUT: FetchQuestionsEndpoint
     private lateinit var stackOverflowApiMock: StackOverflowApiMock

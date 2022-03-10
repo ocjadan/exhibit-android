@@ -11,7 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class QuestionsListViewModelTest {
+internal class QuestionsListViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule() // Required for LivaData `set`/`postValue`
@@ -60,21 +60,5 @@ class QuestionsListViewModelTest {
 
     private fun networkError() {
         fetchQuestionsUseCaseMock.isNetworkError = true
-    }
-
-    // ------------------------------------------------------------------------------------------------------------------
-    // Region: Helper Classes
-    // ------------------------------------------------------------------------------------------------------------------
-
-    private class FetchQuestionsUseCaseMock(private val fetchQuestionsEndpointMock: FetchQuestionsEndpointMock) :
-        FetchQuestionsUseCase(fetchQuestionsEndpointMock) {
-        var isGeneralError = false
-        var isNetworkError = false
-
-        override suspend fun fetchQuestionsAndNotify() {
-            fetchQuestionsEndpointMock.isGeneralError = isGeneralError
-            fetchQuestionsEndpointMock.isNetworkError = isNetworkError
-            super.fetchQuestionsAndNotify()
-        }
     }
 }

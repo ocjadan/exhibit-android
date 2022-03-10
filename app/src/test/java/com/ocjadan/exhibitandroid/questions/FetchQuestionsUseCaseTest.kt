@@ -17,7 +17,7 @@ import org.mockito.kotlin.argumentCaptor
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class FetchQuestionsUseCaseTest {
+internal class FetchQuestionsUseCaseTest {
 
     private lateinit var SUT: FetchQuestionsUseCase
     private lateinit var questionsCaptor: KArgumentCaptor<List<Question>>
