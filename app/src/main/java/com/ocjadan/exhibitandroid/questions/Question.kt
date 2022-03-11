@@ -1,3 +1,3 @@
 package com.ocjadan.exhibitandroid.questions
 
-data class Question(private val title: String)
+data class Question(val id: Int, val title: String)

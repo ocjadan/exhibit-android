@@ -1,8 +1,10 @@
-package com.ocjadan.exhibitandroid.questions
+package com.ocjadan.exhibitandroid.questions.questionsList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
+import com.ocjadan.exhibitandroid.questions.Question
 
 class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
     FetchQuestionsUseCase.Listener {

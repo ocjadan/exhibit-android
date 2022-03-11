@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCaseMock
-import com.ocjadan.exhibitandroid.questions.QuestionsListViewModel
+import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import org.junit.Before

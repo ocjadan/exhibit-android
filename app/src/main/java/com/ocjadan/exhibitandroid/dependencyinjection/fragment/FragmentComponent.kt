@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.dependencyinjection.fragment
 
-import com.ocjadan.exhibitandroid.questions.QuestionsListFragment
+import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment
 import dagger.Subcomponent
 
 @Subcomponent

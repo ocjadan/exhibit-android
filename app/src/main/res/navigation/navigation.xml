@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/nav_questions"
-        android:name="com.ocjadan.exhibitandroid.questions.QuestionsListFragment"
+        android:name="com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment"
         android:label="@string/menu_questions" />
 
 </navigation>

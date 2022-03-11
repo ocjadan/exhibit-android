@@ -6,6 +6,6 @@ object QuestionSchemaTestData {
     }
 
     fun questionSchemas(): List<QuestionSchema> {
-        return listOf(QuestionSchema(), QuestionSchema())
+        return listOf(QuestionSchema(question_id = 0), QuestionSchema(question_id = 1))
     }
 }

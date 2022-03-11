@@ -27,7 +27,8 @@ open class FetchQuestionsUseCase(private val fetchQuestionsEndpoint: FetchQuesti
     }
 
     private fun mapQuestionSchemaToQuestion(questions: List<QuestionSchema>): List<Question> {
-        return questions.map { Question(it.title) }
+        val questionsWithId = questions.filter { it.question_id != null }
+        return questionsWithId.map { Question(it.question_id!!, it.title) }
     }
 
     private fun notifySuccess(questions: List<Question>) {

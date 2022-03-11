@@ -2,7 +2,7 @@ package com.ocjadan.exhibitandroid
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.ocjadan.exhibitandroid.questions.QuestionsListViewModel
+import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import java.lang.RuntimeException
 import javax.inject.Provider
 
