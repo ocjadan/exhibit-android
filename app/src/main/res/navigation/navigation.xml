@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@+id/nav_questions">
+
+    <fragment
+        android:id="@+id/nav_questions"
+        android:name="com.ocjadan.exhibitandroid.questions.QuestionsListFragment"
+        android:label="@string/menu_questions" />
+
+</navigation>

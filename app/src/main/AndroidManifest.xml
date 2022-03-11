@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ExhibitAndroid">
         <activity
-            android:name=".questions.QuestionsListActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:theme="@style/Theme.ExhibitAndroid">
+            android:theme="@style/Theme.ExhibitAndroid.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ExhibitAndroid</string>
+
+    <!-- Navigation Drawer -->
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="nav_header_title">StackOverflow</string>
+    <string name="nav_header_subtitle">https://stackoverflow.com</string>
+    <string name="menu_questions">Questions</string>
 </resources>
