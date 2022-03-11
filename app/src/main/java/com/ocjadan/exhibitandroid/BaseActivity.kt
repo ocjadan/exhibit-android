@@ -1,9 +1,9 @@
 package com.ocjadan.exhibitandroid
 
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 
-open class BaseActivity : ComponentActivity() {
+open class BaseActivity : AppCompatActivity() {
     val activityComponent by lazy {
-        (application as MainApplication).appComponent.activityComponentBuilder().build()
+        (application as MainApplication).appComponent.activityComponentBuilder().activity(this).build()
     }
 }
