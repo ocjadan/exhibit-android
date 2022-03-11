@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
-import com.ocjadan.exhibitandroid.BaseObservable
+import com.ocjadan.exhibitandroid.common.BaseObservable
 import com.ocjadan.exhibitandroid.R
 import com.ocjadan.exhibitandroid.questions.Question
 

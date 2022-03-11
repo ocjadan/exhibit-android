@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.ocjadan.exhibitandroid.BaseFragment
-import com.ocjadan.exhibitandroid.ViewControllerFactory
-import com.ocjadan.exhibitandroid.ViewModelFactory
+import com.ocjadan.exhibitandroid.common.BaseFragment
+import com.ocjadan.exhibitandroid.common.ViewControllerFactory
+import com.ocjadan.exhibitandroid.common.ViewModelFactory
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

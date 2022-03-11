@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.dependencyinjection.app.networking
 
-import com.ocjadan.exhibitandroid.UrlProvider
+import com.ocjadan.exhibitandroid.common.UrlProvider
 import com.ocjadan.exhibitandroid.dependencyinjection.app.AppScope
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint

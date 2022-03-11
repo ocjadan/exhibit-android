@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.questions
 
-import com.ocjadan.exhibitandroid.BaseObservable
+import com.ocjadan.exhibitandroid.common.BaseObservable
 import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint
 import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
 import com.ocjadan.exhibitandroid.questions.networking.QuestionSchema

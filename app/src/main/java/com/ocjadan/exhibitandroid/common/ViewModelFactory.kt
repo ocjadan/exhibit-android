@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid
+package com.ocjadan.exhibitandroid.common
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,6 +7,7 @@ import java.lang.RuntimeException
 import javax.inject.Provider
 
 class ViewModelFactory(private val questionsListVM: Provider<QuestionsListViewModel>) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             QuestionsListViewModel::class.java -> questionsListVM.get() as T

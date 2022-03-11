@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid
+package com.ocjadan.exhibitandroid.common
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

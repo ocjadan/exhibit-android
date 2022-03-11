@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions
+package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint

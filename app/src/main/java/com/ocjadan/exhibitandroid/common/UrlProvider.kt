@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid
+package com.ocjadan.exhibitandroid.common
 
 class UrlProvider {
     companion object {

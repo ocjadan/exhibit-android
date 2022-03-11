@@ -1,6 +1,8 @@
-package com.ocjadan.exhibitandroid.questions
+package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
+import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
+import com.ocjadan.exhibitandroid.questions.Question
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 

@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid
+package com.ocjadan.exhibitandroid.common
 
 open class BaseObservable<T> {
     private val _listenersMap: MutableSet<T> by lazy { mutableSetOf() }

@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid
+package com.ocjadan.exhibitandroid.common
 
 import androidx.fragment.app.Fragment
 

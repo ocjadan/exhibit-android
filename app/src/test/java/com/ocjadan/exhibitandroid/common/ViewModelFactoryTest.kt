@@ -1,9 +1,9 @@
-package com.ocjadan.exhibitandroid
+package com.ocjadan.exhibitandroid.common
 
 import androidx.lifecycle.ViewModel
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.FetchQuestionsEndpointMock
-import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCaseMock
+import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsEndpointMock
+import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
