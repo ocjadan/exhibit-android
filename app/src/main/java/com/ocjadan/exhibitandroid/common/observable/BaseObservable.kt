@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.common.observable
 
-abstract class BaseObservable<T> : IBaseObservable<T> {
+abstract class BaseObservable<T> : IObservable<T> {
     private val _listenersMap: MutableSet<T> by lazy { mutableSetOf() }
     override val listenersMap: Set<T> = _listenersMap
 
