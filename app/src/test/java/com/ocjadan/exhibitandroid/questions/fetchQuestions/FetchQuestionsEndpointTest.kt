@@ -1,5 +1,6 @@
 package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
+import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint
 import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
@@ -22,7 +23,7 @@ internal class FetchQuestionsEndpointTest {
 
     @Before
     fun setUp() {
-        stackOverflowApiMock = StackOverflowApiMock()
+        stackOverflowApiMock = CompositionRoot().getStackOverflowApiMock()
         SUT = FetchQuestionsEndpoint(stackOverflowApiMock.mock)
     }
 

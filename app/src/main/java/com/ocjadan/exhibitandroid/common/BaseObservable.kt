@@ -1,14 +1,20 @@
 package com.ocjadan.exhibitandroid.common
 
-open class BaseObservable<T> {
-    private val _listenersMap: MutableSet<T> by lazy { mutableSetOf() }
-    val listenersMap: Set<T> = _listenersMap
+interface IBaseObservable<T> {
+    val listenersMap: Set<T>
+    fun addListener(listener: T)
+    fun removeListener(listener: T)
+}
 
-    fun addListener(listener: T) {
+abstract class BaseObservable<T> : IBaseObservable<T> {
+    private val _listenersMap: MutableSet<T> by lazy { mutableSetOf() }
+    override val listenersMap: Set<T> = _listenersMap
+
+    override fun addListener(listener: T) {
         _listenersMap.add(listener)
     }
 
-    fun removeListener(listener: T) {
+    override fun removeListener(listener: T) {
         _listenersMap.remove(listener)
     }
 }

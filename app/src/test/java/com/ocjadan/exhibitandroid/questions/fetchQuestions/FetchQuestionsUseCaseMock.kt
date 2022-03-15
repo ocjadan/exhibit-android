@@ -2,7 +2,7 @@ package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
 
-internal class FetchQuestionsUseCaseMock(private val fetchQuestionsEndpointMock: FetchQuestionsEndpointMock) :
+class FetchQuestionsUseCaseMock(private val fetchQuestionsEndpointMock: FetchQuestionsEndpointMock) :
     FetchQuestionsUseCase(fetchQuestionsEndpointMock) {
     var isGeneralError = false
     var isNetworkError = false

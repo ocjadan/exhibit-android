@@ -1,0 +1,5 @@
+package com.ocjadan.exhibitandroid.questions.questionsList
+
+import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
+
+class QuestionsListViewModelMock(fetchQuestionsUseCase: FetchQuestionsUseCase) : QuestionsListViewModel(fetchQuestionsUseCase)

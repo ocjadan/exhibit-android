@@ -5,16 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.ocjadan.exhibitandroid.common.BaseFragment
-import com.ocjadan.exhibitandroid.common.ViewControllerFactory
+import com.ocjadan.exhibitandroid.common.viewcontrollers.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.ViewModelFactory
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class QuestionsListFragment : BaseFragment(), QuestionsListViewController.Listener {
+class QuestionsListFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -22,8 +19,8 @@ class QuestionsListFragment : BaseFragment(), QuestionsListViewController.Listen
     @Inject
     lateinit var viewControllerFactory: ViewControllerFactory
 
-    private lateinit var viewModel: QuestionsListViewModel
-    private lateinit var viewController: QuestionsListViewController
+    @Inject
+    lateinit var controller: QuestionsListController
 
     override fun onAttach(context: Context) {
         fragmentComponent.inject(this)
@@ -32,43 +29,31 @@ class QuestionsListFragment : BaseFragment(), QuestionsListViewController.Listen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
+        val viewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
 
         viewModel.questions.observe(this) {
-            viewController.bindQuestions(it)
+            controller.bindQuestions(it)
         }
 
-        viewModel.error.observe(this) {
-            it?.let {
-                viewController.bindError(it)
-            }
-        }
+        viewModel.error.observe(this) { }
+
+        controller.bindViewModel(viewModel)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        viewController = viewControllerFactory.getQuestionsListViewController(container)
-        return viewController.rootView
+        val viewController = viewControllerFactory.getQuestionsListViewController(container)
+        controller.bindViewController(viewController)
+        return viewController.getRootView()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        lifecycleScope.launch {
-            viewModel.loadQuestions()
-        }
+    override fun onStart() {
+        super.onStart()
+        controller.onStart()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewController.addListener(this)
-    }
-
-    override fun onPause() {
-        viewController.removeListener(this)
-        super.onPause()
-    }
-
-    override fun onQuestionClicked(id: Int) {
-        Toast.makeText(requireContext(), "Question $id was clicked!", Toast.LENGTH_SHORT).show()
+    override fun onStop() {
+        controller.onStop()
+        super.onStop()
     }
 }

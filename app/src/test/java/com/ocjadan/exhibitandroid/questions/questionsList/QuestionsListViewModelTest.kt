@@ -1,16 +1,20 @@
 package com.ocjadan.exhibitandroid.questions.questionsList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsEndpointMock
+import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock
-
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+
 import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
@@ -24,10 +28,16 @@ internal class QuestionsListViewModelTest {
 
     @Before
     fun setUp() {
-        val stackOverflowApiMock = StackOverflowApiMock()
-        val fetchQuestionsEndpointMock = FetchQuestionsEndpointMock(stackOverflowApiMock.mock)
-        fetchQuestionsUseCaseMock = FetchQuestionsUseCaseMock(fetchQuestionsEndpointMock)
+        val unconfinedDispatcher = UnconfinedTestDispatcher() // Execution order guarantees that are unusual
+        Dispatchers.setMain(unconfinedDispatcher) // Required for viewModelScope
+
+        fetchQuestionsUseCaseMock = CompositionRoot().getFetchQuestionsUseCaseMock()
         SUT = QuestionsListViewModel(fetchQuestionsUseCaseMock)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test

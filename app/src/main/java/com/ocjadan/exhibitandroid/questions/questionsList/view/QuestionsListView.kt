@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions.questionsList.view
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,7 +15,7 @@ import com.ocjadan.exhibitandroid.questions.QuestionView
 import com.ocjadan.exhibitandroid.ui.theme.ExhibitAndroidTheme
 
 @Composable
-internal fun QuestionsListView(questions: List<Question>, onQuestionClicked: (id: Int) -> Unit) {
+internal fun QuestionsListView(questions: List<Question>, onQuestionClicked: (question: Question) -> Unit) {
     ExhibitAndroidTheme {
         // A surface container using the 'background' color from the theme
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {

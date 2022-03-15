@@ -3,10 +3,12 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
 import com.ocjadan.exhibitandroid.questions.Question
+import kotlinx.coroutines.launch
 
-class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
+open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
     FetchQuestionsUseCase.Listener {
 
     enum class QuestionsListError {
@@ -28,8 +30,10 @@ class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUs
         super.onCleared()
     }
 
-    suspend fun loadQuestions() {
-        fetchQuestionsUseCase.fetchQuestionsAndNotify()
+    fun loadQuestions() {
+        viewModelScope.launch {
+            fetchQuestionsUseCase.fetchQuestionsAndNotify()
+        }
     }
 
     override fun onFetchQuestionsUseCaseSuccess(questions: List<Question>) {

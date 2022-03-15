@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
-import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
+import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
 import com.ocjadan.exhibitandroid.questions.Question
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -33,8 +33,7 @@ internal class FetchQuestionsUseCaseTest {
 
     @Before
     fun setUp() {
-        val stackOverflowApiMock = StackOverflowApiMock()
-        fetchQuestionsEndpointMock = FetchQuestionsEndpointMock(stackOverflowApiMock.mock)
+        fetchQuestionsEndpointMock = CompositionRoot().getFetchQuestionsEndpointMock()
         SUT = FetchQuestionsUseCase(fetchQuestionsEndpointMock)
         questionsCaptor = argumentCaptor()
         addListeners()

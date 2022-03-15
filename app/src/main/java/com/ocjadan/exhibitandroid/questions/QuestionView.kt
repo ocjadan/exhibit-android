@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-internal fun QuestionView(modifier: Modifier, question: Question, onClick: (id: Int) -> Unit) {
+internal fun QuestionView(modifier: Modifier, question: Question, onClick: (question: Question) -> Unit) {
     Row(
         modifier
-            .clickable { onClick(question.id) }) {
+            .clickable { onClick(question) }) {
         Text(question.title)
     }
 }
