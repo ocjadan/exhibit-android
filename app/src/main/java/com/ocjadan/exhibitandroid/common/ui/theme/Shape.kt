@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.ui.theme
+package com.ocjadan.exhibitandroid.common.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

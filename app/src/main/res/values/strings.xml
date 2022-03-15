@@ -6,4 +6,10 @@
     <string name="nav_header_title">StackOverflow</string>
     <string name="nav_header_subtitle">https://stackoverflow.com</string>
     <string name="menu_questions">Questions</string>
+
+    <!-- Toolbar -->
+    <string name="toolbar_account_button">Toolbar Account Button</string>
+    <string name="toolbar_app_title">StackOverflow</string>
+
+    <!-- Questions -->
 </resources>
