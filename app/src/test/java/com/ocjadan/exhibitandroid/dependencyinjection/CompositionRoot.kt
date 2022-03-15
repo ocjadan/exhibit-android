@@ -4,7 +4,7 @@ import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewControllerMock
+import com.ocjadan.exhibitandroid.questions.questionsList.view.QuestionsListViewControllerMock
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModelMock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 

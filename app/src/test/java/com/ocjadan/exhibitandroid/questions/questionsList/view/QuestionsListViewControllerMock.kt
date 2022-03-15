@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions.questionsList.view
 
 import android.view.View
 import com.ocjadan.exhibitandroid.questions.Question

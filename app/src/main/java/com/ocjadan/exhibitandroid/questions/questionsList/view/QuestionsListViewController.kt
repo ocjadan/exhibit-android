@@ -28,7 +28,8 @@ class QuestionsListViewController(layoutInflater: LayoutInflater, viewGroup: Vie
     }
 
     private fun compose() {
-        (getRootView() as ComposeView).setContent {
+        val composeView = getRootView() as? ComposeView ?: return
+        composeView.setContent {
             ExhibitAndroidTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
