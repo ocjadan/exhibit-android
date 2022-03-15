@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.common.viewcontrollers
+package com.ocjadan.exhibitandroid.common.viewcontroller
 
 import android.content.Context
 import android.view.LayoutInflater

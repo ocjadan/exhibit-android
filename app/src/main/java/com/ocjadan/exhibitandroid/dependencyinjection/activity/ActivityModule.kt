@@ -2,8 +2,8 @@ package com.ocjadan.exhibitandroid.dependencyinjection.activity
 
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import com.ocjadan.exhibitandroid.common.viewcontrollers.ViewControllerFactory
-import com.ocjadan.exhibitandroid.common.ViewModelFactory
+import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
+import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListController
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import dagger.Module

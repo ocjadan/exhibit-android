@@ -1,6 +1,7 @@
 package com.ocjadan.exhibitandroid.common
 
 import androidx.lifecycle.ViewModel
+import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock

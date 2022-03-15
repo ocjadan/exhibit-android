@@ -7,8 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.ocjadan.exhibitandroid.common.BaseFragment
-import com.ocjadan.exhibitandroid.common.viewcontrollers.ViewControllerFactory
-import com.ocjadan.exhibitandroid.common.ViewModelFactory
+import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
+import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
 class QuestionsListFragment : BaseFragment() {
@@ -30,6 +30,7 @@ class QuestionsListFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
+        viewModel.onCreate()
 
         viewModel.questions.observe(this) {
             controller.bindQuestions(it)

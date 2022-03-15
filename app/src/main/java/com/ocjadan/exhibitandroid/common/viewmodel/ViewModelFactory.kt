@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.common
+package com.ocjadan.exhibitandroid.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import com.ocjadan.exhibitandroid.R
-import com.ocjadan.exhibitandroid.common.viewcontrollers.BaseObservableViewController
+import com.ocjadan.exhibitandroid.common.viewcontroller.BaseObservableViewController
 import com.ocjadan.exhibitandroid.questions.Question
 
 class QuestionsListViewController(layoutInflater: LayoutInflater, viewGroup: ViewGroup?) : IQuestionsListViewController,
