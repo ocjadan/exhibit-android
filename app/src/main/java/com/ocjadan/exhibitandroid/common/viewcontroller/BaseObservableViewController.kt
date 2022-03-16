@@ -15,9 +15,6 @@ abstract class BaseObservableViewController<Listener>(
     private val rootView = layoutInflater.inflate(rootViewId, viewGroup, false)
     private val _listenersMap: MutableSet<Listener> by lazy { mutableSetOf() }
 
-    override val listenersMap: Set<Listener>
-        get() = _listenersMap
-
     override fun getRootView(): View {
         return rootView
     }
@@ -32,5 +29,9 @@ abstract class BaseObservableViewController<Listener>(
 
     override fun removeListener(listener: Listener) {
         _listenersMap.remove(listener)
+    }
+
+    override fun getListeners(): Set<Listener> {
+        return _listenersMap.toSet()
     }
 }

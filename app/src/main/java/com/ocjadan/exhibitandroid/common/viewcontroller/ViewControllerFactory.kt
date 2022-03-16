@@ -2,11 +2,17 @@ package com.ocjadan.exhibitandroid.common.viewcontroller
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.NavigationRes
+import androidx.fragment.app.FragmentManager
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
 import com.ocjadan.exhibitandroid.questions.questionsList.view.QuestionsListViewController
 
-class ViewControllerFactory(private val layoutInflater: LayoutInflater) {
+class ViewControllerFactory(private val layoutInflater: LayoutInflater, private val fragmentManager: FragmentManager) {
     fun getQuestionsListViewController(parent: ViewGroup?): IQuestionsListViewController {
         return QuestionsListViewController(layoutInflater, parent)
+    }
+
+    fun getNavDrawerViewController(parent: ViewGroup?, @NavigationRes navigationGraph: Int): INavDrawerViewController {
+        return NavDrawerViewController(layoutInflater, fragmentManager, parent, navigationGraph)
     }
 }

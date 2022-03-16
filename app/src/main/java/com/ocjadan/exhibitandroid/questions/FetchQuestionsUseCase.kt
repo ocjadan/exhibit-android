@@ -32,19 +32,19 @@ open class FetchQuestionsUseCase(private val fetchQuestionsEndpoint: FetchQuesti
     }
 
     private fun notifySuccess(questions: List<Question>) {
-        for (listener in listenersMap) {
+        for (listener in getListeners()) {
             listener.onFetchQuestionsUseCaseSuccess(questions)
         }
     }
 
     private fun notifyFailure() {
-        for (listener in listenersMap) {
+        for (listener in getListeners()) {
             listener.onFetchQuestionsUseCaseFailure()
         }
     }
 
     private fun notifyNetworkError() {
-        for (listener in listenersMap) {
+        for (listener in getListeners()) {
             listener.onFetchQuestionsUseCaseNetworkError()
         }
     }

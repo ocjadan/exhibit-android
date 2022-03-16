@@ -1,6 +1,7 @@
 package com.ocjadan.exhibitandroid.dependencyinjection.activity
 
 import androidx.appcompat.app.AppCompatActivity
+import com.ocjadan.exhibitandroid.MainActivity
 import com.ocjadan.exhibitandroid.dependencyinjection.fragment.FragmentComponent
 import dagger.BindsInstance
 import dagger.Subcomponent
@@ -15,4 +16,6 @@ interface ActivityComponent {
     }
 
     fun fragmentComponentBuilder(): FragmentComponent.Builder
+
+    fun inject(activity: MainActivity)
 }

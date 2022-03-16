@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation"
-    app:startDestination="@+id/nav_questions">
+    android:id="@+id/navigation_drawer_graph"
+    app:startDestination="@+id/nav_frag_questions">
 
     <fragment
-        android:id="@+id/nav_questions"
+        android:id="@+id/nav_frag_questions"
         android:name="com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment"
         android:label="@string/menu_questions" />
+
+    <fragment
+        android:id="@+id/nav_frag_posts"
+        android:name="com.ocjadan.exhibitandroid.posts.PostsListFragment"
+        android:label="@string/menu_posts" />
 
 </navigation>

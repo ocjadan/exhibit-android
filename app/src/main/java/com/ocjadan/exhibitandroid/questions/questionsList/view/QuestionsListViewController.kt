@@ -40,7 +40,8 @@ class QuestionsListViewController(layoutInflater: LayoutInflater, viewGroup: Vie
                                 .padding(8.dp, 12.dp),
                             startIcon = R.drawable.ic_baseline_account_circle_24,
                             startIconDescription = R.string.toolbar_account_button,
-                            title = R.string.toolbar_app_title
+                            title = R.string.toolbar_app_title,
+                            onStartIconClicked = ::onAvatarClicked
                         )
                         QuestionsListView(questions, ::onQuestionClicked)
                     }
@@ -50,8 +51,14 @@ class QuestionsListViewController(layoutInflater: LayoutInflater, viewGroup: Vie
     }
 
     private fun onQuestionClicked(question: Question) {
-        for (listener in listenersMap) {
+        for (listener in getListeners()) {
             listener.onQuestionClicked(question)
+        }
+    }
+
+    private fun onAvatarClicked() {
+        for (listener in getListeners()) {
+            listener.onToolbarAvatarClicked()
         }
     }
 }

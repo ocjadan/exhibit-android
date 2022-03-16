@@ -1,9 +1,12 @@
 package com.ocjadan.exhibitandroid.questions.questionsList
 
+import com.ocjadan.exhibitandroid.common.IBackPressedListener
+import com.ocjadan.exhibitandroid.common.NavDrawerHelper
 import com.ocjadan.exhibitandroid.questions.Question
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
 
-class QuestionsListController : IQuestionsListViewController.Listener {
+class QuestionsListController(private val navDrawerHelper: NavDrawerHelper) : IQuestionsListViewController.Listener,
+    IBackPressedListener {
 
     private lateinit var viewModel: QuestionsListViewModel
     private lateinit var viewController: IQuestionsListViewController
@@ -31,5 +34,19 @@ class QuestionsListController : IQuestionsListViewController.Listener {
 
     override fun onQuestionClicked(question: Question) {
         // Nothing to do yet
+    }
+
+    override fun onToolbarAvatarClicked() {
+        if (!navDrawerHelper.isDrawerOpen()) {
+            navDrawerHelper.openDrawer()
+        }
+    }
+
+    override fun onBackPressed(): Boolean {
+        if (navDrawerHelper.isDrawerOpen()) {
+            navDrawerHelper.closeDrawer()
+            return true
+        }
+        return false
     }
 }

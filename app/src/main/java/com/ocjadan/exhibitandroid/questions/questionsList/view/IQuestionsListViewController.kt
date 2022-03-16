@@ -6,6 +6,7 @@ import com.ocjadan.exhibitandroid.questions.Question
 interface IQuestionsListViewController : IObservableViewController<IQuestionsListViewController.Listener> {
     interface Listener {
         fun onQuestionClicked(question: Question)
+        fun onToolbarAvatarClicked()
     }
 
     fun bindQuestions(questions: List<Question>)
