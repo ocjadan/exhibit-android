@@ -30,7 +30,7 @@ class ExampleStartupBenchmark {
     fun startup() = benchmarkRule.measureRepeated(
         packageName = "com.ocjadan.exhibitandroid",
         metrics = listOf(StartupTimingMetric()),
-        compilationMode = CompilationMode.SpeedProfile(),
+        compilationMode = CompilationMode.Partial(),
         iterations = 3,
         startupMode = StartupMode.COLD
     ) {

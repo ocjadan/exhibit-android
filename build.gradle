@@ -1,11 +1,13 @@
 buildscript {
     ext {
+        min_sdk = 23
+        target_sdk = 32
         compose_version = '1.1.1'
         benchmark_version = '1.0.0'
     }
 
     dependencies {
-        // Microbenchmarking
+        // microbenchmark
         classpath "androidx.benchmark:benchmark-gradle-plugin:$benchmark_version"
     }
 }// Top-level build file where you can add configuration options common to all sub-projects/modules.
