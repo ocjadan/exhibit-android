@@ -3,10 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ocjadan.macrobenchmark">
 
-    <queries>
-        <package android:name="com.ocjadan.exhibitandroid" />
-    </queries>
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="ScopedStorage" />
+
+    <queries>
+        <package android:name="com.ocjadan.exhibitandroid" />
+    </queries>
+
+    <application android:requestLegacyExternalStorage="true" />
 </manifest>

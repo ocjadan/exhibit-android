@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ocjadan.exhibitandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -23,6 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <!-- Enable profiling by macrobenchmark. -->
+        <!-- Set 'enabled' to false when not in use. -->
+        <!-- Lint: 'shell' requires min API 29, force lint to treat project as API 29 (q) with 'targetApi'. -->
+        <profileable
+            android:enabled="true"
+            android:shell="true"
+            tools:targetApi="q" />
+    </application>
 </manifest>

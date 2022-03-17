@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.ocjadan.exhibitandroid"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -27,8 +27,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         benchmark {
+            initWith buildTypes.release
             signingConfig signingConfigs.debug
-            debuggable false
         }
     }
     compileOptions {
@@ -98,4 +98,7 @@ dependencies {
     def moshi_version = "1.13.0"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     ksp "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
+    // Macrobench
+//    implementation "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta04"
 }
