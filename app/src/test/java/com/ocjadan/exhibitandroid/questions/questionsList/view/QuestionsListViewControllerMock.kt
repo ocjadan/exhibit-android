@@ -11,8 +11,9 @@ class QuestionsListViewControllerMock : IQuestionsListViewController {
         TODO("Not yet implemented")
     }
 
-    override val listenersMap: Set<IQuestionsListViewController.Listener>
-        get() = map
+    override fun getListeners(): Set<IQuestionsListViewController.Listener> {
+        return map.toSet()
+    }
 
     override fun addListener(listener: IQuestionsListViewController.Listener) {
         this.map.add(listener)

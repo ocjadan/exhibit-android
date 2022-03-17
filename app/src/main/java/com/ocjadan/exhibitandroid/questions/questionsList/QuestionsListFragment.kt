@@ -30,7 +30,6 @@ class QuestionsListFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val viewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
-        viewModel.onCreate()
 
         viewModel.questions.observe(this) {
             controller.bindQuestions(it)

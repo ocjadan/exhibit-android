@@ -21,11 +21,6 @@ class MainActivity : BaseActivity(), NavDrawerHelper {
         setContentView(navDrawerVC.getRootView())
     }
 
-    override fun onStart() {
-        super.onStart()
-        navDrawerVC.onStart()
-    }
-
     override fun openDrawer() {
         navDrawerVC.openDrawer()
     }

@@ -33,17 +33,11 @@ internal class QuestionsListViewModelTest {
 
         fetchQuestionsUseCaseMock = CompositionRoot().getFetchQuestionsUseCaseMock()
         SUT = QuestionsListViewModel(fetchQuestionsUseCaseMock)
-        SUT.onCreate()
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-    }
-
-    @Test
-    fun onCreate_listenersAttached() {
-        assert(fetchQuestionsUseCaseMock.listenersMap.isNotEmpty())
     }
 
     @Test

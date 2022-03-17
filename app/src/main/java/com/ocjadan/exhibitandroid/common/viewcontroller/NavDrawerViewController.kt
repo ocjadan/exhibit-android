@@ -19,7 +19,7 @@ class NavDrawerViewController(
     parent: ViewGroup?,
     @NavigationRes private val navigationGraph: Int
 ) :
-    BaseObservableViewController<INavDrawerViewController.Listener>(layoutInflater, parent, R.layout.drawer),
+    BaseViewController(layoutInflater, parent, R.layout.drawer),
     INavDrawerViewController, NavigationView.OnNavigationItemSelectedListener {
 
     private val navHostFragment =
@@ -32,6 +32,7 @@ class NavDrawerViewController(
         initNavController()
         initNavView()
         initNavViewMenu()
+        onCreate()
     }
 
     private fun initNavController() {
@@ -49,12 +50,8 @@ class NavDrawerViewController(
         selectMenuItem(menuItems.first())
     }
 
-    override fun onStart() {
+    private fun onCreate() {
         navView.setNavigationItemSelectedListener(this)
-    }
-
-    override fun onStop() {
-        // No-op
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

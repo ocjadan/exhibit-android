@@ -33,7 +33,8 @@ class QuestionsListControllerTest {
         val compositionRoot = CompositionRoot()
         questionsListViewModel = compositionRoot.getQuestionsListViewModelMock()
         questionsListViewController = compositionRoot.getQuestionsListViewControllerMock()
-        SUT = QuestionsListController()
+        val navDrawerHelper = compositionRoot.getNavDrawerHelper()
+        SUT = QuestionsListController(navDrawerHelper)
     }
 
     @After
@@ -66,14 +67,14 @@ class QuestionsListControllerTest {
     fun onStart_allBindings_viewControllerListenersNotEmpty() {
         allBindings()
         SUT.onStart()
-        assert(questionsListViewController.listenersMap.isNotEmpty())
+        assert(questionsListViewController.getListeners().isNotEmpty())
     }
 
     @Test
     fun onStop_allBindings_viewControllerListenersIsEmpty() {
         allBindings()
         SUT.onStop()
-        assert(questionsListViewController.listenersMap.isEmpty())
+        assert(questionsListViewController.getListeners().isEmpty())
     }
 
     // ------------------------------------------------------------------------------------------------------------------

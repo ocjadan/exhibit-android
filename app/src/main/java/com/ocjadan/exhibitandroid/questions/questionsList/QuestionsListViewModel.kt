@@ -21,8 +21,12 @@ open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuesti
     private val _error: MutableLiveData<QuestionsListError> by lazy { MutableLiveData(null) }
     val error: LiveData<QuestionsListError> get() = _error
 
+    init {
+        onCreate()
+    }
+
     // Android provides 'onCleared' but not 'onCreate'; having one here for consistency
-    fun onCreate() {
+    private fun onCreate() {
         fetchQuestionsUseCase.addListener(this)
     }
 

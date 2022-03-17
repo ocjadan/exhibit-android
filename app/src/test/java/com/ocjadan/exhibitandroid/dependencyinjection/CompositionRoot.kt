@@ -1,5 +1,6 @@
 package com.ocjadan.exhibitandroid.dependencyinjection
 
+import com.ocjadan.exhibitandroid.common.NavDrawerHelper
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock
@@ -28,5 +29,21 @@ class CompositionRoot {
 
     fun getQuestionsListViewControllerMock(): IQuestionsListViewController {
         return QuestionsListViewControllerMock()
+    }
+
+    fun getNavDrawerHelper(): NavDrawerHelper {
+        return object : NavDrawerHelper {
+            override fun openDrawer() {
+                TODO("Not yet implemented")
+            }
+
+            override fun closeDrawer() {
+                TODO("Not yet implemented")
+            }
+
+            override fun isDrawerOpen(): Boolean {
+                TODO("Not yet implemented")
+            }
+        }
     }
 }

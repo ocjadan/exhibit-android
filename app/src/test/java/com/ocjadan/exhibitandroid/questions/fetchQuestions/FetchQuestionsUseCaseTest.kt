@@ -41,22 +41,22 @@ internal class FetchQuestionsUseCaseTest {
 
     @Test
     fun addListeners_allListenersAreAdded() {
-        assert(SUT.listenersMap.contains(listenerOne))
-        assert(SUT.listenersMap.contains(listenerTwo))
+        assert(SUT.getListeners().contains(listenerOne))
+        assert(SUT.getListeners().contains(listenerTwo))
     }
 
     @Test
     fun addListeners_removeAllListeners_noListenersRemain() {
         removeAllListeners()
-        assert(!SUT.listenersMap.contains(listenerOne))
-        assert(!SUT.listenersMap.contains(listenerTwo))
+        assert(!SUT.getListeners().contains(listenerOne))
+        assert(!SUT.getListeners().contains(listenerTwo))
     }
 
     @Test
     fun addListeners_removeListener_listenerRemovedAndOtherListenerRemains() {
         SUT.removeListener(listenerOne)
-        assert(!SUT.listenersMap.contains(listenerOne))
-        assert(SUT.listenersMap.contains(listenerTwo))
+        assert(!SUT.getListeners().contains(listenerOne))
+        assert(SUT.getListeners().contains(listenerTwo))
     }
 
     @Test

@@ -37,31 +37,31 @@ class QuestionsListViewControllerTest {
     @Test
     fun addListener_oneListener_singeListenerAdded() {
         oneListener()
-        assert(SUT.listenersMap.contains(listenerOne))
-        assert(SUT.listenersMap.count() == 1)
+        assert(SUT.getListeners().contains(listenerOne))
+        assert(SUT.getListeners().count() == 1)
     }
 
     @Test
     fun addListener_allListeners_allListenersAdded() {
         allListeners()
-        assert(SUT.listenersMap.containsAll(listOf(listenerOne, listenerTwo)))
-        assert(SUT.listenersMap.count() == 2)
+        assert(SUT.getListeners().containsAll(listOf(listenerOne, listenerTwo)))
+        assert(SUT.getListeners().count() == 2)
     }
 
     @Test
     fun removeListener_oneListener_otherListenerRemains() {
         allListeners()
         removeOneListener()
-        assert(SUT.listenersMap.contains(listenerTwo))
-        assert(SUT.listenersMap.count() == 1)
+        assert(SUT.getListeners().contains(listenerTwo))
+        assert(SUT.getListeners().count() == 1)
     }
 
     @Test
     fun removeListener_allListeners_noListenersRemain() {
         allListeners()
         removeAllListeners()
-        assert(!SUT.listenersMap.containsAll(listOf(listenerOne, listenerTwo)))
-        assert(SUT.listenersMap.isEmpty())
+        assert(!SUT.getListeners().containsAll(listOf(listenerOne, listenerTwo)))
+        assert(SUT.getListeners().isEmpty())
     }
 
     @Test
