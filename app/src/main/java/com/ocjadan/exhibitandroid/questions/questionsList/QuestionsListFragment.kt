@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.ocjadan.exhibitandroid.common.BaseFragment
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -20,7 +21,10 @@ class QuestionsListFragment : BaseFragment() {
     lateinit var viewControllerFactory: ViewControllerFactory
 
     @Inject
-    lateinit var controller: QuestionsListController
+    lateinit var navDrawerHelper: NavDrawerHelper
+
+    private lateinit var questionsListViewModel: QuestionsListViewModel
+    private lateinit var questionsListController: QuestionsListController
 
     override fun onAttach(context: Context) {
         fragmentComponent.inject(this)
@@ -29,35 +33,35 @@ class QuestionsListFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
+        questionsListViewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
 
-        viewModel.questions.observe(this) {
-            controller.bindQuestions(it)
+        questionsListViewModel.questions.observe(this) {
+            questionsListController.bindQuestions(it)
         }
 
-        viewModel.error.observe(this) { }
-
-        controller.bindViewModel(viewModel)
+        questionsListViewModel.error.observe(this) { }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         val viewController = viewControllerFactory.getQuestionsListViewController(container)
-        controller.bindViewController(viewController)
+
+        questionsListController = QuestionsListController(questionsListViewModel, viewController, navDrawerHelper)
+
         return viewController.getRootView()
     }
 
     override fun onStart() {
         super.onStart()
-        controller.onStart()
+        questionsListController.onStart()
     }
 
     override fun onStop() {
-        controller.onStop()
+        questionsListController.onStop()
         super.onStop()
     }
 
     override fun onBackPressed(): Boolean {
-        return controller.onBackPressed()
+        return questionsListController.onBackPressed()
     }
 }

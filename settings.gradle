@@ -16,3 +16,4 @@ rootProject.name = "ExhibitAndroid"
 include ':app'
 include ':macrobenchmark'
 include ':microbenchmark'
+include ':benchmarkable'

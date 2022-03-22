@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.common.viewcontroller
+package com.ocjadan.exhibitandroid.common.navdrawer
 
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.navigation.NavigationView
 import com.ocjadan.exhibitandroid.R
+import com.ocjadan.exhibitandroid.common.viewcontroller.BaseViewController
 import java.lang.RuntimeException
 
 class NavDrawerViewController(

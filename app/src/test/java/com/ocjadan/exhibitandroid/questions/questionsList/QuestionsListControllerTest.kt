@@ -34,7 +34,7 @@ class QuestionsListControllerTest {
         questionsListViewModel = compositionRoot.getQuestionsListViewModelMock()
         questionsListViewController = compositionRoot.getQuestionsListViewControllerMock()
         val navDrawerHelper = compositionRoot.getNavDrawerHelper()
-        SUT = QuestionsListController(navDrawerHelper)
+        SUT = QuestionsListController(questionsListViewModel, questionsListViewController, navDrawerHelper)
     }
 
     @After
@@ -43,50 +43,20 @@ class QuestionsListControllerTest {
         mainThreadSurrogate.close()
     }
 
-    // onStart; no bindings; property access exception
-    @Test(expected = UninitializedPropertyAccessException::class)
-    fun onStart_noBindings_UninitializedPropertyAccessException() {
-        SUT.onStart()
-    }
-
-    // onStart; one binding; property access exception
-    @Test(expected = UninitializedPropertyAccessException::class)
-    fun onStart_bindViewController_UninitializedPropertyAccessException() {
-        oneBinding()
-        SUT.onStart()
-    }
-
-    // onStart; all bindings; no exceptions
     @Test
-    fun onStart_allBindings_NoExceptions() {
-        allBindings()
+    fun onStart_NoExceptions() {
         SUT.onStart()
     }
 
     @Test
-    fun onStart_allBindings_viewControllerListenersNotEmpty() {
-        allBindings()
+    fun onStart_viewControllerListenersNotEmpty() {
         SUT.onStart()
         assert(questionsListViewController.getListeners().isNotEmpty())
     }
 
     @Test
-    fun onStop_allBindings_viewControllerListenersIsEmpty() {
-        allBindings()
+    fun onStop_viewControllerListenersIsEmpty() {
         SUT.onStop()
         assert(questionsListViewController.getListeners().isEmpty())
-    }
-
-    // ------------------------------------------------------------------------------------------------------------------
-    // Region: Helper Methods
-    // ------------------------------------------------------------------------------------------------------------------
-
-    private fun oneBinding() {
-        SUT.bindViewController(questionsListViewController)
-    }
-
-    private fun allBindings() {
-        oneBinding()
-        SUT.bindViewModel(questionsListViewModel)
     }
 }

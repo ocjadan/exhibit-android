@@ -3,10 +3,9 @@ package com.ocjadan.exhibitandroid.dependencyinjection.activity
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import com.ocjadan.exhibitandroid.common.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListController
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import dagger.Module
 import dagger.Provides
@@ -28,9 +27,9 @@ object ActivityModule {
     fun fragmentManager(activity: AppCompatActivity): FragmentManager = activity.supportFragmentManager
 
     @Provides
-    fun questionsListController(navDrawerHelper: NavDrawerHelper): QuestionsListController =
-        QuestionsListController(navDrawerHelper)
-
-    @Provides
-    fun getNavDrawerHelper(activity: AppCompatActivity): NavDrawerHelper = activity as NavDrawerHelper
+    fun navDrawerHelper(activity: AppCompatActivity): NavDrawerHelper {
+        // MainActivity is the only activity and it contains the nav drawer,
+        // thus delegate nav drawer calls to MainActivity.
+        return activity as NavDrawerHelper
+    }
 }

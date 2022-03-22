@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.common
+package com.ocjadan.exhibitandroid.common.navdrawer
 
 interface NavDrawerHelper {
     fun openDrawer()

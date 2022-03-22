@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk target_sdk
+
+    defaultConfig {
+        minSdk min_sdk
+        targetSdk target_sdk
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion compose_version
+    }
+}
+
+dependencies {
+//    implementation project(':core')
+
+    // Android
+    api 'androidx.core:core-ktx:1.7.0'
+    api 'androidx.appcompat:appcompat:1.4.1'
+
+    // Material Android
+    api 'com.google.android.material:material:1.5.0'
+
+    // Navigation
+    api 'androidx.navigation:navigation-fragment-ktx:2.4.1'
+    api 'androidx.navigation:navigation-ui-ktx:2.4.1'
+
+    // Compose
+    api 'androidx.navigation:navigation-compose:2.4.1'
+    api 'androidx.activity:activity-compose:1.4.0'
+    api "androidx.compose.ui:ui:$compose_version"
+    api "androidx.compose.material:material:$compose_version"
+    api "androidx.compose.ui:ui-tooling-preview:$compose_version"
+
+    api "androidx.compose.ui:ui-test-junit4:$compose_version"
+    api "androidx.compose.ui:ui-tooling:$compose_version"
+}

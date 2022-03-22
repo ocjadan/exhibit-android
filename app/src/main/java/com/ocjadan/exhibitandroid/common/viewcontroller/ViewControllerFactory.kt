@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.NavigationRes
 import androidx.fragment.app.FragmentManager
+import com.ocjadan.exhibitandroid.common.navdrawer.INavDrawerViewController
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerViewController
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
 import com.ocjadan.exhibitandroid.questions.questionsList.view.QuestionsListViewController
 

@@ -2,8 +2,8 @@ package com.ocjadan.exhibitandroid
 
 import android.os.Bundle
 import com.ocjadan.exhibitandroid.common.BaseActivity
-import com.ocjadan.exhibitandroid.common.NavDrawerHelper
-import com.ocjadan.exhibitandroid.common.viewcontroller.INavDrawerViewController
+import com.ocjadan.exhibitandroid.common.navdrawer.INavDrawerViewController
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import javax.inject.Inject
 

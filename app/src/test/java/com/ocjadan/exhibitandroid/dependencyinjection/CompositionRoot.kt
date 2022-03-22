@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.dependencyinjection
 
-import com.ocjadan.exhibitandroid.common.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock

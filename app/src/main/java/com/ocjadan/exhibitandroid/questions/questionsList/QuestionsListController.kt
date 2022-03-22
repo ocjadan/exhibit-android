@@ -1,23 +1,16 @@
 package com.ocjadan.exhibitandroid.questions.questionsList
 
 import com.ocjadan.exhibitandroid.common.IBackPressedListener
-import com.ocjadan.exhibitandroid.common.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.questions.Question
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
 
-class QuestionsListController(private val navDrawerHelper: NavDrawerHelper) : IQuestionsListViewController.Listener,
+class QuestionsListController(
+    private val viewModel: QuestionsListViewModel,
+    private val viewController: IQuestionsListViewController,
+    private val navDrawerHelper: NavDrawerHelper
+) : IQuestionsListViewController.Listener,
     IBackPressedListener {
-
-    private lateinit var viewModel: QuestionsListViewModel
-    private lateinit var viewController: IQuestionsListViewController
-
-    fun bindViewModel(viewModel: QuestionsListViewModel) {
-        this.viewModel = viewModel
-    }
-
-    fun bindViewController(controller: IQuestionsListViewController) {
-        viewController = controller
-    }
 
     fun bindQuestions(questions: List<Question>) {
         viewController.bindQuestions(questions)
