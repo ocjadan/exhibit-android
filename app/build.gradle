@@ -101,4 +101,7 @@ dependencies {
 
     // Macrobench
 //    implementation "androidx.benchmark:benchmark-macro-junit4:1.1.0-beta04"
+
+    // Benchmarkable library - shared code
+    implementation project(":benchmarkable")
 }

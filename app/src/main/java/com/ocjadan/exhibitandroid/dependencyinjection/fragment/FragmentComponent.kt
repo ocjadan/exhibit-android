@@ -1,5 +1,6 @@
 package com.ocjadan.exhibitandroid.dependencyinjection.fragment
 
+import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsFragment
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment
 import dagger.Subcomponent
 
@@ -11,4 +12,5 @@ interface FragmentComponent {
     }
 
     fun inject(fragment: QuestionsListFragment)
+    fun inject(fragment: QuestionDetailsFragment)
 }

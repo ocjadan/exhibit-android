@@ -1,13 +1,13 @@
 package com.ocjadan.exhibitandroid.questions.questionsList.view
 
 import com.ocjadan.exhibitandroid.common.viewcontroller.IObservableViewController
-import com.ocjadan.exhibitandroid.questions.Question
+import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
 
 interface IQuestionsListViewController : IObservableViewController<IQuestionsListViewController.Listener> {
     interface Listener {
-        fun onQuestionClicked(question: Question)
+        fun onQuestionsListItemClicked(questionsListItem: QuestionsListItem)
         fun onToolbarAvatarClicked()
     }
 
-    fun bindQuestions(questions: List<Question>)
+    fun bindQuestions(questionsListItems: List<QuestionsListItem>)
 }

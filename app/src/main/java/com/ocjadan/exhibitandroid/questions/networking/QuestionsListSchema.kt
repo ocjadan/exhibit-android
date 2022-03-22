@@ -7,8 +7,8 @@ import com.squareup.moshi.JsonClass
  */
 
 @JsonClass(generateAdapter = true)
-data class QuestionListSchema(
-    val items: List<QuestionSchema>,
+data class QuestionsListSchema(
+    val items: List<QuestionsListItemSchema>,
     val has_more: Boolean = false,
     val quota_max: Int = 1,
     val quota_remaining: Int = 0

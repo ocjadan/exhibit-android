@@ -2,7 +2,6 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 
 import com.ocjadan.exhibitandroid.common.IBackPressedListener
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
-import com.ocjadan.exhibitandroid.questions.Question
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
 
 class QuestionsListController(
@@ -12,7 +11,7 @@ class QuestionsListController(
 ) : IQuestionsListViewController.Listener,
     IBackPressedListener {
 
-    fun bindQuestions(questions: List<Question>) {
+    fun bindQuestions(questions: List<QuestionsListItem>) {
         viewController.bindQuestions(questions)
     }
 
@@ -25,7 +24,7 @@ class QuestionsListController(
         viewController.removeListener(this)
     }
 
-    override fun onQuestionClicked(question: Question) {
+    override fun onQuestionsListItemClicked(questionsListItem: QuestionsListItem) {
         // Nothing to do yet
     }
 

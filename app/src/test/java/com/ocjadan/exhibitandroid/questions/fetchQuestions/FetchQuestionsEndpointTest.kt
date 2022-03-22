@@ -2,8 +2,8 @@ package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint
-import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsListItemsEndpoint
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsListItemsEndpoint.FetchQuestionsListItemsEndpointStatus
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -18,35 +18,35 @@ import java.lang.RuntimeException
 @RunWith(MockitoJUnitRunner::class)
 internal class FetchQuestionsEndpointTest {
 
-    private lateinit var SUT: FetchQuestionsEndpoint
+    private lateinit var SUT: FetchQuestionsListItemsEndpoint
     private lateinit var stackOverflowApiMock: StackOverflowApiMock
 
     @Before
     fun setUp() {
         stackOverflowApiMock = CompositionRoot().getStackOverflowApiMock()
-        SUT = FetchQuestionsEndpoint(stackOverflowApiMock.mock)
+        SUT = FetchQuestionsListItemsEndpoint(stackOverflowApiMock.mock)
     }
 
     @Test
     fun fetchQuestions_success_statusIsSuccessAndQuestionDataReturned() = runTest {
         success()
-        val result = SUT.fetchQuestions()
-        assert(result.status == FetchQuestionsEndpointStatus.SUCCESS)
-        assert(result.questions.isNotEmpty())
+        val result = SUT.fetchQuestionsListItems()
+        assert(result.status == FetchQuestionsListItemsEndpointStatus.SUCCESS)
+        assert(result.questionsListItems.isNotEmpty())
     }
 
     @Test
     fun fetchQuestions_jsonError_statusIsFailureAndNoQuestionDataReturned() = runTest {
         jsonError()
-        val result = SUT.fetchQuestions()
-        assert(result.status == FetchQuestionsEndpointStatus.FAILURE)
-        assert(result.questions.isEmpty())
+        val result = SUT.fetchQuestionsListItems()
+        assert(result.status == FetchQuestionsListItemsEndpointStatus.FAILURE)
+        assert(result.questionsListItems.isEmpty())
     }
 
     @Test(expected = RuntimeException::class) // UnknownHostException stubbed to throw RuntimeException
     fun fetchQuestions_networkError_statusIsNetworkErrorAndNoQuestionDataReturned() = runTest {
         networkError()
-        SUT.fetchQuestions()
+        SUT.fetchQuestionsListItems()
     }
 
     // ------------------------------------------------------------------------------------------------------------------

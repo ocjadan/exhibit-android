@@ -7,4 +7,4 @@ import com.squareup.moshi.JsonClass
  */
 
 @JsonClass(generateAdapter = true)
-data class QuestionSchema(val owner: OwnerSchema? = null, val question_id: Int? = null, val title: String = "")
+data class QuestionsListItemSchema(val owner: OwnerSchema? = null, val question_id: Int? = null, val title: String = "")

@@ -35,7 +35,7 @@ class QuestionsListFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         questionsListViewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
 
-        questionsListViewModel.questions.observe(this) {
+        questionsListViewModel.questionsListItems.observe(this) {
             questionsListController.bindQuestions(it)
         }
 

@@ -1,8 +1,8 @@
 package com.ocjadan.exhibitandroid.dependencyinjection.app
 
 import com.ocjadan.exhibitandroid.common.UrlProvider
-import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
-import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint
+import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsListItemsUseCase
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsListItemsEndpoint
 import dagger.Module
 import dagger.Provides
 
@@ -12,5 +12,5 @@ internal object AppModule {
     fun urlProvider() = UrlProvider()
 
     @Provides
-    fun fetchQuestionsUseCase(endpoint: FetchQuestionsEndpoint) = FetchQuestionsUseCase(endpoint)
+    fun fetchQuestionsListItemsUseCase(endpoint: FetchQuestionsListItemsEndpoint) = FetchQuestionsListItemsUseCase(endpoint)
 }

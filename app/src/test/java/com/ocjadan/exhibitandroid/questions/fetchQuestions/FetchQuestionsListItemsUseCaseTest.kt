@@ -1,8 +1,8 @@
 package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
-import com.ocjadan.exhibitandroid.questions.Question
+import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsListItemsUseCase
+import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 
@@ -19,22 +19,22 @@ import org.mockito.kotlin.argumentCaptor
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class FetchQuestionsUseCaseTest {
+internal class FetchQuestionsListItemsUseCaseTest {
 
-    private lateinit var SUT: FetchQuestionsUseCase
-    private lateinit var questionsCaptor: KArgumentCaptor<List<Question>>
-    private lateinit var fetchQuestionsEndpointMock: FetchQuestionsEndpointMock
-
-    @Mock
-    private lateinit var listenerOne: FetchQuestionsUseCase.Listener
+    private lateinit var SUT: FetchQuestionsListItemsUseCase
+    private lateinit var questionsCaptor: KArgumentCaptor<List<QuestionsListItem>>
+    private lateinit var fetchQuestionsListItemsEndpointMock: FetchQuestionsListItemsEndpointMock
 
     @Mock
-    private lateinit var listenerTwo: FetchQuestionsUseCase.Listener
+    private lateinit var listenerOne: FetchQuestionsListItemsUseCase.Listener
+
+    @Mock
+    private lateinit var listenerTwo: FetchQuestionsListItemsUseCase.Listener
 
     @Before
     fun setUp() {
-        fetchQuestionsEndpointMock = CompositionRoot().getFetchQuestionsEndpointMock()
-        SUT = FetchQuestionsUseCase(fetchQuestionsEndpointMock)
+        fetchQuestionsListItemsEndpointMock = CompositionRoot().getFetchQuestionsEndpointMock()
+        SUT = FetchQuestionsListItemsUseCase(fetchQuestionsListItemsEndpointMock)
         questionsCaptor = argumentCaptor()
         addListeners()
     }
@@ -61,7 +61,7 @@ internal class FetchQuestionsUseCaseTest {
 
     @Test
     fun fetchQuestionsAndNotify_success_allListenersNotifiedSuccessWithData() = runTest {
-        SUT.fetchQuestionsAndNotify()
+        SUT.fetchQuestionsListItemsAndNotify()
         verify(listenerOne).onFetchQuestionsUseCaseSuccess(questionsCaptor.capture())
         verify(listenerTwo).onFetchQuestionsUseCaseSuccess(questionsCaptor.capture())
 
@@ -74,7 +74,7 @@ internal class FetchQuestionsUseCaseTest {
     @Test
     fun fetchQuestionsAndNotify_generalError_allListenersNotifiedFailure() = runTest {
         generalError()
-        SUT.fetchQuestionsAndNotify()
+        SUT.fetchQuestionsListItemsAndNotify()
         verify(listenerOne).onFetchQuestionsUseCaseFailure()
         verify(listenerTwo).onFetchQuestionsUseCaseFailure()
     }
@@ -83,7 +83,7 @@ internal class FetchQuestionsUseCaseTest {
     fun fetchQuestionsAndNotify_removeOneListener_generalError_otherListenerNotifiedFailure() = runTest {
         SUT.removeListener(listenerOne)
         generalError()
-        SUT.fetchQuestionsAndNotify()
+        SUT.fetchQuestionsListItemsAndNotify()
         verify(listenerOne, never()).onFetchQuestionsUseCaseFailure()
         verify(listenerTwo).onFetchQuestionsUseCaseFailure()
     }
@@ -92,7 +92,7 @@ internal class FetchQuestionsUseCaseTest {
     fun fetchQuestionsAndNotify_removeAllListeners_generalError_noListenersNotifiedFailure() = runTest {
         removeAllListeners()
         generalError()
-        SUT.fetchQuestionsAndNotify()
+        SUT.fetchQuestionsListItemsAndNotify()
         verify(listenerOne, never()).onFetchQuestionsUseCaseFailure()
         verify(listenerTwo, never()).onFetchQuestionsUseCaseFailure()
     }
@@ -100,7 +100,7 @@ internal class FetchQuestionsUseCaseTest {
     @Test
     fun fetchQuestionsAndNotify_networkError_allListenersNotifiedNetworkError() = runTest {
         networkError()
-        SUT.fetchQuestionsAndNotify()
+        SUT.fetchQuestionsListItemsAndNotify()
         verify(listenerOne).onFetchQuestionsUseCaseNetworkError()
         verify(listenerTwo).onFetchQuestionsUseCaseNetworkError()
     }
@@ -109,7 +109,7 @@ internal class FetchQuestionsUseCaseTest {
     fun fetchQuestionsAndNotify_removeOneListener_networkError_oneListenerNotifiedNetworkError() = runTest {
         SUT.removeListener(listenerOne)
         networkError()
-        SUT.fetchQuestionsAndNotify()
+        SUT.fetchQuestionsListItemsAndNotify()
         verify(listenerOne, never()).onFetchQuestionsUseCaseNetworkError()
         verify(listenerTwo).onFetchQuestionsUseCaseNetworkError()
     }
@@ -118,7 +118,7 @@ internal class FetchQuestionsUseCaseTest {
     fun fetchQuestionsAndNotify_removeAllListeners_networkError_noListenersNotifiedNetworkError() = runTest {
         removeAllListeners()
         networkError()
-        SUT.fetchQuestionsAndNotify()
+        SUT.fetchQuestionsListItemsAndNotify()
         verify(listenerOne, never()).onFetchQuestionsUseCaseNetworkError()
         verify(listenerTwo, never()).onFetchQuestionsUseCaseNetworkError()
     }
@@ -128,11 +128,11 @@ internal class FetchQuestionsUseCaseTest {
     // ------------------------------------------------------------------------------------------------------------------
 
     private fun generalError() {
-        fetchQuestionsEndpointMock.isGeneralError = true
+        fetchQuestionsListItemsEndpointMock.isGeneralError = true
     }
 
     private fun networkError() {
-        fetchQuestionsEndpointMock.isNetworkError = true
+        fetchQuestionsListItemsEndpointMock.isNetworkError = true
     }
 
     private fun addListeners() {

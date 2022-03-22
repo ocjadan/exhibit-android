@@ -3,7 +3,7 @@ package com.ocjadan.exhibitandroid.dependencyinjection.app.networking
 import com.ocjadan.exhibitandroid.common.UrlProvider
 import com.ocjadan.exhibitandroid.dependencyinjection.app.AppScope
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
-import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsEndpoint
+import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsListItemsEndpoint
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -40,5 +40,5 @@ internal object NetworkModule {
     }
 
     @Provides
-    fun fetchQuestionsEndpoint(api: StackOverflowApi) = FetchQuestionsEndpoint(api)
+    fun fetchQuestionsListItemsEndpoint(api: StackOverflowApi) = FetchQuestionsListItemsEndpoint(api)
 }

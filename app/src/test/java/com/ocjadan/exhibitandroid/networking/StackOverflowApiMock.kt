@@ -16,21 +16,21 @@ class StackOverflowApiMock {
     val mock: StackOverflowApi = mock(StackOverflowApi::class.java)
 
     fun success() = runTest {
-        `when`(mock.getQuestions())
+        `when`(mock.getQuestionsListItems())
             .thenReturn(
                 Response.success(QuestionSchemaTestData.questionListSchema())
             )
     }
 
     fun jsonError() = runTest {
-        `when`(mock.getQuestions())
+        `when`(mock.getQuestionsListItems())
             .thenThrow(
                 JsonDataException()
             )
     }
 
     fun networkError() = runTest {
-        `when`(mock.getQuestions())
+        `when`(mock.getQuestionsListItems())
             .thenThrow(
                 UnknownHostException()
             )

@@ -2,7 +2,7 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock
+import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsListItemsUseCaseMock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -24,7 +24,7 @@ internal class QuestionsListViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule() // Required for LivaData `set`/`postValue`
 
     private lateinit var SUT: QuestionsListViewModel
-    private lateinit var fetchQuestionsUseCaseMock: FetchQuestionsUseCaseMock
+    private lateinit var fetchQuestionsUseCaseMock: FetchQuestionsListItemsUseCaseMock
 
     @Before
     fun setUp() {
@@ -43,9 +43,9 @@ internal class QuestionsListViewModelTest {
     @Test
     fun loadQuestions_success_questionsReturnedAndNoError() = runTest {
         SUT.loadQuestions()
-        val questions = SUT.questions.value ?: throw RuntimeException()
+        val items = SUT.questionsListItems.value ?: throw RuntimeException()
         val error = SUT.error.value
-        assert(questions.isNotEmpty())
+        assert(items.isNotEmpty())
         assert(error == null)
     }
 
@@ -53,9 +53,9 @@ internal class QuestionsListViewModelTest {
     fun loadQuestions_networkError_noQuestionsAndNetworkError() = runTest {
         networkError()
         SUT.loadQuestions()
-        val questions = SUT.questions.value ?: throw RuntimeException()
+        val items = SUT.questionsListItems.value ?: throw RuntimeException()
         val error = SUT.error.value
-        assert(questions.isEmpty())
+        assert(items.isEmpty())
         assert(error == QuestionsListViewModel.QuestionsListError.NETWORK)
     }
 
@@ -63,9 +63,9 @@ internal class QuestionsListViewModelTest {
     fun loadQuestions_generalError_noQuestionsAndGeneralError() = runTest {
         generalError()
         SUT.loadQuestions()
-        val questions = SUT.questions.value ?: throw RuntimeException()
+        val items = SUT.questionsListItems.value ?: throw RuntimeException()
         val error = SUT.error.value
-        assert(questions.isEmpty())
+        assert(items.isEmpty())
         assert(error == QuestionsListViewModel.QuestionsListError.FAILURE)
     }
 

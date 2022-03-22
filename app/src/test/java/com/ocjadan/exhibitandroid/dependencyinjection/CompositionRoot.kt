@@ -2,8 +2,8 @@ package com.ocjadan.exhibitandroid.dependencyinjection
 
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsEndpointMock
-import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsUseCaseMock
+import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsListItemsEndpointMock
+import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsListItemsUseCaseMock
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
 import com.ocjadan.exhibitandroid.questions.questionsList.view.QuestionsListViewControllerMock
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModelMock
@@ -15,12 +15,12 @@ class CompositionRoot {
         return StackOverflowApiMock()
     }
 
-    fun getFetchQuestionsEndpointMock(): FetchQuestionsEndpointMock {
-        return FetchQuestionsEndpointMock(getStackOverflowApiMock().mock)
+    fun getFetchQuestionsEndpointMock(): FetchQuestionsListItemsEndpointMock {
+        return FetchQuestionsListItemsEndpointMock(getStackOverflowApiMock().mock)
     }
 
-    fun getFetchQuestionsUseCaseMock(): FetchQuestionsUseCaseMock {
-        return FetchQuestionsUseCaseMock(getFetchQuestionsEndpointMock())
+    fun getFetchQuestionsUseCaseMock(): FetchQuestionsListItemsUseCaseMock {
+        return FetchQuestionsListItemsUseCaseMock(getFetchQuestionsEndpointMock())
     }
 
     fun getQuestionsListViewModelMock(): QuestionsListViewModelMock {

@@ -4,19 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
-import com.ocjadan.exhibitandroid.questions.Question
 import kotlinx.coroutines.launch
 
-open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
-    FetchQuestionsUseCase.Listener {
+open class QuestionsListViewModel(private val fetchQuestionsListItemsUseCase: FetchQuestionsListItemsUseCase) : ViewModel(),
+    FetchQuestionsListItemsUseCase.Listener {
 
     enum class QuestionsListError {
         NETWORK, FAILURE
     }
 
-    private val _questions: MutableLiveData<List<Question>> by lazy { MutableLiveData(listOf()) }
-    val questions: LiveData<List<Question>> get() = _questions
+    private val _questionsListItems: MutableLiveData<List<QuestionsListItem>> by lazy { MutableLiveData(listOf()) }
+    val questionsListItems: LiveData<List<QuestionsListItem>> get() = _questionsListItems
 
     private val _error: MutableLiveData<QuestionsListError> by lazy { MutableLiveData(null) }
     val error: LiveData<QuestionsListError> get() = _error
@@ -27,22 +25,22 @@ open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuesti
 
     // Android provides 'onCleared' but not 'onCreate'; having one here for consistency
     private fun onCreate() {
-        fetchQuestionsUseCase.addListener(this)
+        fetchQuestionsListItemsUseCase.addListener(this)
     }
 
     override fun onCleared() {
-        fetchQuestionsUseCase.removeListener(this)
+        fetchQuestionsListItemsUseCase.removeListener(this)
         super.onCleared()
     }
 
     fun loadQuestions() {
         viewModelScope.launch {
-            fetchQuestionsUseCase.fetchQuestionsAndNotify()
+            fetchQuestionsListItemsUseCase.fetchQuestionsListItemsAndNotify()
         }
     }
 
-    override fun onFetchQuestionsUseCaseSuccess(questions: List<Question>) {
-        _questions.value = questions
+    override fun onFetchQuestionsUseCaseSuccess(questionsListItems: List<QuestionsListItem>) {
+        _questionsListItems.value = questionsListItems
         _error.value = null
     }
 

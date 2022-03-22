@@ -15,15 +15,15 @@ import com.ocjadan.exhibitandroid.R
 import com.ocjadan.exhibitandroid.common.ui.Toolbar
 import com.ocjadan.exhibitandroid.common.ui.theme.ExhibitAndroidTheme
 import com.ocjadan.exhibitandroid.common.viewcontroller.BaseObservableViewController
-import com.ocjadan.exhibitandroid.questions.Question
+import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
 
 class QuestionsListViewController(layoutInflater: LayoutInflater, viewGroup: ViewGroup?) : IQuestionsListViewController,
     BaseObservableViewController<IQuestionsListViewController.Listener>(layoutInflater, viewGroup, R.layout.compose_view) {
 
-    private var questions: List<Question> = emptyList()
+    private var questionsListItems: List<QuestionsListItem> = emptyList()
 
-    override fun bindQuestions(questions: List<Question>) {
-        this.questions = questions
+    override fun bindQuestions(questionsListItems: List<QuestionsListItem>) {
+        this.questionsListItems = questionsListItems
         compose()
     }
 
@@ -43,16 +43,16 @@ class QuestionsListViewController(layoutInflater: LayoutInflater, viewGroup: Vie
                             title = R.string.toolbar_app_title,
                             onStartIconClicked = ::onAvatarClicked
                         )
-                        QuestionsListView(questions, ::onQuestionClicked)
+                        QuestionsListView(questionsListItems, ::onQuestionClicked)
                     }
                 }
             }
         }
     }
 
-    private fun onQuestionClicked(question: Question) {
+    private fun onQuestionClicked(questionsListItem: QuestionsListItem) {
         for (listener in getListeners()) {
-            listener.onQuestionClicked(question)
+            listener.onQuestionsListItemClicked(questionsListItem)
         }
     }
 
