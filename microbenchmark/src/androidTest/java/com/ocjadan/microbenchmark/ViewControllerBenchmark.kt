@@ -25,19 +25,10 @@ class ViewControllerBenchmark {
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun benchmark_init_questionsListViewController() {
+    fun benchmark_init_questionDetailsViewController() {
         activityRule.scenario.onActivity {
             benchmarkRule.measureRepeated {
-                it.initQuestionsListVC()
-            }
-        }
-    }
-
-    @Test
-    fun benchmark_init_navDrawerViewController() {
-        activityRule.scenario.onActivity {
-            benchmarkRule.measureRepeated {
-                it.initNavDrawer()
+                it.initQuestionDetailsVC()
             }
         }
     }

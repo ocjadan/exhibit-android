@@ -29,11 +29,21 @@ android {
         benchmark {
             debuggable = true
             signingConfig = debug.signingConfig
+            // Needed because Project has so many modules. Make sure :app and :macrobenchmark are using 'benchmark' builds
+            // and all others use 'release'.
+            // https://developer.android.com/studio/profile/macrobenchmark-overview#set_up_multi-module_application
+            matchingFallbacks = ['release']
         }
     }
 
     targetProjectPath = ":app"
     experimentalProperties["android.experimental.self-instrumenting"] = true
+
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
 }
 
 dependencies {
