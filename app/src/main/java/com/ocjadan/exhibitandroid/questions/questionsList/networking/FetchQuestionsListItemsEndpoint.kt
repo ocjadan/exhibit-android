@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.networking
+package com.ocjadan.exhibitandroid.questions.questionsList.networking
 
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.squareup.moshi.JsonDataException

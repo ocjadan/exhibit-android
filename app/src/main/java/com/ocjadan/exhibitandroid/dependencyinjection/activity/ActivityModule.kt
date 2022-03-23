@@ -4,6 +4,9 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.screensNavigator.INavControllerWrapper
+import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerHelper
+import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsViewModel
@@ -36,4 +39,13 @@ object ActivityModule {
         // thus delegate nav drawer calls to MainActivity.
         return activity as NavDrawerHelper
     }
+
+    @Provides
+    fun screensNavigator(navigationHelper: NavControllerHelper) = ScreensNavigator(navigationHelper)
+
+    @Provides
+    fun navigationHelper(navControllerWrapper: INavControllerWrapper) = NavControllerHelper(navControllerWrapper)
+
+    @Provides
+    fun navControllerWrapper(activity: AppCompatActivity): INavControllerWrapper = activity as INavControllerWrapper
 }

@@ -1,11 +1,11 @@
-package com.ocjadan.exhibitandroid.questions.networking
+package com.ocjadan.exhibitandroid.questions.questionsList.networking
 
+import com.ocjadan.exhibitandroid.questions.questionsList.networking.QuestionsListItemSchema
 import com.squareup.moshi.JsonClass
 
 /**
- * Note: `items` is required; JsonDataException is thrown if it's not found.
+ * @param items Is required; JsonDataException is thrown if it's not found.
  */
-
 @JsonClass(generateAdapter = true)
 data class QuestionsListSchema(
     val items: List<QuestionsListItemSchema>,

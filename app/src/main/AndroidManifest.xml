@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
 
-        <!-- Enable profiling by macrobenchmark. -->
+        <!-- Enable profiling for macrobenchmarks. -->
         <!-- Set 'enabled' to false when not in use. -->
         <!-- Lint: 'shell' requires min API 29, force lint to treat project as API 29 (q) with 'targetApi'. -->
         <profileable

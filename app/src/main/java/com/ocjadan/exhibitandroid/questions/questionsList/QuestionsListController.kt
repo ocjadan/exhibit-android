@@ -2,12 +2,14 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 
 import com.ocjadan.exhibitandroid.common.IBackPressedListener
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
 
 class QuestionsListController(
     private val viewModel: QuestionsListViewModel,
     private val viewController: IQuestionsListViewController,
-    private val navDrawerHelper: NavDrawerHelper
+    private val navDrawerHelper: NavDrawerHelper,
+    private val screensNavigator: ScreensNavigator
 ) : IQuestionsListViewController.Listener,
     IBackPressedListener {
 
@@ -25,7 +27,7 @@ class QuestionsListController(
     }
 
     override fun onQuestionsListItemClicked(questionsListItem: QuestionsListItem) {
-        // Nothing to do yet
+        screensNavigator.toQuestionDetails(questionsListItem)
     }
 
     override fun onToolbarAvatarClicked() {

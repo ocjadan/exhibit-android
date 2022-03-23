@@ -6,12 +6,14 @@
 
     <fragment
         android:id="@+id/nav_frag_questions"
-        android:name="com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment"
-        android:label="@string/menu_questions" />
+        android:name="com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment" />
 
     <fragment
         android:id="@+id/nav_frag_posts"
-        android:name="com.ocjadan.exhibitandroid.posts.PostsListFragment"
-        android:label="@string/menu_posts" />
+        android:name="com.ocjadan.exhibitandroid.posts.PostsListFragment" />
+
+    <fragment
+        android:id="@+id/nav_frag_questiondetails"
+        android:name="com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsFragment" />
 
 </navigation>

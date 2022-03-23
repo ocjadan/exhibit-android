@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat
 import androidx.core.view.children
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.google.android.material.navigation.NavigationView
 import com.ocjadan.exhibitandroid.R
@@ -84,5 +85,9 @@ class NavDrawerViewController(
 
     override fun isDrawerOpen(): Boolean {
         return layDrawer.isDrawerOpen(GravityCompat.START)
+    }
+
+    override fun getNavController(): NavController {
+        return navController
     }
 }

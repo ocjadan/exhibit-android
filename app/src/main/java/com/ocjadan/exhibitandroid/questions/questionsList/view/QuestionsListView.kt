@@ -7,7 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ocjadan.exhibitandroid.questions.QuestionsListItemView
+import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItemView
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
 
 @Composable

@@ -2,8 +2,8 @@ package com.ocjadan.exhibitandroid.questions.fetchQuestions
 
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsListItemsEndpoint
-import com.ocjadan.exhibitandroid.questions.networking.FetchQuestionsListItemsEndpoint.FetchQuestionsListItemsEndpointStatus
+import com.ocjadan.exhibitandroid.questions.questionsList.networking.FetchQuestionsListItemsEndpoint
+import com.ocjadan.exhibitandroid.questions.questionsList.networking.FetchQuestionsListItemsEndpoint.FetchQuestionsListItemsEndpointStatus
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.ocjadan.exhibitandroid.common.BaseFragment
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import javax.inject.Inject
@@ -22,6 +23,9 @@ class QuestionsListFragment : BaseFragment() {
 
     @Inject
     lateinit var navDrawerHelper: NavDrawerHelper
+
+    @Inject
+    lateinit var screensNavigator: ScreensNavigator
 
     private lateinit var questionsListViewModel: QuestionsListViewModel
     private lateinit var questionsListController: QuestionsListController
@@ -46,7 +50,8 @@ class QuestionsListFragment : BaseFragment() {
         super.onCreateView(inflater, container, savedInstanceState)
         val viewController = viewControllerFactory.getQuestionsListViewController(container)
 
-        questionsListController = QuestionsListController(questionsListViewModel, viewController, navDrawerHelper)
+        questionsListController =
+            QuestionsListController(questionsListViewModel, viewController, navDrawerHelper, screensNavigator)
 
         return viewController.getRootView()
     }
