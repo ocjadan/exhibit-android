@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.view
+package com.ocjadan.exhibitandroid.questions.questionsList.list
 
 import android.content.Context
 import android.view.LayoutInflater

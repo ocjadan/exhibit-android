@@ -1,8 +1,6 @@
-package com.ocjadan.exhibitandroid.questions.fetchQuestions
+package com.ocjadan.exhibitandroid.questions.questionsList.items
 
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsListItemsUseCase
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 

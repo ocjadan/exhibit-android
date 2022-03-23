@@ -10,9 +10,6 @@
         <item
             android:id="@+id/menu_item_questions"
             android:title="@string/menu_questions" />
-        <item
-            android:id="@+id/menu_item_posts"
-            android:title="@string/menu_posts" />
     </group>
 
 </menu>

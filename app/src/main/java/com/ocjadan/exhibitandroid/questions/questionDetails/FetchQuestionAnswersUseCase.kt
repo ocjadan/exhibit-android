@@ -9,7 +9,7 @@ import com.ocjadan.exhibitandroid.questions.questionDetails.networking.FetchQues
 
 import java.lang.RuntimeException
 
-class FetchQuestionAnswersUseCase(private val fetchQuestionAnswersEndpoint: FetchQuestionAnswersEndpoint) :
+open class FetchQuestionAnswersUseCase(private val fetchQuestionAnswersEndpoint: FetchQuestionAnswersEndpoint) :
     BaseObservable<FetchQuestionAnswersUseCase.Listener>() {
     interface Listener {
         fun onFetchQuestionAnswersSuccess(answers: List<Answer>)

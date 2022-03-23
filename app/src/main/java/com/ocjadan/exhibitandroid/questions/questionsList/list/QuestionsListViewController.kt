@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.view
+package com.ocjadan.exhibitandroid.questions.questionsList.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,7 +15,7 @@ import com.ocjadan.exhibitandroid.R
 import com.ocjadan.exhibitandroid.common.ui.Toolbar
 import com.ocjadan.exhibitandroid.common.ui.theme.ExhibitAndroidTheme
 import com.ocjadan.exhibitandroid.common.viewcontroller.BaseObservableViewController
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
+import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
 
 class QuestionsListViewController(layoutInflater: LayoutInflater, viewGroup: ViewGroup?) : IQuestionsListViewController,
     BaseObservableViewController<IQuestionsListViewController.Listener>(layoutInflater, viewGroup, R.layout.compose_view) {

@@ -1,6 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.fetchQuestions
-
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsListItemsUseCase
+package com.ocjadan.exhibitandroid.questions.questionsList.items
 
 class FetchQuestionsListItemsUseCaseMock(private val fetchQuestionsListItemsEndpointMock: FetchQuestionsListItemsEndpointMock) :
     FetchQuestionsListItemsUseCase(fetchQuestionsListItemsEndpointMock) {

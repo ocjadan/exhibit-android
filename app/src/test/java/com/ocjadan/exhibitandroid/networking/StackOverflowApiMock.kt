@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.networking
 
-import com.ocjadan.exhibitandroid.questions.networking.QuestionSchemaTestData
+import com.ocjadan.exhibitandroid.questions.SchemaTestData
 import com.squareup.moshi.JsonDataException
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -18,7 +18,7 @@ class StackOverflowApiMock {
     fun success() = runTest {
         `when`(mock.getQuestionsListItems())
             .thenReturn(
-                Response.success(QuestionSchemaTestData.questionListSchema())
+                Response.success(SchemaTestData.questionListSchema())
             )
     }
 

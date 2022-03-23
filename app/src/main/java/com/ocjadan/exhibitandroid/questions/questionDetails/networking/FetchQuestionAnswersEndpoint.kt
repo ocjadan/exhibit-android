@@ -7,7 +7,7 @@ import java.io.IOException
 import java.lang.RuntimeException
 import java.net.UnknownHostException
 
-class FetchQuestionAnswersEndpoint(private val stackOverflowApi: StackOverflowApi) {
+open class FetchQuestionAnswersEndpoint(private val stackOverflowApi: StackOverflowApi) {
 
     enum class FetchQuestionAnswersEndpointStatus {
         SUCCESS, FAILURE, NETWORK_ERROR

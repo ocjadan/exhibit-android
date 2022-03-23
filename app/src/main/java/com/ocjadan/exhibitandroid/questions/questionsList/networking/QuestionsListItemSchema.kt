@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.questions.questionsList.networking
 
-import com.ocjadan.exhibitandroid.users.OwnerSchema
+import com.ocjadan.exhibitandroid.owners.OwnerSchema
 import com.squareup.moshi.JsonClass
 
 /**

@@ -1,7 +1,7 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.view
+package com.ocjadan.exhibitandroid.questions.questionsList.list
 
 import com.ocjadan.exhibitandroid.common.viewcontroller.IObservableViewController
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
+import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
 
 interface IQuestionsListViewController : IObservableViewController<IQuestionsListViewController.Listener> {
     interface Listener {

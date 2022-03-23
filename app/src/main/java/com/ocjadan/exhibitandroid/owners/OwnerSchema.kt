@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.users
+package com.ocjadan.exhibitandroid.owners
 
 import com.squareup.moshi.JsonClass
 

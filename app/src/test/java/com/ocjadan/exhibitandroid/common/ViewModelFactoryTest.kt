@@ -3,8 +3,10 @@ package com.ocjadan.exhibitandroid.common
 import androidx.lifecycle.ViewModel
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsListItemsEndpointMock
-import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsListItemsUseCaseMock
+import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersEndpointMock
+import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCaseMock
+import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsListItemsEndpointMock
+import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsListItemsUseCaseMock
 import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsViewModel
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -41,6 +43,8 @@ internal class ViewModelFactoryTest {
     }
 
     private class ViewModelProviderMock<T>(private val type: ViewModelType) : Provider<T> {
+        private val stackOverflowApiMock by lazy { StackOverflowApiMock().mock }
+
         enum class ViewModelType {
             QUESTIONS_LIST, QUESTION_DETAILS
         }
@@ -54,14 +58,15 @@ internal class ViewModelFactoryTest {
         }
 
         private fun getQuestionDetailsVM(): QuestionDetailsViewModel {
-            return QuestionDetailsViewModel()
+            val fetchQuestionAnswersEndpointMock = FetchQuestionAnswersEndpointMock(stackOverflowApiMock)
+            val fetchQuestionsAnswersUseCaseMock = FetchQuestionAnswersUseCaseMock(fetchQuestionAnswersEndpointMock)
+            return QuestionDetailsViewModel(fetchQuestionsAnswersUseCaseMock)
         }
 
         private fun getQuestionsListVM(): QuestionsListViewModel {
-            val stackOverflowApiMock = StackOverflowApiMock().mock
-            val fetchQuestionsEndpointMock = FetchQuestionsListItemsEndpointMock(stackOverflowApiMock)
-            val fetchQuestionsUseCaseMock = FetchQuestionsListItemsUseCaseMock(fetchQuestionsEndpointMock)
-            return QuestionsListViewModel(fetchQuestionsUseCaseMock)
+            val fetchQuestionsListItemsEndpointMock = FetchQuestionsListItemsEndpointMock(stackOverflowApiMock)
+            val fetchQuestionsListItemsUseCaseMock = FetchQuestionsListItemsUseCaseMock(fetchQuestionsListItemsEndpointMock)
+            return QuestionsListViewModel(fetchQuestionsListItemsUseCaseMock)
         }
     }
 }

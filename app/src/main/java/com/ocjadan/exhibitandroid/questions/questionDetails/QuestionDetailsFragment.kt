@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.ocjadan.benchmarkable.questionDetails.IQuestionDetailsViewController
 import com.ocjadan.benchmarkable.questionDetails.QuestionDetails
 import com.ocjadan.exhibitandroid.common.BaseFragment
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import java.lang.RuntimeException
@@ -33,6 +35,12 @@ class QuestionDetailsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var navDrawerHelper: NavDrawerHelper
+
+    @Inject
+    lateinit var screensNavigator: ScreensNavigator
 
     private lateinit var questionDetailsVM: QuestionDetailsViewModel
     private lateinit var questionDetailsVC: IQuestionDetailsViewController
@@ -62,7 +70,7 @@ class QuestionDetailsFragment : BaseFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         questionDetailsVC = viewControllerFactory.getQuestionDetailsViewController(container)
-        questionDetailsVC.bindQuestionDetails(details)
+        questionDetailsVC.bindDetails(details)
         return questionDetailsVC.getRootView()
     }
 
@@ -74,6 +82,14 @@ class QuestionDetailsFragment : BaseFragment() {
     }
 
     override fun onBackPressed(): Boolean {
-        TODO("Not yet implemented")
+        /**
+         * Purposely handling here because QuestionDetailsViewController is in the benchmarkable module.
+         * This highlights the difficulty of sharing code for benchmarking.
+         */
+        if (navDrawerHelper.isDrawerOpen()) {
+            navDrawerHelper.closeDrawer()
+        }
+        screensNavigator.navigateUp()
+        return true
     }
 }

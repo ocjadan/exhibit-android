@@ -2,7 +2,7 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.fetchQuestions.FetchQuestionsListItemsUseCaseMock
+import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsListItemsUseCaseMock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

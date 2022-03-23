@@ -2,7 +2,7 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
+import com.ocjadan.exhibitandroid.questions.questionsList.list.IQuestionsListViewController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.newSingleThreadContext
@@ -34,7 +34,8 @@ class QuestionsListControllerTest {
         questionsListViewModel = compositionRoot.getQuestionsListViewModelMock()
         questionsListViewController = compositionRoot.getQuestionsListViewControllerMock()
         val navDrawerHelper = compositionRoot.getNavDrawerHelper()
-        SUT = QuestionsListController(questionsListViewModel, questionsListViewController, navDrawerHelper)
+        val screensNavigator = compositionRoot.getScreensNavigator()
+        SUT = QuestionsListController(questionsListViewModel, questionsListViewController, navDrawerHelper, screensNavigator)
     }
 
     @After

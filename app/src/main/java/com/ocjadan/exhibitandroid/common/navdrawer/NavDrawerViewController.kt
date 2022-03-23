@@ -70,7 +70,6 @@ class NavDrawerViewController(
     private fun navigateToItem(item: MenuItem) {
         when (item.title) {
             getContext().getString(R.string.menu_questions) -> navController.navigate(R.id.nav_frag_questions)
-            getContext().getString(R.string.menu_posts) -> navController.navigate(R.id.nav_frag_posts)
             else -> throw RuntimeException("Unrecognized menu item: $item")
         }
     }

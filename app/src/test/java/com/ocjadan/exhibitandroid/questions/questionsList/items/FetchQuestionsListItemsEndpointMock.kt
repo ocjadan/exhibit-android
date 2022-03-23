@@ -1,8 +1,8 @@
-package com.ocjadan.exhibitandroid.questions.fetchQuestions
+package com.ocjadan.exhibitandroid.questions.questionsList.items
 
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.ocjadan.exhibitandroid.questions.questionsList.networking.FetchQuestionsListItemsEndpoint
-import com.ocjadan.exhibitandroid.questions.networking.QuestionSchemaTestData
+import com.ocjadan.exhibitandroid.questions.SchemaTestData
 
 class FetchQuestionsListItemsEndpointMock(stackOverflowApi: StackOverflowApi) :
     FetchQuestionsListItemsEndpoint(stackOverflowApi) {
@@ -21,7 +21,7 @@ class FetchQuestionsListItemsEndpointMock(stackOverflowApi: StackOverflowApi) :
             )
             else -> FetchQuestionsListItemsEndpointResult(
                 FetchQuestionsListItemsEndpointStatus.SUCCESS,
-                QuestionSchemaTestData.questionSchemas()
+                SchemaTestData.questionSchema()
             )
         }
     }

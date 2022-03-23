@@ -3,7 +3,8 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 import com.ocjadan.exhibitandroid.common.IBackPressedListener
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
-import com.ocjadan.exhibitandroid.questions.questionsList.view.IQuestionsListViewController
+import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
+import com.ocjadan.exhibitandroid.questions.questionsList.list.IQuestionsListViewController
 
 class QuestionsListController(
     private val viewModel: QuestionsListViewModel,

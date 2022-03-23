@@ -9,10 +9,6 @@
         android:name="com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment" />
 
     <fragment
-        android:id="@+id/nav_frag_posts"
-        android:name="com.ocjadan.exhibitandroid.posts.PostsListFragment" />
-
-    <fragment
         android:id="@+id/nav_frag_questiondetails"
         android:name="com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsFragment" />
 

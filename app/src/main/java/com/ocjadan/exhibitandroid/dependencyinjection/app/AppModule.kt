@@ -2,7 +2,7 @@ package com.ocjadan.exhibitandroid.dependencyinjection.app
 
 import com.ocjadan.exhibitandroid.common.UrlProvider
 import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCase
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsListItemsUseCase
+import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsListItemsUseCase
 import com.ocjadan.exhibitandroid.questions.questionsList.networking.FetchQuestionsListItemsEndpoint
 import com.ocjadan.exhibitandroid.questions.questionDetails.networking.FetchQuestionAnswersEndpoint
 import dagger.Module

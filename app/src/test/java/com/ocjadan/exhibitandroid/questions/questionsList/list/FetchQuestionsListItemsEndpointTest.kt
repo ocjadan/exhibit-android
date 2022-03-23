@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.fetchQuestions
+package com.ocjadan.exhibitandroid.questions.questionsList.list
 
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
@@ -16,7 +16,7 @@ import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-internal class FetchQuestionsEndpointTest {
+internal class FetchQuestionsListItemsEndpointTest {
 
     private lateinit var SUT: FetchQuestionsListItemsEndpoint
     private lateinit var stackOverflowApiMock: StackOverflowApiMock

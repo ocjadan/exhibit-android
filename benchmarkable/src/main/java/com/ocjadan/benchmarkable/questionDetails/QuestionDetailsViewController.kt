@@ -1,6 +1,5 @@
 package com.ocjadan.benchmarkable.questionDetails
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,13 +12,12 @@ class QuestionDetailsViewController(layoutInflater: LayoutInflater, viewGroup: V
     IQuestionDetailsViewController {
 
     private val rootView = layoutInflater.inflate(R.layout.compose_view, viewGroup, false)
-    private val _listenersMap: MutableSet<IQuestionDetailsViewController.Listener> by lazy { mutableSetOf() }
 
     private lateinit var details: QuestionDetails
 
     private var answers: List<Answer> = emptyList()
 
-    override fun bindQuestionDetails(details: QuestionDetails) {
+    override fun bindDetails(details: QuestionDetails) {
         this.details = details
         if (details.isAnswered) {
             composeDetailsLoading()
@@ -61,21 +59,5 @@ class QuestionDetailsViewController(layoutInflater: LayoutInflater, viewGroup: V
 
     override fun getRootView(): View {
         return rootView
-    }
-
-    private fun getContext(): Context {
-        return rootView.context
-    }
-
-    override fun addListener(listener: IQuestionDetailsViewController.Listener) {
-        _listenersMap.add(listener)
-    }
-
-    override fun removeListener(listener: IQuestionDetailsViewController.Listener) {
-        _listenersMap.remove(listener)
-    }
-
-    override fun getListeners(): Set<IQuestionDetailsViewController.Listener> {
-        return _listenersMap.toSet()
     }
 }

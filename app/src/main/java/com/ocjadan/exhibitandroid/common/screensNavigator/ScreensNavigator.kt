@@ -4,7 +4,7 @@ import android.os.Bundle
 import com.ocjadan.benchmarkable.questionDetails.QuestionDetails
 import com.ocjadan.exhibitandroid.R
 import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsFragment
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
+import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
 
 class ScreensNavigator(private val navigationHelper: NavControllerHelper) {
     fun toQuestionDetails(question: QuestionsListItem) {
@@ -18,5 +18,9 @@ class ScreensNavigator(private val navigationHelper: NavControllerHelper) {
         val args = Bundle(1)
         args.putSerializable(QuestionDetailsFragment.QUESTION_DETAILS, details)
         navigationHelper.navigateTo(R.id.nav_frag_questiondetails, args)
+    }
+
+    fun navigateUp() {
+        navigationHelper.navigateUp()
     }
 }

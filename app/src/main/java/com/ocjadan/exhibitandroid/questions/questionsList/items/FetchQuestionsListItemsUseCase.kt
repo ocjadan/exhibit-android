@@ -1,8 +1,8 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions.questionsList.items
 
 import com.ocjadan.exhibitandroid.common.observable.BaseObservable
-import com.ocjadan.exhibitandroid.users.Owner
-import com.ocjadan.exhibitandroid.users.OwnerSchema
+import com.ocjadan.exhibitandroid.owners.Owner
+import com.ocjadan.exhibitandroid.owners.OwnerSchema
 import com.ocjadan.exhibitandroid.questions.questionsList.networking.FetchQuestionsListItemsEndpoint
 import com.ocjadan.exhibitandroid.questions.questionsList.networking.FetchQuestionsListItemsEndpoint.FetchQuestionsListItemsEndpointStatus
 import com.ocjadan.exhibitandroid.questions.questionsList.networking.QuestionsListItemSchema

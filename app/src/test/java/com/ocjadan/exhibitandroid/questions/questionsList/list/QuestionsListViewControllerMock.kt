@@ -1,7 +1,7 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.view
+package com.ocjadan.exhibitandroid.questions.questionsList.list
 
 import android.view.View
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListItem
+import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
 
 class QuestionsListViewControllerMock : IQuestionsListViewController {
     private val map = HashSet<IQuestionsListViewController.Listener>()
