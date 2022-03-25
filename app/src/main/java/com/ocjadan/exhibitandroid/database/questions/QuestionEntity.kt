@@ -2,8 +2,10 @@ package com.ocjadan.exhibitandroid.database.questions
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
-@Entity(tableName = "questions", primaryKeys = ["question_id"])
+@Entity(tableName = "questions", indices = [Index(value = ["question_id"], unique = true)])
 data class QuestionEntity(
     @ColumnInfo(name = "question_id")
     val questionId: Long,
@@ -18,5 +20,8 @@ data class QuestionEntity(
     val creationDate: Long,
 
     @ColumnInfo(name = "owner_id")
-    val ownerId: Long
+    val ownerId: Long,
+
+    @PrimaryKey(autoGenerate = true)
+    val tableOrderId: Int? = null
 )

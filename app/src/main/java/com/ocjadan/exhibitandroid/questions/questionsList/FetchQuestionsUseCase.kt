@@ -39,22 +39,21 @@ open class FetchQuestionsUseCase(
         return lastQuestionsUpdate + CACHE_TIMEOUT < timeProvider.getCurrentTimestamp()
     }
 
-    private fun fetchQuestionsFromCacheAndNotify() {
-        val questions = questionsCache.getQuestionsWithOwners()
-        notifySuccess(questions)
-    }
-
     private suspend fun fetchQuestionsFromEndpointAndNotify() {
         val result = fetchQuestionsEndpoint.fetchQuestions()
         when (result.status) {
             FetchQuestionsEndpointStatus.SUCCESS -> {
-                val questions = result.questions
-                saveQuestionsToCache(questions)
-                notifySuccess(questions)
+                saveQuestionsToCache(result.questions)
+                fetchQuestionsFromCacheAndNotify()
             }
             FetchQuestionsEndpointStatus.NETWORK_ERROR -> notifyNetworkError()
             else -> notifyFailure()
         }
+    }
+
+    private fun fetchQuestionsFromCacheAndNotify() {
+        val questions = questionsCache.getQuestionsWithOwners()
+        notifySuccess(questions)
     }
 
     private fun saveQuestionsToCache(questions: List<Question>) {

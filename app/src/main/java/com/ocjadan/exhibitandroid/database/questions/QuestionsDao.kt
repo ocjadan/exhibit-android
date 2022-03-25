@@ -17,6 +17,6 @@ interface QuestionsDao {
     fun getWithOwner(id: Long): QuestionWithOwner
 
     @Transaction
-    @Query("SELECT * FROM questions ORDER BY creation_date DESC LIMIT :amount")
+    @Query("SELECT * FROM questions ORDER BY tableOrderId DESC LIMIT :amount")
     fun getAllWithOwners(amount: Int): List<QuestionWithOwner>
 }
