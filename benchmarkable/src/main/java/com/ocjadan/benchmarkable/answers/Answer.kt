@@ -1,3 +1,3 @@
 package com.ocjadan.benchmarkable.answers
 
-data class Answer(val id: Int, val body: String)
+data class Answer(val id: Long, val body: String)

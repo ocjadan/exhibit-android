@@ -8,8 +8,8 @@ import com.ocjadan.benchmarkable.questionDetails.IQuestionDetailsViewController
 import com.ocjadan.benchmarkable.questionDetails.QuestionDetailsViewController
 import com.ocjadan.exhibitandroid.common.navdrawer.INavDrawerViewController
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerViewController
-import com.ocjadan.exhibitandroid.questions.questionsList.list.IQuestionsListViewController
-import com.ocjadan.exhibitandroid.questions.questionsList.list.QuestionsListViewController
+import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
+import com.ocjadan.exhibitandroid.questions.questionsList.views.QuestionsListViewController
 
 class ViewControllerFactory(private val layoutInflater: LayoutInflater, private val fragmentManager: FragmentManager) {
     fun getQuestionsListViewController(parent: ViewGroup?): IQuestionsListViewController {

@@ -1,18 +1,18 @@
 package com.ocjadan.exhibitandroid.questions
 
-import com.ocjadan.exhibitandroid.owners.OwnerSchema
-import com.ocjadan.exhibitandroid.questions.questionsList.networking.QuestionsListItemSchema
-import com.ocjadan.exhibitandroid.questions.questionsList.networking.QuestionsListSchema
+import com.ocjadan.exhibitandroid.networking.owners.OwnerSchema
+import com.ocjadan.exhibitandroid.networking.questionsList.QuestionSchema
+import com.ocjadan.exhibitandroid.networking.questionsList.QuestionsListSchema
 
 object SchemaTestData {
     fun questionListSchema(): QuestionsListSchema {
         return QuestionsListSchema(questionSchema())
     }
 
-    fun questionSchema(): List<QuestionsListItemSchema> {
+    fun questionSchema(): List<QuestionSchema> {
         return listOf(
-            QuestionsListItemSchema(ownerSchema(), 0, "TITLE1", true),
-            QuestionsListItemSchema(ownerSchema(), 1, "TITLE2", false)
+            QuestionSchema(ownerSchema(), 0, "TITLE1", true),
+            QuestionSchema(ownerSchema(), 1, "TITLE2", false)
         )
     }
 

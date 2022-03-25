@@ -4,10 +4,10 @@ import android.os.Bundle
 import com.ocjadan.benchmarkable.questionDetails.QuestionDetails
 import com.ocjadan.exhibitandroid.R
 import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsFragment
-import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
+import com.ocjadan.exhibitandroid.questions.questionsList.Question
 
 class ScreensNavigator(private val navigationHelper: NavControllerHelper) {
-    fun toQuestionDetails(question: QuestionsListItem) {
+    fun toQuestionDetails(question: Question) {
         val details = QuestionDetails(
             question.id,
             question.isAnswered,

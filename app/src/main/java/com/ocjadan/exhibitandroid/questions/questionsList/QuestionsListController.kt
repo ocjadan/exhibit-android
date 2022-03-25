@@ -3,8 +3,7 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 import com.ocjadan.exhibitandroid.common.IBackPressedListener
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
-import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
-import com.ocjadan.exhibitandroid.questions.questionsList.list.IQuestionsListViewController
+import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
 
 class QuestionsListController(
     private val viewModel: QuestionsListViewModel,
@@ -14,7 +13,7 @@ class QuestionsListController(
 ) : IQuestionsListViewController.Listener,
     IBackPressedListener {
 
-    fun bindQuestions(questions: List<QuestionsListItem>) {
+    fun bindQuestions(questions: List<Question>) {
         viewController.bindQuestions(questions)
     }
 
@@ -27,8 +26,8 @@ class QuestionsListController(
         viewController.removeListener(this)
     }
 
-    override fun onQuestionsListItemClicked(questionsListItem: QuestionsListItem) {
-        screensNavigator.toQuestionDetails(questionsListItem)
+    override fun onQuestionClicked(question: Question) {
+        screensNavigator.toQuestionDetails(question)
     }
 
     override fun onToolbarAvatarClicked() {

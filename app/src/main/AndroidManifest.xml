@@ -28,6 +28,7 @@
         <!-- Enable profiling for macrobenchmarks. -->
         <!-- Set 'enabled' to false when not in use. -->
         <!-- Lint: 'shell' requires min API 29, force lint to treat project as API 29 (q) with 'targetApi'. -->
+        <!-- NOTE: Due to forcing lint to treat project as API 29, emulator needs to be using API 29 in order to run benchmarks. -->
         <profileable
             android:enabled="true"
             android:shell="true"

@@ -4,19 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsListItemsUseCase
-import com.ocjadan.exhibitandroid.questions.questionsList.items.QuestionsListItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-open class QuestionsListViewModel(private val fetchQuestionsListItemsUseCase: FetchQuestionsListItemsUseCase) : ViewModel(),
-    FetchQuestionsListItemsUseCase.Listener {
+open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
+    FetchQuestionsUseCase.Listener {
 
     enum class QuestionsListError {
         NETWORK, FAILURE
     }
 
-    private val _questionsListItems: MutableLiveData<List<QuestionsListItem>> by lazy { MutableLiveData(listOf()) }
-    val questionsListItems: LiveData<List<QuestionsListItem>> get() = _questionsListItems
+    private val _questions: MutableLiveData<List<Question>> by lazy { MutableLiveData(listOf()) }
+    val questions: LiveData<List<Question>> get() = _questions
 
     private val _error: MutableLiveData<QuestionsListError> by lazy { MutableLiveData(null) }
     val error: LiveData<QuestionsListError> get() = _error
@@ -27,30 +26,36 @@ open class QuestionsListViewModel(private val fetchQuestionsListItemsUseCase: Fe
 
     // Android provides 'onCleared' but not 'onCreate'; having one here for consistency
     private fun onCreate() {
-        fetchQuestionsListItemsUseCase.addListener(this)
+        fetchQuestionsUseCase.addListener(this)
     }
 
     override fun onCleared() {
-        fetchQuestionsListItemsUseCase.removeListener(this)
+        fetchQuestionsUseCase.removeListener(this)
         super.onCleared()
     }
 
     fun loadQuestions() {
-        viewModelScope.launch {
-            fetchQuestionsListItemsUseCase.fetchQuestionsListItemsAndNotify()
+        viewModelScope.launch(Dispatchers.IO) {
+            fetchQuestionsUseCase.fetchQuestionsAndNotify()
         }
     }
 
-    override fun onFetchQuestionsUseCaseSuccess(questionsListItems: List<QuestionsListItem>) {
-        _questionsListItems.value = questionsListItems
-        _error.value = null
+    override fun onFetchQuestionsUseCaseSuccess(questions: List<Question>) {
+        viewModelScope.launch {
+            _questions.value = questions
+            _error.value = null
+        }
     }
 
     override fun onFetchQuestionsUseCaseFailure() {
-        _error.value = QuestionsListError.FAILURE
+        viewModelScope.launch {
+            _error.value = QuestionsListError.FAILURE
+        }
     }
 
     override fun onFetchQuestionsUseCaseNetworkError() {
-        _error.value = QuestionsListError.NETWORK
+        viewModelScope.launch {
+            _error.value = QuestionsListError.NETWORK
+        }
     }
 }

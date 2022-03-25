@@ -16,7 +16,7 @@ import dagger.Provides
 import javax.inject.Provider
 
 @Module
-object ActivityModule {
+internal object ActivityModule {
     @Provides
     fun viewModelFactory(
         questionsListVM: Provider<QuestionsListViewModel>,

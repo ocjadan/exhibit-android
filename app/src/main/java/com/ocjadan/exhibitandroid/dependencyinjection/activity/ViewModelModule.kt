@@ -1,17 +1,17 @@
 package com.ocjadan.exhibitandroid.dependencyinjection.activity
 
 import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCase
-import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsListItemsUseCase
+import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCase
 import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsViewModel
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import dagger.Module
 import dagger.Provides
 
 @Module
-object ViewModelModule {
+internal object ViewModelModule {
     @Provides
-    fun questionsListVM(fetchQuestionsListItemsUseCase: FetchQuestionsListItemsUseCase) =
-        QuestionsListViewModel(fetchQuestionsListItemsUseCase)
+    fun questionsListVM(fetchQuestionsUseCase: FetchQuestionsUseCase) =
+        QuestionsListViewModel(fetchQuestionsUseCase)
 
     @Provides
     fun questionDetailsVM(fetchQuestionAnswersUseCase: FetchQuestionAnswersUseCase) =

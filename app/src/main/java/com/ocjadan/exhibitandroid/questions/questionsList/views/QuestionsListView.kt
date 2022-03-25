@@ -1,0 +1,26 @@
+package com.ocjadan.exhibitandroid.questions.questionsList.views
+
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.ocjadan.exhibitandroid.questions.questionsList.Question
+
+@Composable
+internal fun QuestionsListView(
+    questions: List<Question>,
+    onQuestionClicked: (question: Question) -> Unit
+) {
+    if (questions.isEmpty()) {
+        Text("No questions")
+    } else {
+        LazyColumn {
+            items(questions) {
+                QuestionsListItemView(Modifier.padding(0.dp, 0.dp, 0.dp, 16.dp), it, onQuestionClicked)
+            }
+        }
+    }
+}

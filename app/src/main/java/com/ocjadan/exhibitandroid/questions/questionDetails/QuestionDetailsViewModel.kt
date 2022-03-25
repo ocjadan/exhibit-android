@@ -33,7 +33,7 @@ class QuestionDetailsViewModel(private val fetchQuestionAnswersUseCase: FetchQue
         super.onCleared()
     }
 
-    fun loadAnswers(id: Int) {
+    fun loadAnswers(id: Long) {
         viewModelScope.launch {
             fetchQuestionAnswersUseCase.fetchQuestionAnswers(id)
         }

@@ -1,11 +1,9 @@
 package com.ocjadan.exhibitandroid.questions.questionDetails
 
-import android.text.Html
 import com.ocjadan.benchmarkable.answers.Answer
-import com.ocjadan.exhibitandroid.answers.AnswerSchema
 import com.ocjadan.exhibitandroid.common.observable.BaseObservable
-import com.ocjadan.exhibitandroid.questions.questionDetails.networking.FetchQuestionAnswersEndpoint
-import com.ocjadan.exhibitandroid.questions.questionDetails.networking.FetchQuestionAnswersEndpoint.FetchQuestionAnswersEndpointStatus
+import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint
+import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint.FetchQuestionAnswersEndpointStatus
 
 import java.lang.RuntimeException
 
@@ -17,21 +15,16 @@ open class FetchQuestionAnswersUseCase(private val fetchQuestionAnswersEndpoint:
         fun onFetchQuestionAnswersNetworkError()
     }
 
-    suspend fun fetchQuestionAnswers(id: Int) {
+    suspend fun fetchQuestionAnswers(id: Long) {
         val result = fetchQuestionAnswersEndpoint.fetchQuestionAnswers(id)
         when (result.status) {
             FetchQuestionAnswersEndpointStatus.SUCCESS -> {
-                val answerSchemas = result.answers ?: throw RuntimeException("Schema null on success ${result.answers}")
-                val answers = mapAnswersListItemSchemaToAnswersList(answerSchemas)
+                val answers = result.answers ?: throw RuntimeException("Schema null on success ${result.answers}")
                 notifySuccess(answers)
             }
             FetchQuestionAnswersEndpointStatus.FAILURE -> notifyFailure()
             FetchQuestionAnswersEndpointStatus.NETWORK_ERROR -> notifyNetworkError()
         }
-    }
-
-    private fun mapAnswersListItemSchemaToAnswersList(schema: List<AnswerSchema>): List<Answer> {
-        return schema.map { Answer(it.id, Html.fromHtml(it.body).toString()) }
     }
 
     private fun notifySuccess(answers: List<Answer>) {
