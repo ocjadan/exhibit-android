@@ -3,11 +3,13 @@ package com.ocjadan.exhibitandroid.database.owners
 import com.ocjadan.exhibitandroid.owners.Owner
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
 open class OwnersCache(private val ownersDao: OwnersDao, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
     open suspend fun saveAll(owners: List<Owner>) {
-        return withContext(dispatcher) {
+        withContext(dispatcher) {
+            ensureActive()
             val ownerEntities = mapOwnersToOwnerEntities(owners)
             ownersDao.insertAll(ownerEntities)
         }

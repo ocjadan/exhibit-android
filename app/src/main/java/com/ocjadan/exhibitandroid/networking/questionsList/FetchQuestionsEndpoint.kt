@@ -4,12 +4,21 @@ import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.ocjadan.exhibitandroid.owners.Owner
 import com.ocjadan.exhibitandroid.networking.owners.OwnerSchema
 import com.ocjadan.exhibitandroid.questions.questionsList.Question
+
 import com.squareup.moshi.JsonDataException
-import java.io.IOException
+
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ensureActive
+import kotlinx.coroutines.withContext
+
 import java.lang.RuntimeException
 import java.net.UnknownHostException
 
-open class FetchQuestionsEndpoint(private val stackOverflowApi: StackOverflowApi) {
+open class FetchQuestionsEndpoint(
+    private val stackOverflowApi: StackOverflowApi,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
 
     enum class FetchQuestionsEndpointStatus {
         SUCCESS, FAILURE, NETWORK_ERROR
@@ -21,18 +30,20 @@ open class FetchQuestionsEndpoint(private val stackOverflowApi: StackOverflowApi
     )
 
     open suspend fun fetchQuestions(): FetchQuestionsEndpointResult {
-        return try {
-            val response = stackOverflowApi.getQuestions()
-            val body = response.body() ?: throw RuntimeException("Null response body: $response")
-            val questions = mapQuestionSchemaToQuestion(body.items)
-            FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.SUCCESS, questions)
-        } catch (ex: JsonDataException) {
-            FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.FAILURE)
-        } catch (ex: UnknownHostException) {
-            FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.NETWORK_ERROR)
-        } catch (ex: IOException) {
-            // Can be thread cancelled
-            FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.FAILURE)
+        return withContext(dispatcher) {
+            try {
+                val response = stackOverflowApi.getQuestions()
+                ensureActive()
+
+                val body = response.body() ?: throw RuntimeException("Null response body: $response")
+                val questions = mapQuestionSchemaToQuestion(body.items)
+
+                FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.SUCCESS, questions)
+            } catch (ex: JsonDataException) {
+                FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.FAILURE)
+            } catch (ex: UnknownHostException) {
+                FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.NETWORK_ERROR)
+            }
         }
     }
 
