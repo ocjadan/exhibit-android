@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
@@ -35,27 +34,21 @@ open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuesti
     }
 
     fun loadQuestions() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             fetchQuestionsUseCase.fetchQuestionsAndNotify()
         }
     }
 
     override fun onFetchQuestionsUseCaseSuccess(questions: List<Question>) {
-        viewModelScope.launch {
-            _questions.value = questions
-            _error.value = null
-        }
+        _questions.value = questions
+        _error.value = null
     }
 
     override fun onFetchQuestionsUseCaseFailure() {
-        viewModelScope.launch {
-            _error.value = QuestionsListError.FAILURE
-        }
+        _error.value = QuestionsListError.FAILURE
     }
 
     override fun onFetchQuestionsUseCaseNetworkError() {
-        viewModelScope.launch {
-            _error.value = QuestionsListError.NETWORK
-        }
+        _error.value = QuestionsListError.NETWORK
     }
 }

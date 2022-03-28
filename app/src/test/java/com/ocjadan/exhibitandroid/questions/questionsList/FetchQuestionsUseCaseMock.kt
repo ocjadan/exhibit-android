@@ -1,10 +1,11 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.items
+package com.ocjadan.exhibitandroid.questions.questionsList
 
+import com.ocjadan.exhibitandroid.common.TestData
 import com.ocjadan.exhibitandroid.common.TimeProviderMock
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
 import com.ocjadan.exhibitandroid.database.owners.OwnersCacheMock
 import com.ocjadan.exhibitandroid.database.updates.UpdatesCacheMock
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCase
+import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
 
 class FetchQuestionsUseCaseMock(
     private val fetchQuestionsEndpointMock: FetchQuestionsEndpointMock,
@@ -18,8 +19,28 @@ class FetchQuestionsUseCaseMock(
     var isNetworkError = false
 
     override suspend fun fetchQuestionsAndNotify() {
-        fetchQuestionsEndpointMock.isGeneralError = isGeneralError
-        fetchQuestionsEndpointMock.isNetworkError = isNetworkError
-        super.fetchQuestionsAndNotify()
+        when {
+            isGeneralError -> notifyFailure()
+            isNetworkError -> notifyNetworkError()
+            else -> notifySuccess()
+        }
+    }
+
+    private fun notifySuccess() {
+        for (listener in getListeners()) {
+            listener.onFetchQuestionsUseCaseSuccess(TestData.getQuestions())
+        }
+    }
+
+    private fun notifyFailure() {
+        for (listener in getListeners()) {
+            listener.onFetchQuestionsUseCaseFailure()
+        }
+    }
+
+    private fun notifyNetworkError() {
+        for (listener in getListeners()) {
+            listener.onFetchQuestionsUseCaseNetworkError()
+        }
     }
 }

@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Transaction
 import androidx.room.Query
-import com.ocjadan.exhibitandroid.database.questions.questionWithOwner.QuestionWithOwner
+import com.ocjadan.exhibitandroid.database.questions.questionWithOwner.QuestionWithOwnerEntity
 
 @Dao
 interface QuestionsDao {
@@ -14,9 +14,9 @@ interface QuestionsDao {
 
     @Transaction
     @Query("SELECT * FROM questions WHERE question_id = :id")
-    fun getWithOwner(id: Long): QuestionWithOwner
+    fun getWithOwner(id: Long): QuestionWithOwnerEntity
 
     @Transaction
     @Query("SELECT * FROM questions ORDER BY tableOrderId DESC LIMIT :amount")
-    fun getAllWithOwners(amount: Int): List<QuestionWithOwner>
+    fun getAllWithOwners(amount: Int): List<QuestionWithOwnerEntity>
 }

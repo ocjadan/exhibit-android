@@ -1,7 +1,6 @@
-package com.ocjadan.exhibitandroid.common
+package com.ocjadan.exhibitandroid.common.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsViewModel
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
@@ -31,6 +30,13 @@ internal class ViewModelFactoryTest {
         val viewModel = SUT.create(QuestionsListViewModel::class.java)
         val questionsListViewModel = questionsListVMProvider.get()
         assert(viewModel::class.isInstance(questionsListViewModel))
+    }
+
+    @Test
+    fun create_questionDetailsViewModel_questionDetailsViewModelReturned() {
+        val viewModel = SUT.create(QuestionDetailsViewModel::class.java)
+        val questionDetailsViewModel = questionDetailsVMProvider.get()
+        assert(viewModel::class.isInstance(questionDetailsViewModel))
     }
 
     @Test(expected = RuntimeException::class)

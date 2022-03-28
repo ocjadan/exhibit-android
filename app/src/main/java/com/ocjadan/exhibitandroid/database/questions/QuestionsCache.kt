@@ -1,24 +1,34 @@
 package com.ocjadan.exhibitandroid.database.questions
 
 import com.ocjadan.exhibitandroid.database.owners.OwnerEntity
-import com.ocjadan.exhibitandroid.database.questions.questionWithOwner.QuestionWithOwner
+import com.ocjadan.exhibitandroid.database.questions.questionWithOwner.QuestionWithOwnerEntity
 import com.ocjadan.exhibitandroid.owners.Owner
 import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.lang.RuntimeException
 
-open class QuestionsCache(private val questionsDao: QuestionsDao) {
+open class QuestionsCache(
+    private val questionsDao: QuestionsDao,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+) {
     companion object {
         private const val AMOUNT = 30 // Default amount StackOverflow returns
     }
 
-    fun getQuestionsWithOwners(amount: Int = AMOUNT): List<Question> {
-        val entities = questionsDao.getAllWithOwners(amount)
-        return mapQuestionEntitiesToQuestions(entities)
+    open suspend fun getQuestions(amount: Int = AMOUNT): List<Question> {
+        return withContext(dispatcher) {
+            val entities = questionsDao.getAllWithOwners(amount)
+            mapQuestionEntitiesToQuestions(entities)
+        }
     }
 
-    fun saveAll(questions: List<Question>) {
-        val entities = mapQuestionsToQuestionEntities(questions)
-        questionsDao.insertAll(entities)
+    open suspend fun saveAll(questions: List<Question>) {
+        withContext(dispatcher) {
+            val entities = mapQuestionsToQuestionEntities(questions)
+            questionsDao.insertAll(entities)
+        }
     }
 
     private fun mapQuestionsToQuestionEntities(questions: List<Question>): List<QuestionEntity> {
@@ -33,7 +43,7 @@ open class QuestionsCache(private val questionsDao: QuestionsDao) {
         }
     }
 
-    private fun mapQuestionEntitiesToQuestions(entities: List<QuestionWithOwner>): List<Question> {
+    private fun mapQuestionEntitiesToQuestions(entities: List<QuestionWithOwnerEntity>): List<Question> {
         return entities.map {
             val question = it.question
             val owner = it.owner

@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.ocjadan.exhibitandroid.database.owners.OwnerEntity
 import com.ocjadan.exhibitandroid.database.questions.QuestionEntity
 
-data class QuestionWithOwner(
+data class QuestionWithOwnerEntity(
     @Embedded val question: QuestionEntity,
     @Relation(
         parentColumn = "owner_id",

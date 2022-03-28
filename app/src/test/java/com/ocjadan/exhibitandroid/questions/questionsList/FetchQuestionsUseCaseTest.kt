@@ -1,12 +1,11 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.items
+package com.ocjadan.exhibitandroid.questions.questionsList
 
 import com.ocjadan.exhibitandroid.common.TimeProviderMock
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
 import com.ocjadan.exhibitandroid.database.owners.OwnersCacheMock
 import com.ocjadan.exhibitandroid.database.updates.UpdatesCacheMock
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCase
-import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 
@@ -27,6 +26,7 @@ internal class FetchQuestionsUseCaseTest {
 
     private lateinit var SUT: FetchQuestionsUseCase
     private lateinit var questionsCaptor: KArgumentCaptor<List<Question>>
+
     private lateinit var fetchQuestionsEndpointMock: FetchQuestionsEndpointMock
     private lateinit var questionsCacheMock: QuestionsCacheMock
     private lateinit var ownersCacheMock: OwnersCacheMock
@@ -47,6 +47,7 @@ internal class FetchQuestionsUseCaseTest {
         ownersCacheMock = compositionRoot.getOwnersCacheMock()
         updatesCacheMock = compositionRoot.getUpdatesCacheMock()
         timeProviderMock = compositionRoot.getTimeProviderMock()
+
         SUT = FetchQuestionsUseCase(
             fetchQuestionsEndpointMock,
             questionsCacheMock,
@@ -55,6 +56,7 @@ internal class FetchQuestionsUseCaseTest {
             timeProviderMock
         )
         questionsCaptor = argumentCaptor()
+
         addListeners()
     }
 

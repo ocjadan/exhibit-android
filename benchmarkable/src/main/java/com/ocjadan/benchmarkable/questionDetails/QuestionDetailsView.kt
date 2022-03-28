@@ -10,14 +10,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.ocjadan.benchmarkable.answers.Answer
 
 enum class QuestionDetailsViewState {
     IDLE, LOADING, ANSWERS, NO_ANSWERS
 }
 
 @Composable
-fun QuestionDetailsView(details: QuestionDetails, answers: List<Answer>, state: QuestionDetailsViewState) {
+fun QuestionDetailsView(details: QuestionDetails, answers: List<QuestionAnswer>, state: QuestionDetailsViewState) {
     LazyColumn {
         item {
             Row {
@@ -47,7 +46,7 @@ fun QuestionDetailsView(details: QuestionDetails, answers: List<Answer>, state: 
 }
 
 @Composable
-private fun AnswerView(modifier: Modifier, answer: Answer) {
+private fun AnswerView(modifier: Modifier, answer: QuestionAnswer) {
     Column(modifier) {
         Row {
             Text("Answer:", color = Color.Blue)

@@ -2,7 +2,6 @@ package com.ocjadan.exhibitandroid.questions.questionsList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsUseCaseMock
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -31,7 +30,7 @@ internal class QuestionsListViewModelTest {
         val unconfinedDispatcher = UnconfinedTestDispatcher() // Execution order guarantees that are unusual
         Dispatchers.setMain(unconfinedDispatcher) // Required for viewModelScope
 
-        fetchQuestionsUseCaseMock = CompositionRoot().getFetchQuestionsUseCaseMock() as FetchQuestionsUseCaseMock
+        fetchQuestionsUseCaseMock = CompositionRoot().getFetchQuestionsUseCaseMock()
         SUT = QuestionsListViewModel(fetchQuestionsUseCaseMock)
     }
 

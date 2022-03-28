@@ -34,7 +34,7 @@ open class FetchQuestionsUseCase(
         }
     }
 
-    private fun shouldFetchQuestionsFromEndpoint(): Boolean {
+    private suspend fun shouldFetchQuestionsFromEndpoint(): Boolean {
         val lastQuestionsUpdate = updatesCache.getLastQuestionsUpdate() ?: return true
         return lastQuestionsUpdate + CACHE_TIMEOUT < timeProvider.getCurrentTimestamp()
     }
@@ -51,12 +51,12 @@ open class FetchQuestionsUseCase(
         }
     }
 
-    private fun fetchQuestionsFromCacheAndNotify() {
-        val questions = questionsCache.getQuestionsWithOwners()
+    private suspend fun fetchQuestionsFromCacheAndNotify() {
+        val questions = questionsCache.getQuestions()
         notifySuccess(questions)
     }
 
-    private fun saveQuestionsToCache(questions: List<Question>) {
+    private suspend fun saveQuestionsToCache(questions: List<Question>) {
         val owners = mapOwnersFromQuestions(questions)
         ownersCache.saveAll(owners)
         questionsCache.saveAll(questions)

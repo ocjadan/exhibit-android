@@ -1,8 +1,7 @@
 package com.ocjadan.exhibitandroid.networking.questionDetails
 
 import android.text.Html
-import com.ocjadan.benchmarkable.answers.Answer
-import com.ocjadan.exhibitandroid.networking.answers.AnswerSchema
+import com.ocjadan.benchmarkable.questionDetails.QuestionAnswer
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.squareup.moshi.JsonDataException
 import java.io.IOException
@@ -17,18 +16,14 @@ open class FetchQuestionAnswersEndpoint(private val stackOverflowApi: StackOverf
 
     data class FetchQuestionAnswersEndpointResult(
         val status: FetchQuestionAnswersEndpointStatus,
-        val answers: List<Answer>? = null
+        val answers: List<QuestionAnswer>? = null
     )
 
-    suspend fun fetchQuestionAnswers(id: Long): FetchQuestionAnswersEndpointResult {
+    open suspend fun fetchQuestionAnswers(id: Long): FetchQuestionAnswersEndpointResult {
         return try {
             val response = stackOverflowApi.getQuestionAnswers(id)
             val responseBody = response.body() ?: throw RuntimeException("Null response body: $response")
-            val answerSchemas = responseBody.items
-                .filter { it.owner != null && it.answer_id != null && it.body != null }
-                .map { AnswerSchema(it.owner!!, it.answer_id!!, it.body!!) }
-            val answers = mapAnswerSchemasToAnswers(answerSchemas)
-
+            val answers = mapQuestionAnswerSchemasToQuestionAnswers(responseBody.items)
             FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.SUCCESS, answers)
         } catch (ex: JsonDataException) {
             FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.FAILURE)
@@ -39,7 +34,9 @@ open class FetchQuestionAnswersEndpoint(private val stackOverflowApi: StackOverf
         }
     }
 
-    private fun mapAnswerSchemasToAnswers(schema: List<AnswerSchema>): List<Answer> {
-        return schema.map { Answer(it.id, Html.fromHtml(it.body).toString()) }
+    private fun mapQuestionAnswerSchemasToQuestionAnswers(schemas: List<QuestionAnswerSchema>): List<QuestionAnswer> {
+        return schemas
+            .filter { it.answer_id != null && it.body != null }
+            .map { QuestionAnswer(it.answer_id!!, Html.fromHtml(it.body).toString()) }
     }
 }

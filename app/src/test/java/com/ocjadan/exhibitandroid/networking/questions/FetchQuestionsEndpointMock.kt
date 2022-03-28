@@ -1,8 +1,8 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.items
+package com.ocjadan.exhibitandroid.networking.questions
 
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.ocjadan.exhibitandroid.networking.questionsList.FetchQuestionsEndpoint
-import com.ocjadan.exhibitandroid.questions.TestData
+import com.ocjadan.exhibitandroid.common.TestData
 
 class FetchQuestionsEndpointMock(stackOverflowApi: StackOverflowApi) :
     FetchQuestionsEndpoint(stackOverflowApi) {

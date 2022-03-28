@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ocjadan.benchmarkable.answers.Answer
+import com.ocjadan.benchmarkable.questionDetails.QuestionAnswer
 import kotlinx.coroutines.launch
 
 class QuestionDetailsViewModel(private val fetchQuestionAnswersUseCase: FetchQuestionAnswersUseCase) : ViewModel(),
@@ -14,8 +14,8 @@ class QuestionDetailsViewModel(private val fetchQuestionAnswersUseCase: FetchQue
         NONE, FAILURE, NETWORK
     }
 
-    private val _answers: MutableLiveData<List<Answer>> by lazy { MutableLiveData(emptyList()) }
-    val answers: LiveData<List<Answer>> get() = _answers
+    private val _answers: MutableLiveData<List<QuestionAnswer>> by lazy { MutableLiveData(emptyList()) }
+    val answers: LiveData<List<QuestionAnswer>> get() = _answers
 
     private val _error: MutableLiveData<QuestionDetailsError> by lazy { MutableLiveData(QuestionDetailsError.NONE) }
     val error: LiveData<QuestionDetailsError> get() = _error
@@ -39,8 +39,8 @@ class QuestionDetailsViewModel(private val fetchQuestionAnswersUseCase: FetchQue
         }
     }
 
-    override fun onFetchQuestionAnswersSuccess(answers: List<Answer>) {
-        _answers.value = answers
+    override fun onFetchQuestionAnswersSuccess(questionAnswers: List<QuestionAnswer>) {
+        _answers.value = questionAnswers
     }
 
     override fun onFetchQuestionAnswersFailure() {

@@ -1,7 +1,7 @@
 package com.ocjadan.exhibitandroid.dependencyinjection
 
-import com.ocjadan.exhibitandroid.common.NavControllerHelperMock
-import com.ocjadan.exhibitandroid.common.NavControllerWrapperMock
+import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerHelperMock
+import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerWrapperMock
 import com.ocjadan.exhibitandroid.common.TimeProviderMock
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
 import com.ocjadan.exhibitandroid.common.screensNavigator.INavControllerWrapper
@@ -10,19 +10,17 @@ import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
 import com.ocjadan.exhibitandroid.database.questions.QuestionsDaoMock
 import com.ocjadan.exhibitandroid.database.owners.OwnersCacheMock
-import com.ocjadan.exhibitandroid.database.owners.OwnersDao
 import com.ocjadan.exhibitandroid.database.owners.OwnersDaoMock
-import com.ocjadan.exhibitandroid.database.questions.QuestionsDao
 import com.ocjadan.exhibitandroid.database.updates.UpdatesCacheMock
 import com.ocjadan.exhibitandroid.database.updates.UpdatesDao
 import com.ocjadan.exhibitandroid.database.updates.UpdatesDaoMock
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
-import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersEndpointMock
+import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpointMock
 import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCase
 import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCaseMock
 import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCase
-import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsEndpointMock
-import com.ocjadan.exhibitandroid.questions.questionsList.items.FetchQuestionsUseCaseMock
+import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
+import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCaseMock
 import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
 import com.ocjadan.exhibitandroid.questions.questionsList.views.QuestionsListViewControllerMock
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModelMock
@@ -38,7 +36,7 @@ class CompositionRoot {
         return FetchQuestionsEndpointMock(getStackOverflowApiMock().mock)
     }
 
-    fun getFetchQuestionsUseCaseMock(): FetchQuestionsUseCase {
+    fun getFetchQuestionsUseCaseMock(): FetchQuestionsUseCaseMock {
         return FetchQuestionsUseCaseMock(
             getFetchQuestionsEndpointMock(),
             getQuestionsCacheMock(),
@@ -48,7 +46,7 @@ class CompositionRoot {
         )
     }
 
-    private fun getFetchQuestionAnswersEndpointMock(): FetchQuestionAnswersEndpointMock {
+    fun getFetchQuestionAnswersEndpointMock(): FetchQuestionAnswersEndpointMock {
         return FetchQuestionAnswersEndpointMock(getStackOverflowApiMock().mock)
     }
 
@@ -91,7 +89,7 @@ class CompositionRoot {
     }
 
     fun getOwnersCacheMock(): OwnersCacheMock {
-        return OwnersCacheMock(getOwnersDaoMock())
+        return OwnersCacheMock(getOwnersDaoMock().mock)
     }
 
     fun getUpdatesCacheMock(): UpdatesCacheMock {
@@ -110,12 +108,12 @@ class CompositionRoot {
         return NavControllerWrapperMock().mock
     }
 
-    private fun getQuestionsDaoMock(): QuestionsDao {
-        return QuestionsDaoMock().mock
+    fun getQuestionsDaoMock(): QuestionsDaoMock {
+        return QuestionsDaoMock()
     }
 
-    private fun getOwnersDaoMock(): OwnersDao {
-        return OwnersDaoMock().mock
+    fun getOwnersDaoMock(): OwnersDaoMock {
+        return OwnersDaoMock()
     }
 
     private fun getUpdatesDaoMock(): UpdatesDao {

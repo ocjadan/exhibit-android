@@ -1,15 +1,23 @@
 package com.ocjadan.exhibitandroid.database.updates
 
 import com.ocjadan.exhibitandroid.database.updates.lastQuestionsUpdate.LastQuestionsUpdateEntity
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
-open class UpdatesCache(private val updatesDao: UpdatesDao) {
-    fun getLastQuestionsUpdate(): Long? {
-        val entity = updatesDao.getLastQuestionsUpdate()
-        return entity?.timestamp
+import kotlinx.coroutines.withContext
+
+open class UpdatesCache(private val updatesDao: UpdatesDao, private val dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    open suspend fun getLastQuestionsUpdate(): Long? {
+        return withContext(dispatcher) {
+            val entity = updatesDao.getLastQuestionsUpdate()
+            entity?.timestamp
+        }
     }
 
-    fun setLastQuestionsUpdate(timestamp: Long) {
-        val entity = LastQuestionsUpdateEntity(timestamp = timestamp)
-        updatesDao.setLastQuestionsUpdate(entity)
+    open suspend fun setLastQuestionsUpdate(timestamp: Long) {
+        withContext(dispatcher) {
+            val entity = LastQuestionsUpdateEntity(timestamp = timestamp)
+            updatesDao.setLastQuestionsUpdate(entity)
+        }
     }
 }

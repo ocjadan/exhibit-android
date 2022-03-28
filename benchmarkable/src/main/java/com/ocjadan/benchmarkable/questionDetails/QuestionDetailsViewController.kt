@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import com.ocjadan.benchmarkable.R
-import com.ocjadan.benchmarkable.answers.Answer
 import java.lang.RuntimeException
 
 class QuestionDetailsViewController(layoutInflater: LayoutInflater, viewGroup: ViewGroup?) :
@@ -15,7 +14,7 @@ class QuestionDetailsViewController(layoutInflater: LayoutInflater, viewGroup: V
 
     private lateinit var details: QuestionDetails
 
-    private var answers: List<Answer> = emptyList()
+    private var answers: List<QuestionAnswer> = emptyList()
 
     override fun bindDetails(details: QuestionDetails) {
         this.details = details
@@ -26,7 +25,7 @@ class QuestionDetailsViewController(layoutInflater: LayoutInflater, viewGroup: V
         }
     }
 
-    override fun bindAnswers(answers: List<Answer>) {
+    override fun bindAnswers(answers: List<QuestionAnswer>) {
         if (answers.count() < 1) {
             throw RuntimeException("No answers.")
         }
