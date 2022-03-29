@@ -7,7 +7,6 @@ import com.ocjadan.exhibitandroid.questions.questionsList.Question
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
 import java.lang.RuntimeException
@@ -22,7 +21,6 @@ open class QuestionsCache(
 
     open suspend fun getQuestions(amount: Int = AMOUNT): List<Question> {
         return withContext(dispatcher) {
-            ensureActive()
             val entities = questionsDao.getAllWithOwners(amount)
             mapQuestionEntitiesToQuestions(entities)
         }
@@ -30,7 +28,6 @@ open class QuestionsCache(
 
     open suspend fun saveAll(questions: List<Question>) {
         withContext(dispatcher) {
-            ensureActive()
             val entities = mapQuestionsToQuestionEntities(questions)
             questionsDao.insertAll(entities)
         }

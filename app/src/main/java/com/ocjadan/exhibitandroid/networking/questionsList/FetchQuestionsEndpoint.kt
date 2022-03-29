@@ -9,7 +9,6 @@ import com.squareup.moshi.JsonDataException
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.withContext
 
 import java.lang.RuntimeException
@@ -33,11 +32,8 @@ open class FetchQuestionsEndpoint(
         return withContext(dispatcher) {
             try {
                 val response = stackOverflowApi.getQuestions()
-                ensureActive()
-
                 val body = response.body() ?: throw RuntimeException("Null response body: $response")
                 val questions = mapQuestionSchemaToQuestion(body.items)
-
                 FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.SUCCESS, questions)
             } catch (ex: JsonDataException) {
                 FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.FAILURE)
