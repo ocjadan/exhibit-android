@@ -59,7 +59,7 @@ object TestData {
         val randomLongs = RandomData.getRandomLongs(2)
         val id = randomLongs[0]
         val creationDate = randomLongs[1]
-        val isAnswered = id % 2 == 0L
+        val isAnswered = id.rem(2) == 0L
         return Question(id, "TITLE_$id", getOwner(), isAnswered, creationDate)
     }
 

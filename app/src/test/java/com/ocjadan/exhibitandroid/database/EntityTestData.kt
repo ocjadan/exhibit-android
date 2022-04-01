@@ -22,7 +22,7 @@ object EntityTestData {
         val ownerId = randomLongs[1]
         val creationDate = randomLongs[2]
         val tableOrderId = RandomData.getRandomInt()
-        val isAnswered = questionId % 2 == 0L
+        val isAnswered = questionId.rem(2) == 0L
         return QuestionEntity(questionId, isAnswered, "TITLE_$questionId", creationDate, ownerId, tableOrderId)
     }
 

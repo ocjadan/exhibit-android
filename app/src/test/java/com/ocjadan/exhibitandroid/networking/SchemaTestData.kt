@@ -38,7 +38,7 @@ object SchemaTestData {
         val randomLongs = RandomData.getRandomLongs(2)
         val questionId = randomLongs[0]
         val creationDate = randomLongs[1]
-        val isAnswered = questionId % 2 == 0L
+        val isAnswered = questionId.rem(2) == 0L
         return QuestionSchema(getOwnerSchema(), questionId, "TITLE_$questionId", isAnswered, creationDate)
     }
 

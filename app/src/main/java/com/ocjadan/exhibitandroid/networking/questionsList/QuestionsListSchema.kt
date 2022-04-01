@@ -1,9 +1,11 @@
 package com.ocjadan.exhibitandroid.networking.questionsList
 
 import com.squareup.moshi.JsonClass
+import com.squareup.moshi.JsonDataException
 
 /**
- * @param items Is required; JsonDataException is thrown if it's not found.
+ * @param items is required.
+ * @throws JsonDataException when items is not found.
  */
 @JsonClass(generateAdapter = true)
 data class QuestionsListSchema(
