@@ -6,8 +6,12 @@ import com.ocjadan.exhibitandroid.database.owners.OwnersCacheMock
 import com.ocjadan.exhibitandroid.database.updates.UpdatesCacheMock
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 
 import org.junit.Before
 import org.junit.Test
@@ -42,6 +46,7 @@ internal class FetchQuestionsUseCaseTest {
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
+        val dispatcherBg = compositionRoot.getTestDispatcher()
         fetchQuestionsEndpointMock = compositionRoot.getFetchQuestionsEndpointMock()
         questionsCacheMock = compositionRoot.getQuestionsCacheMock()
         ownersCacheMock = compositionRoot.getOwnersCacheMock()
@@ -53,11 +58,19 @@ internal class FetchQuestionsUseCaseTest {
             questionsCacheMock,
             ownersCacheMock,
             updatesCacheMock,
-            timeProviderMock
+            timeProviderMock,
+            dispatcherBg
         )
         questionsCaptor = argumentCaptor()
 
         addListeners()
+
+        Dispatchers.setMain(dispatcherBg)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test

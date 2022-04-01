@@ -4,33 +4,31 @@ import android.text.Html
 import com.ocjadan.benchmarkable.questionDetails.QuestionAnswer
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.squareup.moshi.JsonDataException
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.lang.RuntimeException
-import java.net.UnknownHostException
 
-open class FetchQuestionAnswersEndpoint(private val stackOverflowApi: StackOverflowApi) {
-
-    enum class FetchQuestionAnswersEndpointStatus {
-        SUCCESS, FAILURE, NETWORK_ERROR
+open class FetchQuestionAnswersEndpoint(
+    private val stackOverflowApi: StackOverflowApi,
+    private val dispatcher: CoroutineDispatcher
+) {
+    sealed class Result {
+        data class Success(val answers: List<QuestionAnswer>) : Result()
+        object Failure : Result()
+        object NetworkError : Result()
     }
 
-    data class FetchQuestionAnswersEndpointResult(
-        val status: FetchQuestionAnswersEndpointStatus,
-        val answers: List<QuestionAnswer>? = null
-    )
-
-    open suspend fun fetchQuestionAnswers(id: Long): FetchQuestionAnswersEndpointResult {
-        return try {
+    open suspend fun fetchQuestionAnswers(id: Long): Result = withContext(dispatcher) {
+        return@withContext try {
             val response = stackOverflowApi.getQuestionAnswers(id)
             val responseBody = response.body() ?: throw RuntimeException("Null response body: $response")
             val answers = mapQuestionAnswerSchemasToQuestionAnswers(responseBody.items)
-            FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.SUCCESS, answers)
+            Result.Success(answers)
         } catch (ex: JsonDataException) {
-            FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.FAILURE)
-        } catch (ex: UnknownHostException) {
-            FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.NETWORK_ERROR)
+            Result.Failure
         } catch (ex: IOException) {
-            FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.FAILURE)
+            Result.NetworkError
         }
     }
 

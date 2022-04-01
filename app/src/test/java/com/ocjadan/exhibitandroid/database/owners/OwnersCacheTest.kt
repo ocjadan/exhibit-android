@@ -3,8 +3,13 @@ package com.ocjadan.exhibitandroid.database.owners
 import com.ocjadan.exhibitandroid.database.EntityTestData
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.common.TestData
+import kotlinx.coroutines.Dispatchers
+
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 
 import org.junit.Before
 import org.junit.Test
@@ -18,8 +23,18 @@ class OwnersCacheTest {
 
     @Before
     fun setUp() {
-        ownersDao = CompositionRoot().getOwnersDaoMock()
-        SUT = OwnersCache(ownersDao.mock)
+        val compositionRoot = CompositionRoot()
+        val dispatcher = compositionRoot.getTestDispatcher()
+
+        ownersDao = compositionRoot.getOwnersDaoMock()
+        SUT = OwnersCache(ownersDao.mock, dispatcher)
+
+        Dispatchers.setMain(dispatcher)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -27,6 +42,6 @@ class OwnersCacheTest {
         val owners = TestData.getOwners()
         val entities = EntityTestData.mapOwnersToOwnerEntities(owners)
         SUT.saveAll(owners)
-        verify(ownersDao.mock).insertAll(entities)
+        verify(ownersDao.mock).upsertAll(entities)
     }
 }

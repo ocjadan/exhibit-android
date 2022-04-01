@@ -3,11 +3,15 @@ package com.ocjadan.exhibitandroid.questions.questionDetails
 import com.ocjadan.benchmarkable.questionDetails.QuestionAnswer
 import com.ocjadan.exhibitandroid.common.observable.BaseObservable
 import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint
-import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint.FetchQuestionAnswersEndpointStatus
+import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint.Result
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-import java.lang.RuntimeException
-
-open class FetchQuestionAnswersUseCase(private val fetchQuestionAnswersEndpoint: FetchQuestionAnswersEndpoint) :
+open class FetchQuestionAnswersUseCase(
+    private val fetchQuestionAnswersEndpoint: FetchQuestionAnswersEndpoint,
+    private val dispatcher: CoroutineDispatcher
+) :
     BaseObservable<FetchQuestionAnswersUseCase.Listener>() {
     interface Listener {
         fun onFetchQuestionAnswersSuccess(questionAnswers: List<QuestionAnswer>)
@@ -16,32 +20,34 @@ open class FetchQuestionAnswersUseCase(private val fetchQuestionAnswersEndpoint:
     }
 
     suspend fun fetchQuestionAnswers(id: Long) {
-        val result = fetchQuestionAnswersEndpoint.fetchQuestionAnswers(id)
-        when (result.status) {
-            FetchQuestionAnswersEndpointStatus.SUCCESS -> {
-                val answers = result.answers ?: throw RuntimeException("Answers null on success ${result.answers}")
-                notifySuccess(answers)
+        when (val result = fetchQuestionAnswersEndpoint.fetchQuestionAnswers(id)) {
+            is Result.Success -> notifySuccess(result.answers)
+            is Result.Failure -> notifyFailure()
+            is Result.NetworkError -> notifyNetworkError()
+        }
+    }
+
+    private suspend fun notifySuccess(questionAnswers: List<QuestionAnswer>) = withContext(dispatcher) {
+        for (listener in getListeners()) {
+            launch {
+                listener.onFetchQuestionAnswersSuccess(questionAnswers)
             }
-            FetchQuestionAnswersEndpointStatus.FAILURE -> notifyFailure()
-            FetchQuestionAnswersEndpointStatus.NETWORK_ERROR -> notifyNetworkError()
         }
     }
 
-    private fun notifySuccess(questionAnswers: List<QuestionAnswer>) {
+    private suspend fun notifyFailure() = withContext(dispatcher) {
         for (listener in getListeners()) {
-            listener.onFetchQuestionAnswersSuccess(questionAnswers)
+            launch {
+                listener.onFetchQuestionAnswersFailure()
+            }
         }
     }
 
-    private fun notifyFailure() {
+    private suspend fun notifyNetworkError() = withContext(dispatcher) {
         for (listener in getListeners()) {
-            listener.onFetchQuestionAnswersFailure()
-        }
-    }
-
-    private fun notifyNetworkError() {
-        for (listener in getListeners()) {
-            listener.onFetchQuestionAnswersNetworkError()
+            launch {
+                listener.onFetchQuestionAnswersNetworkError()
+            }
         }
     }
 }

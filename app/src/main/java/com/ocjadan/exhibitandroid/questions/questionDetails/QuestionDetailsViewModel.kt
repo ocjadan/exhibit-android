@@ -33,21 +33,19 @@ class QuestionDetailsViewModel(private val fetchQuestionAnswersUseCase: FetchQue
         super.onCleared()
     }
 
-    fun loadAnswers(id: Long) {
-        viewModelScope.launch {
-            fetchQuestionAnswersUseCase.fetchQuestionAnswers(id)
-        }
+    fun loadAnswers(id: Long) = viewModelScope.launch {
+        fetchQuestionAnswersUseCase.fetchQuestionAnswers(id)
     }
 
     override fun onFetchQuestionAnswersSuccess(questionAnswers: List<QuestionAnswer>) {
-        _answers.value = questionAnswers
+        _answers.postValue(questionAnswers)
     }
 
     override fun onFetchQuestionAnswersFailure() {
-        _error.value = QuestionDetailsError.FAILURE
+        _error.postValue(QuestionDetailsError.FAILURE)
     }
 
     override fun onFetchQuestionAnswersNetworkError() {
-        _error.value = QuestionDetailsError.NETWORK
+        _error.postValue(QuestionDetailsError.NETWORK)
     }
 }

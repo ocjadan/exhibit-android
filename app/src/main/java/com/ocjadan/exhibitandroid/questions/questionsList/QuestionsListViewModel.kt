@@ -33,22 +33,20 @@ open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuesti
         super.onCleared()
     }
 
-    fun loadQuestions() {
-        viewModelScope.launch {
-            fetchQuestionsUseCase.fetchQuestionsAndNotify()
-        }
+    fun loadQuestions() = viewModelScope.launch {
+        fetchQuestionsUseCase.fetchQuestionsAndNotify()
     }
 
     override fun onFetchQuestionsUseCaseSuccess(questions: List<Question>) {
-        _questions.value = questions
-        _error.value = null
+        _questions.postValue(questions)
+        _error.postValue(null)
     }
 
     override fun onFetchQuestionsUseCaseFailure() {
-        _error.value = QuestionsListError.FAILURE
+        _error.postValue(QuestionsListError.FAILURE)
     }
 
     override fun onFetchQuestionsUseCaseNetworkError() {
-        _error.value = QuestionsListError.NETWORK
+        _error.postValue(QuestionsListError.NETWORK)
     }
 }

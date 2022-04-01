@@ -8,38 +8,32 @@ import com.ocjadan.exhibitandroid.questions.questionsList.Question
 import com.squareup.moshi.JsonDataException
 
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+import java.io.IOException
 import java.lang.RuntimeException
-import java.net.UnknownHostException
 
 open class FetchQuestionsEndpoint(
     private val stackOverflowApi: StackOverflowApi,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher
 ) {
-
-    enum class FetchQuestionsEndpointStatus {
-        SUCCESS, FAILURE, NETWORK_ERROR
+    sealed class Result {
+        data class Success(val questions: List<Question>) : Result()
+        object Failure : Result()
+        object NetworkError : Result()
     }
 
-    data class FetchQuestionsEndpointResult(
-        val status: FetchQuestionsEndpointStatus,
-        val questions: List<Question> = emptyList()
-    )
-
-    open suspend fun fetchQuestions(): FetchQuestionsEndpointResult {
-        return withContext(dispatcher) {
-            try {
-                val response = stackOverflowApi.getQuestions()
-                val body = response.body() ?: throw RuntimeException("Null response body: $response")
-                val questions = mapQuestionSchemaToQuestion(body.items)
-                FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.SUCCESS, questions)
-            } catch (ex: JsonDataException) {
-                FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.FAILURE)
-            } catch (ex: UnknownHostException) {
-                FetchQuestionsEndpointResult(FetchQuestionsEndpointStatus.NETWORK_ERROR)
-            }
+    open suspend fun fetchQuestions(): Result = withContext(dispatcher) {
+        return@withContext try {
+            val response = stackOverflowApi.getQuestions()
+            val body = response.body() ?: throw RuntimeException("Null response body: $response")
+            val questions = mapQuestionSchemaToQuestion(body.items)
+            Result.Success(questions)
+        } catch (ex: JsonDataException) {
+            Result.Failure
+        } catch (ex: IOException) {
+            // Okio: if the request could not be executed due to cancellation, a connectivity problem or timeout.
+            Result.NetworkError
         }
     }
 

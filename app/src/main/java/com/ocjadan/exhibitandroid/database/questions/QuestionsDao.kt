@@ -9,8 +9,8 @@ import com.ocjadan.exhibitandroid.database.questions.questionWithOwner.QuestionW
 
 @Dao
 interface QuestionsDao {
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(questions: List<QuestionEntity>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun upsertAll(questions: List<QuestionEntity>)
 
     @Transaction
     @Query("SELECT * FROM questions WHERE question_id = :id")

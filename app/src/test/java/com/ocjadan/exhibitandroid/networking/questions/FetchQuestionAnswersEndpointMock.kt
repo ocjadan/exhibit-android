@@ -3,23 +3,21 @@ package com.ocjadan.exhibitandroid.networking.questions
 import com.ocjadan.exhibitandroid.common.TestData
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint
+import kotlinx.coroutines.CoroutineDispatcher
 
-class FetchQuestionAnswersEndpointMock(stackOverflowApi: StackOverflowApi) : FetchQuestionAnswersEndpoint(stackOverflowApi) {
+class FetchQuestionAnswersEndpointMock(stackOverflowApi: StackOverflowApi, dispatcher: CoroutineDispatcher) :
+    FetchQuestionAnswersEndpoint(stackOverflowApi, dispatcher) {
     var isGeneralError = false
     var isNetworkError = false
     var fetchQuestionAnswersCount = 0
         private set
 
-    override suspend fun fetchQuestionAnswers(id: Long): FetchQuestionAnswersEndpointResult {
+    override suspend fun fetchQuestionAnswers(id: Long): Result {
         fetchQuestionAnswersCount++
         return when {
-            isGeneralError -> FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.FAILURE)
-            isNetworkError -> FetchQuestionAnswersEndpointResult(FetchQuestionAnswersEndpointStatus.NETWORK_ERROR)
-            else -> FetchQuestionAnswersEndpointResult(
-                FetchQuestionAnswersEndpointStatus.SUCCESS,
-                TestData.getQuestionAnswers()
-            )
+            isGeneralError -> Result.Failure
+            isNetworkError -> Result.NetworkError
+            else -> Result.Success(TestData.getQuestionAnswers())
         }
     }
-
 }

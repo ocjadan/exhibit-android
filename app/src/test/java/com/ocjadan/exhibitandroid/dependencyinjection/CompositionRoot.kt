@@ -18,13 +18,15 @@ import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpointMock
 import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCase
 import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCaseMock
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCase
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCaseMock
 import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
 import com.ocjadan.exhibitandroid.questions.questionsList.views.QuestionsListViewControllerMock
 import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModelMock
+
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.StandardTestDispatcher
 
 @ExperimentalCoroutinesApi
 class CompositionRoot {
@@ -33,7 +35,7 @@ class CompositionRoot {
     }
 
     fun getFetchQuestionsEndpointMock(): FetchQuestionsEndpointMock {
-        return FetchQuestionsEndpointMock(getStackOverflowApiMock().mock)
+        return FetchQuestionsEndpointMock(getStackOverflowApiMock().mock, getTestDispatcher())
     }
 
     fun getFetchQuestionsUseCaseMock(): FetchQuestionsUseCaseMock {
@@ -42,17 +44,19 @@ class CompositionRoot {
             getQuestionsCacheMock(),
             getOwnersCacheMock(),
             getUpdatesCacheMock(),
-            getTimeProviderMock()
+            getTimeProviderMock(),
+            getTestDispatcher()
         )
     }
 
     fun getFetchQuestionAnswersEndpointMock(): FetchQuestionAnswersEndpointMock {
-        return FetchQuestionAnswersEndpointMock(getStackOverflowApiMock().mock)
+        return FetchQuestionAnswersEndpointMock(getStackOverflowApiMock().mock, getTestDispatcher())
     }
 
     fun getFetchQuestionAnswersUseCaseMock(): FetchQuestionAnswersUseCase {
         return FetchQuestionAnswersUseCaseMock(
-            getFetchQuestionAnswersEndpointMock()
+            getFetchQuestionAnswersEndpointMock(),
+            getTestDispatcher()
         )
     }
 
@@ -85,15 +89,15 @@ class CompositionRoot {
     }
 
     fun getQuestionsCacheMock(): QuestionsCacheMock {
-        return QuestionsCacheMock(getQuestionsDaoMock())
+        return QuestionsCacheMock(getQuestionsDaoMock(), getTestDispatcher())
     }
 
     fun getOwnersCacheMock(): OwnersCacheMock {
-        return OwnersCacheMock(getOwnersDaoMock().mock)
+        return OwnersCacheMock(getOwnersDaoMock().mock, getTestDispatcher())
     }
 
     fun getUpdatesCacheMock(): UpdatesCacheMock {
-        return UpdatesCacheMock(getUpdatesDaoMock())
+        return UpdatesCacheMock(getUpdatesDaoMock(), getTestDispatcher())
     }
 
     fun getTimeProviderMock(): TimeProviderMock {
@@ -114,6 +118,10 @@ class CompositionRoot {
 
     fun getOwnersDaoMock(): OwnersDaoMock {
         return OwnersDaoMock()
+    }
+
+    fun getTestDispatcher(): CoroutineDispatcher {
+        return StandardTestDispatcher()
     }
 
     private fun getUpdatesDaoMock(): UpdatesDao {

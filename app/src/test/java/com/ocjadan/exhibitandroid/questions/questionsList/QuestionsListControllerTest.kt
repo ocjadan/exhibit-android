@@ -1,26 +1,19 @@
 package com.ocjadan.exhibitandroid.questions.questionsList
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.After
 
+import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class QuestionsListControllerTest {
-
-    @get:Rule
-    val instantTaskExecutorRule = InstantTaskExecutorRule() // Required for LivaData `set`/`postValue`
-
-    private val mainThreadSurrogate = newSingleThreadContext("Ui thread")
 
     private lateinit var SUT: QuestionsListController
     private lateinit var questionsListViewModel: QuestionsListViewModel
@@ -28,20 +21,18 @@ class QuestionsListControllerTest {
 
     @Before
     fun setUp() {
-        Dispatchers.setMain(mainThreadSurrogate)
-
         val compositionRoot = CompositionRoot()
-        questionsListViewModel = compositionRoot.getQuestionsListViewModelMock()
-        questionsListViewController = compositionRoot.getQuestionsListViewControllerMock()
         val navDrawerHelper = compositionRoot.getNavDrawerHelper()
         val screensNavigator = compositionRoot.getScreensNavigator()
+        questionsListViewModel = compositionRoot.getQuestionsListViewModelMock()
+        questionsListViewController = compositionRoot.getQuestionsListViewControllerMock()
         SUT = QuestionsListController(questionsListViewModel, questionsListViewController, navDrawerHelper, screensNavigator)
+        Dispatchers.setMain(compositionRoot.getTestDispatcher())
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-        mainThreadSurrogate.close()
     }
 
     @Test

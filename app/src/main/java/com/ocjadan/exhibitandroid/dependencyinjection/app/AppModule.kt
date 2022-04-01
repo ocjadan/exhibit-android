@@ -11,8 +11,10 @@ import com.ocjadan.exhibitandroid.networking.questionsList.FetchQuestionsEndpoin
 import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCache
 import com.ocjadan.exhibitandroid.database.updates.UpdatesCache
+import com.ocjadan.exhibitandroid.dependencyinjection.app.coroutines.DispatcherBackground
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 internal object AppModule {
@@ -31,9 +33,13 @@ internal object AppModule {
         questionsCache: QuestionsCache,
         ownersCache: OwnersCache,
         updatesCache: UpdatesCache,
-        timeProvider: TimeProvider
-    ) = FetchQuestionsUseCase(endpoint, questionsCache, ownersCache, updatesCache, timeProvider)
+        timeProvider: TimeProvider,
+        @DispatcherBackground dispatcherBg: CoroutineDispatcher
+    ) = FetchQuestionsUseCase(endpoint, questionsCache, ownersCache, updatesCache, timeProvider, dispatcherBg)
 
     @Provides
-    fun fetchQuestionAnswersUseCase(endpoint: FetchQuestionAnswersEndpoint) = FetchQuestionAnswersUseCase(endpoint)
+    fun fetchQuestionAnswersUseCase(
+        endpoint: FetchQuestionAnswersEndpoint,
+        @DispatcherBackground dispatcherBg: CoroutineDispatcher
+    ) = FetchQuestionAnswersUseCase(endpoint, dispatcherBg)
 }

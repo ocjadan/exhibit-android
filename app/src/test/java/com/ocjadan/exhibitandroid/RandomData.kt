@@ -12,18 +12,10 @@ object RandomData {
     }
 
     fun getRandomInts(amount: Int): List<Int> {
-        val result: MutableList<Int> = mutableListOf()
-        for (index in 1..amount) {
-            result.add(getRandomInt())
-        }
-        return result
+        return IntArray(amount) { getRandomInt() }.toList()
     }
 
     fun getRandomLongs(amount: Int): List<Long> {
-        val result: MutableList<Long> = mutableListOf()
-        for (index in 1..amount) {
-            result.add(getRandomLong())
-        }
-        return result
+        return LongArray(amount) { getRandomLong() }.toList()
     }
 }

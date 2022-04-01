@@ -7,14 +7,18 @@ import com.ocjadan.exhibitandroid.database.questions.QuestionsCache
 import com.ocjadan.exhibitandroid.database.updates.UpdatesCache
 import com.ocjadan.exhibitandroid.owners.Owner
 import com.ocjadan.exhibitandroid.networking.questionsList.FetchQuestionsEndpoint
-import com.ocjadan.exhibitandroid.networking.questionsList.FetchQuestionsEndpoint.FetchQuestionsEndpointStatus
+import com.ocjadan.exhibitandroid.networking.questionsList.FetchQuestionsEndpoint.Result
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 open class FetchQuestionsUseCase(
     private val fetchQuestionsEndpoint: FetchQuestionsEndpoint,
     private val questionsCache: QuestionsCache,
     private val ownersCache: OwnersCache,
     private val updatesCache: UpdatesCache,
-    private val timeProvider: TimeProvider
+    private val timeProvider: TimeProvider,
+    private val dispatcher: CoroutineDispatcher
 ) : BaseObservable<FetchQuestionsUseCase.Listener>() {
     companion object {
         private const val CACHE_TIMEOUT = 60_000L // 1 minute
@@ -40,13 +44,9 @@ open class FetchQuestionsUseCase(
     }
 
     private suspend fun fetchQuestionsFromEndpointAndNotify() {
-        val result = fetchQuestionsEndpoint.fetchQuestions()
-        when (result.status) {
-            FetchQuestionsEndpointStatus.SUCCESS -> {
-                saveQuestionsToCache(result.questions)
-                fetchQuestionsFromCacheAndNotify()
-            }
-            FetchQuestionsEndpointStatus.NETWORK_ERROR -> notifyNetworkError()
+        when (val result = fetchQuestionsEndpoint.fetchQuestions()) {
+            is Result.Success -> onFetchQuestionsFromEndpointSuccess(result.questions)
+            is Result.NetworkError -> notifyNetworkError()
             else -> notifyFailure()
         }
     }
@@ -56,32 +56,51 @@ open class FetchQuestionsUseCase(
         notifySuccess(questions)
     }
 
-    private suspend fun saveQuestionsToCache(questions: List<Question>) {
-        val owners = mapOwnersFromQuestions(questions)
-        ownersCache.saveAll(owners)
-        questionsCache.saveAll(questions)
-        updatesCache.setLastQuestionsUpdate(timeProvider.getCurrentTimestamp())
+    private suspend fun onFetchQuestionsFromEndpointSuccess(questions: List<Question>) {
+        saveToCache(questions)
+        fetchQuestionsFromCacheAndNotify()
+    }
+
+    private suspend fun saveToCache(questions: List<Question>) = withContext(dispatcher) {
+        launch {
+            val owners = mapOwnersFromQuestions(questions)
+            ownersCache.saveAll(owners)
+        }
+
+        launch {
+            questionsCache.saveAll(questions)
+        }
+
+        launch {
+            updatesCache.setLastQuestionsUpdate(timeProvider.getCurrentTimestamp())
+        }
+    }
+
+    private suspend fun notifySuccess(questions: List<Question>) = withContext(dispatcher) {
+        for (listener in getListeners()) {
+            launch {
+                listener.onFetchQuestionsUseCaseSuccess(questions)
+            }
+        }
+    }
+
+    private suspend fun notifyFailure() = withContext(dispatcher) {
+        for (listener in getListeners()) {
+            launch {
+                listener.onFetchQuestionsUseCaseFailure()
+            }
+        }
+    }
+
+    private suspend fun notifyNetworkError() = withContext(dispatcher) {
+        for (listener in getListeners()) {
+            launch {
+                listener.onFetchQuestionsUseCaseNetworkError()
+            }
+        }
     }
 
     private fun mapOwnersFromQuestions(questions: List<Question>): List<Owner> {
         return questions.map { Owner(it.owner.accountId, it.owner.userId, it.owner.profileImage, it.owner.name) }
-    }
-
-    private fun notifySuccess(questions: List<Question>) {
-        for (listener in getListeners()) {
-            listener.onFetchQuestionsUseCaseSuccess(questions)
-        }
-    }
-
-    private fun notifyFailure() {
-        for (listener in getListeners()) {
-            listener.onFetchQuestionsUseCaseFailure()
-        }
-    }
-
-    private fun notifyNetworkError() {
-        for (listener in getListeners()) {
-            listener.onFetchQuestionsUseCaseNetworkError()
-        }
     }
 }

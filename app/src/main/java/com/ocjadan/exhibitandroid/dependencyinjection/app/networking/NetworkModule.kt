@@ -2,14 +2,21 @@ package com.ocjadan.exhibitandroid.dependencyinjection.app.networking
 
 import com.ocjadan.exhibitandroid.networking.UrlProvider
 import com.ocjadan.exhibitandroid.dependencyinjection.app.AppScope
+import com.ocjadan.exhibitandroid.dependencyinjection.app.coroutines.DispatcherIO
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.ocjadan.exhibitandroid.networking.questionsList.FetchQuestionsEndpoint
 import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint
+
 import dagger.Module
 import dagger.Provides
+
+import kotlinx.coroutines.CoroutineDispatcher
+
 import okhttp3.OkHttpClient
+
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+
 import java.util.concurrent.TimeUnit
 
 @Module
@@ -41,8 +48,10 @@ internal object NetworkModule {
     }
 
     @Provides
-    fun fetchQuestionsEndpoint(api: StackOverflowApi) = FetchQuestionsEndpoint(api)
+    fun fetchQuestionsEndpoint(api: StackOverflowApi, @DispatcherIO dispatcher: CoroutineDispatcher) =
+        FetchQuestionsEndpoint(api, dispatcher)
 
     @Provides
-    fun fetchQuestionAnswersEndpoint(api: StackOverflowApi) = FetchQuestionAnswersEndpoint(api)
+    fun fetchQuestionAnswersEndpoint(api: StackOverflowApi, @DispatcherIO dispatcher: CoroutineDispatcher) =
+        FetchQuestionAnswersEndpoint(api, dispatcher)
 }

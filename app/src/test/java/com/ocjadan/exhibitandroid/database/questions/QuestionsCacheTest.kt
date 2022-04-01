@@ -3,10 +3,17 @@ package com.ocjadan.exhibitandroid.database.questions
 import com.ocjadan.exhibitandroid.common.TestData
 import com.ocjadan.exhibitandroid.database.EntityTestData
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
+
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
+
 import org.mockito.kotlin.verify
 
 @ExperimentalCoroutinesApi
@@ -17,8 +24,18 @@ class QuestionsCacheTest {
 
     @Before
     fun setUp() {
-        questionsDao = CompositionRoot().getQuestionsDaoMock()
-        SUT = QuestionsCache(questionsDao.mock)
+        val compositionRoot = CompositionRoot()
+        val dispatcher = compositionRoot.getTestDispatcher()
+
+        questionsDao = compositionRoot.getQuestionsDaoMock()
+        SUT = QuestionsCache(questionsDao.mock, dispatcher)
+
+        Dispatchers.setMain(dispatcher)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
@@ -41,7 +58,7 @@ class QuestionsCacheTest {
         SUT.saveAll(questions)
 
         val questionEntities = EntityTestData.mapQuestionsToQuestionEntities(questions)
-        verify(questionsDao.mock).insertAll(questionEntities)
+        verify(questionsDao.mock).upsertAll(questionEntities)
     }
 
     // ------------------------------------------------------------------------------------------------------------------

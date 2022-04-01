@@ -3,9 +3,13 @@ package com.ocjadan.exhibitandroid.questions.questionDetails
 import com.ocjadan.benchmarkable.questionDetails.QuestionAnswer
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpointMock
+import kotlinx.coroutines.Dispatchers
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 
 import org.junit.Before
 import org.junit.Test
@@ -34,12 +38,21 @@ class FetchQuestionAnswersUseCaseTest {
 
     @Before
     fun setUp() {
-        fetchQuestionAnswersEndpointMock = CompositionRoot().getFetchQuestionAnswersEndpointMock()
+        val compositionRoot = CompositionRoot()
+        val dispatcher = compositionRoot.getTestDispatcher()
 
-        SUT = FetchQuestionAnswersUseCase(fetchQuestionAnswersEndpointMock)
+        fetchQuestionAnswersEndpointMock = compositionRoot.getFetchQuestionAnswersEndpointMock()
+        SUT = FetchQuestionAnswersUseCase(fetchQuestionAnswersEndpointMock, dispatcher)
         answersCaptor = argumentCaptor()
 
         allListeners()
+
+        Dispatchers.setMain(dispatcher)
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test

@@ -3,8 +3,10 @@ package com.ocjadan.exhibitandroid.database.questions
 import com.ocjadan.exhibitandroid.common.TestData
 import com.ocjadan.exhibitandroid.database.EntityTestData
 import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import kotlinx.coroutines.CoroutineDispatcher
 
-class QuestionsCacheMock(private val questionsDaoMock: QuestionsDaoMock) : QuestionsCache(questionsDaoMock.mock) {
+class QuestionsCacheMock(private val questionsDaoMock: QuestionsDaoMock, dispatcher: CoroutineDispatcher) :
+    QuestionsCache(questionsDaoMock.mock, dispatcher) {
     override suspend fun getQuestions(amount: Int): List<Question> {
         questionsDaoMock.success()
 
@@ -16,6 +18,6 @@ class QuestionsCacheMock(private val questionsDaoMock: QuestionsDaoMock) : Quest
         questionsDaoMock.success()
 
         val entities = EntityTestData.mapQuestionsToQuestionEntities(questions)
-        questionsDaoMock.mock.insertAll(entities)
+        questionsDaoMock.mock.upsertAll(entities)
     }
 }
