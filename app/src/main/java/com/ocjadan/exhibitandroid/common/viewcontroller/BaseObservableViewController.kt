@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import java.lang.RuntimeException
 
 abstract class BaseObservableViewController<Listener>(
     layoutInflater: LayoutInflater,
@@ -28,10 +29,14 @@ abstract class BaseObservableViewController<Listener>(
     }
 
     override fun removeListener(listener: Listener) {
+        if (!_listenersMap.contains(listener))
+            throw ListenerNotFound()
         _listenersMap.remove(listener)
     }
 
     override fun getListeners(): Set<Listener> {
         return _listenersMap.toSet()
     }
+
+    class ListenerNotFound : RuntimeException()
 }

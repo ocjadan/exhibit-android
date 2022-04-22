@@ -1,5 +1,8 @@
 package com.ocjadan.exhibitandroid.dependencyinjection
 
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
 import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerHelperMock
 import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerWrapperMock
 import com.ocjadan.exhibitandroid.common.TimeProviderMock
@@ -27,17 +30,36 @@ import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
+import org.mockito.Mockito.*
+import org.mockito.kotlin.anyOrNull
 
-@ExperimentalCoroutinesApi
 class CompositionRoot {
+    private val context: Context by lazy {
+        mock(Context::class.java)
+    }
+
+    val layoutInflater: LayoutInflater by lazy {
+        val inflater = mock(LayoutInflater::class.java)
+        `when`(inflater.inflate(anyInt(), anyOrNull(), anyBoolean())).thenReturn(View(context))
+        inflater
+    }
+
+    @ExperimentalCoroutinesApi
     fun getStackOverflowApiMock(): StackOverflowApiMock {
         return StackOverflowApiMock()
     }
 
+    @ExperimentalCoroutinesApi
+    fun getTestDispatcher(): CoroutineDispatcher {
+        return StandardTestDispatcher()
+    }
+
+    @ExperimentalCoroutinesApi
     fun getFetchQuestionsEndpointMock(): FetchQuestionsEndpointMock {
         return FetchQuestionsEndpointMock(getStackOverflowApiMock().mock, getTestDispatcher())
     }
 
+    @ExperimentalCoroutinesApi
     fun getFetchQuestionsUseCaseMock(): FetchQuestionsUseCaseMock {
         return FetchQuestionsUseCaseMock(
             getFetchQuestionsEndpointMock(),
@@ -49,10 +71,15 @@ class CompositionRoot {
         )
     }
 
+//    val layoutInflater: LayoutInflaterMock
+//        get() = LayoutInflaterMock(context)
+
+    @ExperimentalCoroutinesApi
     fun getFetchQuestionAnswersEndpointMock(): FetchQuestionAnswersEndpointMock {
         return FetchQuestionAnswersEndpointMock(getStackOverflowApiMock().mock, getTestDispatcher())
     }
 
+    @ExperimentalCoroutinesApi
     fun getFetchQuestionAnswersUseCaseMock(): FetchQuestionAnswersUseCase {
         return FetchQuestionAnswersUseCaseMock(
             getFetchQuestionAnswersEndpointMock(),
@@ -60,6 +87,7 @@ class CompositionRoot {
         )
     }
 
+    @ExperimentalCoroutinesApi
     fun getQuestionsListViewModelMock(): QuestionsListViewModelMock {
         return QuestionsListViewModelMock(getFetchQuestionsUseCaseMock())
     }
@@ -88,14 +116,17 @@ class CompositionRoot {
         return ScreensNavigator(getNavControllerHelper())
     }
 
+    @ExperimentalCoroutinesApi
     fun getQuestionsCacheMock(): QuestionsCacheMock {
         return QuestionsCacheMock(getQuestionsDaoMock(), getTestDispatcher())
     }
 
+    @ExperimentalCoroutinesApi
     fun getOwnersCacheMock(): OwnersCacheMock {
         return OwnersCacheMock(getOwnersDaoMock().mock, getTestDispatcher())
     }
 
+    @ExperimentalCoroutinesApi
     fun getUpdatesCacheMock(): UpdatesCacheMock {
         return UpdatesCacheMock(getUpdatesDaoMock(), getTestDispatcher())
     }
@@ -118,10 +149,6 @@ class CompositionRoot {
 
     fun getOwnersDaoMock(): OwnersDaoMock {
         return OwnersDaoMock()
-    }
-
-    fun getTestDispatcher(): CoroutineDispatcher {
-        return StandardTestDispatcher()
     }
 
     private fun getUpdatesDaoMock(): UpdatesDao {
