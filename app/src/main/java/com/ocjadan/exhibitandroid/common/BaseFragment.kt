@@ -4,26 +4,27 @@ import android.content.Context
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 
-abstract class BaseFragment : Fragment(), IBackPressedListener {
+abstract class BaseFragment : Fragment(), BackPressedListener {
     protected val fragmentComponent by lazy {
         (requireActivity() as BaseActivity).activityComponent.fragmentComponentBuilder().build()
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        initBackPress()
+        setupBackPressedDispatcher()
     }
 
-    private fun initBackPress() {
-        // Note: if activity overrides onBackPressed then this won't get called.
-        requireActivity().onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val handled = onBackPressed()
-                if (!handled) {
-                    isEnabled = false
-                    requireActivity().onBackPressed()
-                }
+    private fun setupBackPressedDispatcher() {
+        // Note: if parent activity overrides onBackPressed then this won't get called.
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback())
+    }
+
+    private fun backPressedCallback() = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            if (!handledBackPress()) {
+                isEnabled = false
+                requireActivity().onBackPressed()
             }
-        })
+        }
     }
 }

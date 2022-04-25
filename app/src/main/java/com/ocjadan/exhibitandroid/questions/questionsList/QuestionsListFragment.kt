@@ -66,7 +66,7 @@ class QuestionsListFragment : BaseFragment() {
         super.onStop()
     }
 
-    override fun onBackPressed(): Boolean {
-        return questionsListController.onBackPressed()
+    override fun handledBackPress(): Boolean {
+        return questionsListController.handledBackPress()
     }
 }

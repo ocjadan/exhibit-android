@@ -81,7 +81,7 @@ class QuestionDetailsFragment : BaseFragment() {
         }
     }
 
-    override fun onBackPressed(): Boolean {
+    override fun handledBackPress(): Boolean {
         /**
          * Purposely handling here because QuestionDetailsViewController is in the benchmarkable module.
          * This highlights the difficulty of sharing code for benchmarking.

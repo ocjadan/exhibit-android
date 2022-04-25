@@ -1,6 +1,6 @@
 package com.ocjadan.exhibitandroid.questions.questionsList
 
-import com.ocjadan.exhibitandroid.common.IBackPressedListener
+import com.ocjadan.exhibitandroid.common.BackPressedListener
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
@@ -10,8 +10,7 @@ class QuestionsListController(
     private val viewController: IQuestionsListViewController,
     private val navDrawer: NavDrawer,
     private val screensNavigator: ScreensNavigator
-) : IQuestionsListViewController.Listener,
-    IBackPressedListener {
+) : IQuestionsListViewController.Listener, BackPressedListener {
 
     fun bindQuestions(questions: List<Question>) {
         viewController.bindQuestions(questions)
@@ -34,7 +33,7 @@ class QuestionsListController(
         navDrawer.openDrawer()
     }
 
-    override fun onBackPressed(): Boolean {
+    override fun handledBackPress(): Boolean {
         return navDrawer.handledBackPress()
     }
 }
