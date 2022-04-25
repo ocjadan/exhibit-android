@@ -2,8 +2,8 @@ package com.ocjadan.exhibitandroid.common.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsViewModel
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
+import com.ocjadan.exhibitandroid.questionDetails.QuestionDetailsViewModel
+import com.ocjadan.exhibitandroid.questions.QuestionsViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 import org.junit.Before
@@ -15,20 +15,20 @@ import javax.inject.Provider
 internal class ViewModelFactoryTest {
 
     private lateinit var SUT: ViewModelFactory
-    private lateinit var questionsListVMProvider: Provider<QuestionsListViewModel>
+    private lateinit var questionsVMProvider: Provider<QuestionsViewModel>
     private lateinit var questionDetailsVMProvider: Provider<QuestionDetailsViewModel>
 
     @Before
     fun setUp() {
-        questionsListVMProvider = ViewModelProviderMock(ViewModelProviderMock.ViewModelType.QUESTIONS_LIST)
+        questionsVMProvider = ViewModelProviderMock(ViewModelProviderMock.ViewModelType.QUESTIONS_LIST)
         questionDetailsVMProvider = ViewModelProviderMock(ViewModelProviderMock.ViewModelType.QUESTION_DETAILS)
-        SUT = ViewModelFactory(questionsListVMProvider, questionDetailsVMProvider)
+        SUT = ViewModelFactory(questionsVMProvider, questionDetailsVMProvider)
     }
 
     @Test
     fun create_questionsListViewModel_questionsListViewModelReturned() {
-        val viewModel = SUT.create(QuestionsListViewModel::class.java)
-        val questionsListViewModel = questionsListVMProvider.get()
+        val viewModel = SUT.create(QuestionsViewModel::class.java)
+        val questionsListViewModel = questionsVMProvider.get()
         assert(viewModel::class.isInstance(questionsListViewModel))
     }
 
@@ -64,9 +64,9 @@ internal class ViewModelFactoryTest {
             return QuestionDetailsViewModel(fetchQuestionsAnswersUseCaseMock)
         }
 
-        private fun getQuestionsListVM(): QuestionsListViewModel {
+        private fun getQuestionsListVM(): QuestionsViewModel {
             val fetchQuestionsListItemsUseCaseMock = compositionRoot.getFetchQuestionsUseCaseMock()
-            return QuestionsListViewModel(fetchQuestionsListItemsUseCaseMock)
+            return QuestionsViewModel(fetchQuestionsListItemsUseCaseMock)
         }
     }
 }

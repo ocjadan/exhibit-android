@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.views
+package com.ocjadan.exhibitandroid.questions.views
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -7,7 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import com.ocjadan.exhibitandroid.questions.Question
 
 @Composable
 internal fun QuestionsListItemView(

@@ -5,8 +5,8 @@ import android.content.Context
 import com.ocjadan.exhibitandroid.common.TimeProvider
 import com.ocjadan.exhibitandroid.database.owners.OwnersCache
 import com.ocjadan.exhibitandroid.networking.UrlProvider
-import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCase
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCase
+import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCase
+import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCase
 import com.ocjadan.exhibitandroid.networking.questionsList.FetchQuestionsEndpoint
 import com.ocjadan.exhibitandroid.networking.questionDetails.FetchQuestionAnswersEndpoint
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCache

@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList.views
+package com.ocjadan.exhibitandroid.questions.views
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,27 +11,28 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.mock
+import java.lang.RuntimeException
 
 @RunWith(MockitoJUnitRunner::class)
-class QuestionsListViewControllerTest {
+class QuestionsViewControllerTest {
 
-    private lateinit var SUT: QuestionsListViewController
+    private lateinit var SUT: QuestionsViewControllerImpl
     private lateinit var layoutInflater: LayoutInflater
 
     @Mock
     lateinit var context: Context
 
     @Mock
-    lateinit var listenerOne: IQuestionsListViewController.Listener
+    lateinit var listenerOne: QuestionsViewController.Listener
 
     @Mock
-    lateinit var listenerTwo: IQuestionsListViewController.Listener
+    lateinit var listenerTwo: QuestionsViewController.Listener
 
     @Before
     fun setUp() {
         context = mock()
         layoutInflater = LayoutInflaterMock(context)
-        SUT = QuestionsListViewController(layoutInflater, null)
+        SUT = QuestionsViewControllerImpl(layoutInflater, null)
     }
 
     @Test
@@ -70,9 +71,9 @@ class QuestionsListViewControllerTest {
         assert(view::class.isInstance(View(context)))
     }
 
-    @Test
-    fun bindQuestions_emptyListOfQuestions_works() {
-        SUT.bindQuestions(listOf())
+    @Test(expected = RuntimeException::class)
+    fun showQuestions() {
+        SUT.showQuestions(listOf())
     }
 
     // ------------------------------------------------------------------------------------------------------------------

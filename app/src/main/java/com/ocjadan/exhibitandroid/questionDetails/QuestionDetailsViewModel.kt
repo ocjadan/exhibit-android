@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionDetails
+package com.ocjadan.exhibitandroid.questionDetails
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

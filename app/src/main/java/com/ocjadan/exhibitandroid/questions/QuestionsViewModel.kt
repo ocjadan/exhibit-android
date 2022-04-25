@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 
-open class QuestionsListViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
+open class QuestionsViewModel(private val fetchQuestionsUseCase: FetchQuestionsUseCase) : ViewModel(),
     FetchQuestionsUseCase.Listener {
 
     enum class QuestionsListError {

@@ -11,36 +11,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
-enum class QuestionDetailsViewState {
-    IDLE, LOADING, ANSWERS, NO_ANSWERS
-}
-
 @Composable
-fun QuestionDetailsView(details: QuestionDetails, answers: List<QuestionAnswer>, state: QuestionDetailsViewState) {
-    LazyColumn {
-        item {
-            Row {
-                Text("QuestionDetailsView")
-            }
-        }
+fun QuestionDetailsView(details: QuestionDetails, answers: List<QuestionAnswer>) {
+    if (!details.isAnswered) {
+        Text("Question currently has no answers.")
+        return
+    }
 
-        when (state) {
-            QuestionDetailsViewState.IDLE -> Unit
-            QuestionDetailsViewState.LOADING -> {
-                item {
-                    Text("Loading")
-                }
-            }
-            QuestionDetailsViewState.ANSWERS -> {
-                items(answers) {
-                    AnswerView(Modifier.padding(0.dp, 0.dp, 0.dp, 16.dp), it)
-                }
-            }
-            QuestionDetailsViewState.NO_ANSWERS -> {
-                item {
-                    Text("No answers")
-                }
-            }
+    if (answers.isEmpty())
+        Text("Loading...")
+
+    LazyColumn {
+        items(answers) {
+            AnswerView(Modifier.padding(0.dp, 0.dp, 0.dp, 16.dp), it)
         }
     }
 }

@@ -9,8 +9,8 @@ import com.ocjadan.exhibitandroid.common.screensNavigator.NavigationController
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
-import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsViewModel
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModel
+import com.ocjadan.exhibitandroid.questionDetails.QuestionDetailsViewModel
+import com.ocjadan.exhibitandroid.questions.QuestionsViewModel
 import dagger.Module
 import dagger.Provides
 import javax.inject.Provider
@@ -19,9 +19,9 @@ import javax.inject.Provider
 internal object ActivityModule {
     @Provides
     fun viewModelFactory(
-        questionsListVM: Provider<QuestionsListViewModel>,
+        questionsVM: Provider<QuestionsViewModel>,
         questionDetailsVM: Provider<QuestionDetailsViewModel>
-    ) = ViewModelFactory(questionsListVM, questionDetailsVM)
+    ) = ViewModelFactory(questionsVM, questionDetailsVM)
 
     @Provides
     fun viewControllerFactory(layoutInflater: LayoutInflater, screensNavigator: ScreensNavigator) =

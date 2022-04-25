@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionDetails
+package com.ocjadan.exhibitandroid.questionDetails
 
 import android.content.Context
 import android.os.Bundle
@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.ocjadan.benchmarkable.questionDetails.IQuestionDetailsViewController
+import com.ocjadan.benchmarkable.questionDetails.QuestionDetailsViewController
 import com.ocjadan.benchmarkable.questionDetails.QuestionDetails
 import com.ocjadan.exhibitandroid.common.BaseFragment
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
@@ -43,7 +43,7 @@ class QuestionDetailsFragment : BaseFragment() {
     lateinit var screensNavigator: ScreensNavigator
 
     private lateinit var questionDetailsVM: QuestionDetailsViewModel
-    private lateinit var questionDetailsVC: IQuestionDetailsViewController
+    private lateinit var questionDetailsVC: QuestionDetailsViewController
     private lateinit var details: QuestionDetails
 
     override fun onAttach(context: Context) {
@@ -59,18 +59,14 @@ class QuestionDetailsFragment : BaseFragment() {
 
         questionDetailsVM = ViewModelProvider(this, viewModelFactory)[QuestionDetailsViewModel::class.java]
         questionDetailsVM.answers.observe(this) {
-            it?.let {
-                if (it.count() > 0) {
-                    questionDetailsVC.bindAnswers(it)
-                }
-            }
+            questionDetailsVC.show(details, it)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         questionDetailsVC = viewControllerFactory.getQuestionDetailsViewController(container)
-        questionDetailsVC.bindDetails(details)
+        questionDetailsVC.show(details, listOf())
         return questionDetailsVC.getRootView()
     }
 

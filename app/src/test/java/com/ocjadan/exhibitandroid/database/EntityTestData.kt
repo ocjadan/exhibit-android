@@ -6,7 +6,7 @@ import com.ocjadan.exhibitandroid.database.questions.QuestionEntity
 import com.ocjadan.exhibitandroid.database.questions.questionWithOwner.QuestionWithOwnerEntity
 import com.ocjadan.exhibitandroid.database.updates.lastQuestionsUpdate.LastQuestionsUpdateEntity
 import com.ocjadan.exhibitandroid.owners.Owner
-import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import com.ocjadan.exhibitandroid.questions.Question
 
 object EntityTestData {
     fun getOwnerEntity(): OwnerEntity {

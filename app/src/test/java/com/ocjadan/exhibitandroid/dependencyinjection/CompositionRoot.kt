@@ -16,13 +16,13 @@ import com.ocjadan.exhibitandroid.database.updates.UpdatesDao
 import com.ocjadan.exhibitandroid.database.updates.UpdatesDaoMock
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpointMock
-import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCase
-import com.ocjadan.exhibitandroid.questions.questionDetails.FetchQuestionAnswersUseCaseMock
+import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCase
+import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCaseMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
-import com.ocjadan.exhibitandroid.questions.questionsList.FetchQuestionsUseCaseMock
-import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
-import com.ocjadan.exhibitandroid.questions.questionsList.views.QuestionsListViewControllerMock
-import com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListViewModelMock
+import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCaseMock
+import com.ocjadan.exhibitandroid.questions.views.QuestionsViewController
+import com.ocjadan.exhibitandroid.questions.views.QuestionsViewControllerMock
+import com.ocjadan.exhibitandroid.questions.QuestionsViewModelMock
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -94,12 +94,12 @@ class CompositionRoot {
     }
 
     @ExperimentalCoroutinesApi
-    fun getQuestionsListViewModelMock(): QuestionsListViewModelMock {
-        return QuestionsListViewModelMock(getFetchQuestionsUseCaseMock())
+    fun getQuestionsListViewModelMock(): QuestionsViewModelMock {
+        return QuestionsViewModelMock(getFetchQuestionsUseCaseMock())
     }
 
-    fun getQuestionsListViewControllerMock(): IQuestionsListViewController {
-        return QuestionsListViewControllerMock()
+    fun getQuestionsListViewControllerMock(): QuestionsViewController {
+        return QuestionsViewControllerMock()
     }
 
     @ExperimentalCoroutinesApi

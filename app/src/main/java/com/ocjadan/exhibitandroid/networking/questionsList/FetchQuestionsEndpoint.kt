@@ -3,7 +3,7 @@ package com.ocjadan.exhibitandroid.networking.questionsList
 import com.ocjadan.exhibitandroid.networking.StackOverflowApi
 import com.ocjadan.exhibitandroid.owners.Owner
 import com.ocjadan.exhibitandroid.networking.owners.OwnerSchema
-import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import com.ocjadan.exhibitandroid.questions.Question
 
 import com.squareup.moshi.JsonDataException
 

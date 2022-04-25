@@ -1,19 +1,19 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions
 
 import com.ocjadan.exhibitandroid.common.BackPressedListener
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
-import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
+import com.ocjadan.exhibitandroid.questions.views.QuestionsViewController
 
-class QuestionsListController(
-    private val viewModel: QuestionsListViewModel,
-    private val viewController: IQuestionsListViewController,
+class QuestionsController(
+    private val viewModel: QuestionsViewModel,
+    private val viewController: QuestionsViewController,
     private val navDrawer: NavDrawer,
     private val screensNavigator: ScreensNavigator
-) : IQuestionsListViewController.Listener, BackPressedListener {
+) : QuestionsViewController.Listener, BackPressedListener {
 
-    fun bindQuestions(questions: List<Question>) {
-        viewController.bindQuestions(questions)
+    fun showQuestions(questions: List<Question>) {
+        viewController.showQuestions(questions)
     }
 
     fun onStart() {

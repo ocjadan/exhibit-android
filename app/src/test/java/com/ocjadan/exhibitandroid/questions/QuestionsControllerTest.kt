@@ -1,7 +1,7 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions
 
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
-import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
+import com.ocjadan.exhibitandroid.questions.views.QuestionsViewController
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,20 +13,20 @@ import org.junit.Before
 import org.junit.Test
 
 @ExperimentalCoroutinesApi
-class QuestionsListControllerTest {
+class QuestionsControllerTest {
 
-    private lateinit var SUT: QuestionsListController
-    private lateinit var questionsListViewModel: QuestionsListViewModel
-    private lateinit var questionsListViewController: IQuestionsListViewController
+    private lateinit var SUT: QuestionsController
+    private lateinit var questionsViewModel: QuestionsViewModel
+    private lateinit var questionsViewController: QuestionsViewController
 
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        questionsListViewModel = compositionRoot.getQuestionsListViewModelMock()
-        questionsListViewController = compositionRoot.getQuestionsListViewControllerMock()
-        SUT = QuestionsListController(
-            questionsListViewModel,
-            questionsListViewController,
+        questionsViewModel = compositionRoot.getQuestionsListViewModelMock()
+        questionsViewController = compositionRoot.getQuestionsListViewControllerMock()
+        SUT = QuestionsController(
+            questionsViewModel,
+            questionsViewController,
             compositionRoot.navDrawer,
             compositionRoot.screensNavigation
         )
@@ -46,12 +46,12 @@ class QuestionsListControllerTest {
     @Test
     fun onStart_viewControllerListenersNotEmpty() {
         SUT.onStart()
-        assert(questionsListViewController.getListeners().isNotEmpty())
+        assert(questionsViewController.getListeners().isNotEmpty())
     }
 
     @Test
     fun onStop_viewControllerListenersIsEmpty() {
         SUT.onStop()
-        assert(questionsListViewController.getListeners().isEmpty())
+        assert(questionsViewController.getListeners().isEmpty())
     }
 }

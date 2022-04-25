@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions
 
 import com.ocjadan.exhibitandroid.owners.Owner
 import java.io.Serializable

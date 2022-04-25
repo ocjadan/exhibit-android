@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
@@ -17,12 +17,12 @@ import org.junit.Test
 import java.lang.RuntimeException
 
 @ExperimentalCoroutinesApi
-internal class QuestionsListViewModelTest {
+internal class QuestionsViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule() // Required for LivaData `set`/`postValue`
 
-    private lateinit var SUT: QuestionsListViewModel
+    private lateinit var SUT: QuestionsViewModel
     private lateinit var fetchQuestionsUseCaseMock: FetchQuestionsUseCaseMock
 
     @Before
@@ -31,7 +31,7 @@ internal class QuestionsListViewModelTest {
         Dispatchers.setMain(unconfinedDispatcher) // Required for viewModelScope
 
         fetchQuestionsUseCaseMock = CompositionRoot().getFetchQuestionsUseCaseMock()
-        SUT = QuestionsListViewModel(fetchQuestionsUseCaseMock)
+        SUT = QuestionsViewModel(fetchQuestionsUseCaseMock)
     }
 
     @After
@@ -55,7 +55,7 @@ internal class QuestionsListViewModelTest {
         val questions = SUT.questions.value ?: throw RuntimeException()
         val error = SUT.error.value
         assert(questions.isEmpty())
-        assert(error == QuestionsListViewModel.QuestionsListError.NETWORK)
+        assert(error == QuestionsViewModel.QuestionsListError.NETWORK)
     }
 
     @Test
@@ -65,7 +65,7 @@ internal class QuestionsListViewModelTest {
         val questions = SUT.questions.value ?: throw RuntimeException()
         val error = SUT.error.value
         assert(questions.isEmpty())
-        assert(error == QuestionsListViewModel.QuestionsListError.FAILURE)
+        assert(error == QuestionsViewModel.QuestionsListError.FAILURE)
     }
 
     // ------------------------------------------------------------------------------------------------------------------

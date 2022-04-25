@@ -3,7 +3,7 @@ package com.ocjadan.exhibitandroid.database.questions
 import com.ocjadan.exhibitandroid.database.owners.OwnerEntity
 import com.ocjadan.exhibitandroid.database.questions.questionWithOwner.QuestionWithOwnerEntity
 import com.ocjadan.exhibitandroid.owners.Owner
-import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import com.ocjadan.exhibitandroid.questions.Question
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext

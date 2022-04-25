@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionDetails
+package com.ocjadan.exhibitandroid.questionDetails
 
 import com.ocjadan.benchmarkable.questionDetails.QuestionAnswer
 import com.ocjadan.exhibitandroid.common.observable.BaseObservable

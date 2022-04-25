@@ -2,7 +2,7 @@ package com.ocjadan.exhibitandroid.database.questions
 
 import com.ocjadan.exhibitandroid.common.TestData
 import com.ocjadan.exhibitandroid.database.EntityTestData
-import com.ocjadan.exhibitandroid.questions.questionsList.Question
+import com.ocjadan.exhibitandroid.questions.Question
 import kotlinx.coroutines.CoroutineDispatcher
 
 class QuestionsCacheMock(private val questionsDaoMock: QuestionsDaoMock, dispatcher: CoroutineDispatcher) :

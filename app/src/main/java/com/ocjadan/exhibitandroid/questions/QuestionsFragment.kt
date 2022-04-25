@@ -1,4 +1,4 @@
-package com.ocjadan.exhibitandroid.questions.questionsList
+package com.ocjadan.exhibitandroid.questions
 
 import android.content.Context
 import android.os.Bundle
@@ -13,7 +13,7 @@ import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
 import javax.inject.Inject
 
-class QuestionsListFragment : BaseFragment() {
+class QuestionsFragment : BaseFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -27,8 +27,8 @@ class QuestionsListFragment : BaseFragment() {
     @Inject
     lateinit var screensNavigator: ScreensNavigator
 
-    private lateinit var questionsListViewModel: QuestionsListViewModel
-    private lateinit var questionsListController: QuestionsListController
+    private lateinit var questionsViewModel: QuestionsViewModel
+    private lateinit var questionsController: QuestionsController
 
     override fun onAttach(context: Context) {
         fragmentComponent.inject(this)
@@ -37,36 +37,36 @@ class QuestionsListFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        questionsListViewModel = ViewModelProvider(this, viewModelFactory)[QuestionsListViewModel::class.java]
+        questionsViewModel = ViewModelProvider(this, viewModelFactory)[QuestionsViewModel::class.java]
 
-        questionsListViewModel.questions.observe(this) {
-            questionsListController.bindQuestions(it)
+        questionsViewModel.questions.observe(this) {
+            questionsController.showQuestions(it)
         }
 
-        questionsListViewModel.error.observe(this) { }
+        questionsViewModel.error.observe(this) { }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        val viewController = viewControllerFactory.getQuestionsListViewController(container)
+        val questionsListViewController = viewControllerFactory.getQuestionsListViewController(container)
 
-        questionsListController =
-            QuestionsListController(questionsListViewModel, viewController, navDrawer, screensNavigator)
+        questionsController =
+            QuestionsController(questionsViewModel, questionsListViewController, navDrawer, screensNavigator)
 
-        return viewController.getRootView()
+        return questionsListViewController.getRootView()
     }
 
     override fun onStart() {
         super.onStart()
-        questionsListController.onStart()
+        questionsController.onStart()
     }
 
     override fun onStop() {
-        questionsListController.onStop()
+        questionsController.onStop()
         super.onStop()
     }
 
     override fun handledBackPress(): Boolean {
-        return questionsListController.handledBackPress()
+        return questionsController.handledBackPress()
     }
 }

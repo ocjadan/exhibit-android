@@ -6,10 +6,10 @@
 
     <fragment
         android:id="@+id/nav_frag_questions"
-        android:name="com.ocjadan.exhibitandroid.questions.questionsList.QuestionsListFragment" />
+        android:name="com.ocjadan.exhibitandroid.questions.QuestionsFragment" />
 
     <fragment
         android:id="@+id/nav_frag_questiondetails"
-        android:name="com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsFragment" />
+        android:name="com.ocjadan.exhibitandroid.questionDetails.QuestionDetailsFragment" />
 
 </navigation>
