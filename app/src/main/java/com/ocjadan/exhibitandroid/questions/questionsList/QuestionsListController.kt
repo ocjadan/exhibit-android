@@ -1,14 +1,14 @@
 package com.ocjadan.exhibitandroid.questions.questionsList
 
 import com.ocjadan.exhibitandroid.common.IBackPressedListener
-import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.questions.questionsList.views.IQuestionsListViewController
 
 class QuestionsListController(
     private val viewModel: QuestionsListViewModel,
     private val viewController: IQuestionsListViewController,
-    private val navDrawerHelper: NavDrawerHelper,
+    private val navDrawer: NavDrawer,
     private val screensNavigator: ScreensNavigator
 ) : IQuestionsListViewController.Listener,
     IBackPressedListener {
@@ -31,16 +31,10 @@ class QuestionsListController(
     }
 
     override fun onToolbarAvatarClicked() {
-        if (!navDrawerHelper.isDrawerOpen()) {
-            navDrawerHelper.openDrawer()
-        }
+        navDrawer.openDrawer()
     }
 
     override fun onBackPressed(): Boolean {
-        if (navDrawerHelper.isDrawerOpen()) {
-            navDrawerHelper.closeDrawer()
-            return true
-        }
-        return false
+        return navDrawer.handledBackPress()
     }
 }

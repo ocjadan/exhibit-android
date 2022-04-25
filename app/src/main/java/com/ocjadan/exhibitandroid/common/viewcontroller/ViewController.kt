@@ -2,6 +2,6 @@ package com.ocjadan.exhibitandroid.common.viewcontroller
 
 import android.view.View
 
-interface IViewController {
+interface ViewController {
     fun getRootView(): View
 }

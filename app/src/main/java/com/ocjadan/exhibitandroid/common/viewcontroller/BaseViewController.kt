@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 
 abstract class BaseViewController(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, @LayoutRes rootViewId: Int) :
-    IViewController {
+    ViewController {
 
     private val rootView = layoutInflater.inflate(rootViewId, viewGroup, false)
 

@@ -3,9 +3,9 @@ package com.ocjadan.exhibitandroid.dependencyinjection.activity
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
-import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
-import com.ocjadan.exhibitandroid.common.screensNavigator.INavControllerWrapper
-import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerHelper
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
+import com.ocjadan.exhibitandroid.common.screensNavigator.NavigationHelper
+import com.ocjadan.exhibitandroid.common.screensNavigator.NavigationController
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
@@ -24,8 +24,8 @@ internal object ActivityModule {
     ) = ViewModelFactory(questionsListVM, questionDetailsVM)
 
     @Provides
-    fun viewControllerFactory(layoutInflater: LayoutInflater, fragmentManager: FragmentManager) =
-        ViewControllerFactory(layoutInflater, fragmentManager)
+    fun viewControllerFactory(layoutInflater: LayoutInflater, screensNavigator: ScreensNavigator) =
+        ViewControllerFactory(layoutInflater, screensNavigator)
 
     @Provides
     fun layoutInflater(activity: AppCompatActivity): LayoutInflater = LayoutInflater.from(activity)
@@ -34,18 +34,14 @@ internal object ActivityModule {
     fun fragmentManager(activity: AppCompatActivity): FragmentManager = activity.supportFragmentManager
 
     @Provides
-    fun navDrawerHelper(activity: AppCompatActivity): NavDrawerHelper {
-        // MainActivity is the only activity and it contains the nav drawer,
-        // thus delegate nav drawer calls to MainActivity.
-        return activity as NavDrawerHelper
-    }
+    fun navDrawer(activity: AppCompatActivity): NavDrawer = activity as NavDrawer
 
     @Provides
-    fun screensNavigator(navigationHelper: NavControllerHelper) = ScreensNavigator(navigationHelper)
+    fun screensNavigator(navigationHelper: NavigationHelper) = ScreensNavigator(navigationHelper)
 
     @Provides
-    fun navigationHelper(navControllerWrapper: INavControllerWrapper) = NavControllerHelper(navControllerWrapper)
+    fun navigationHelper(activity: AppCompatActivity): NavigationHelper = activity as NavigationHelper
 
     @Provides
-    fun navControllerWrapper(activity: AppCompatActivity): INavControllerWrapper = activity as INavControllerWrapper
+    fun navigationController(fragmentManager: FragmentManager) = NavigationController(fragmentManager)
 }

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.ocjadan.benchmarkable.questionDetails.IQuestionDetailsViewController
 import com.ocjadan.benchmarkable.questionDetails.QuestionDetails
 import com.ocjadan.exhibitandroid.common.BaseFragment
-import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
@@ -37,7 +37,7 @@ class QuestionDetailsFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelFactory
 
     @Inject
-    lateinit var navDrawerHelper: NavDrawerHelper
+    lateinit var navDrawer: NavDrawer
 
     @Inject
     lateinit var screensNavigator: ScreensNavigator
@@ -86,10 +86,6 @@ class QuestionDetailsFragment : BaseFragment() {
          * Purposely handling here because QuestionDetailsViewController is in the benchmarkable module.
          * This highlights the difficulty of sharing code for benchmarking.
          */
-        if (navDrawerHelper.isDrawerOpen()) {
-            navDrawerHelper.closeDrawer()
-        }
-        screensNavigator.navigateUp()
-        return true
+        return navDrawer.handledBackPress()
     }
 }

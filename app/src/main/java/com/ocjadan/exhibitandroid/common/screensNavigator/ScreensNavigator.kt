@@ -6,7 +6,11 @@ import com.ocjadan.exhibitandroid.R
 import com.ocjadan.exhibitandroid.questions.questionDetails.QuestionDetailsFragment
 import com.ocjadan.exhibitandroid.questions.questionsList.Question
 
-class ScreensNavigator(private val navigationHelper: NavControllerHelper) {
+class ScreensNavigator(private val navigationHelper: NavigationHelper) {
+    fun toQuestions() {
+        navigationHelper.navigateTo(R.id.nav_frag_questions, null)
+    }
+
     fun toQuestionDetails(question: Question) {
         val details = QuestionDetails(
             question.id,

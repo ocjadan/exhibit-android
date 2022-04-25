@@ -1,7 +1,7 @@
 package com.ocjadan.exhibitandroid.common.navdrawer
 
-interface NavDrawerHelper {
+interface NavDrawer {
     fun openDrawer()
     fun closeDrawer()
-    fun isDrawerOpen(): Boolean
+    fun handledBackPress(): Boolean
 }

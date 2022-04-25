@@ -22,11 +22,14 @@ class QuestionsListControllerTest {
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        val navDrawerHelper = compositionRoot.getNavDrawerHelper()
-        val screensNavigator = compositionRoot.getScreensNavigator()
         questionsListViewModel = compositionRoot.getQuestionsListViewModelMock()
         questionsListViewController = compositionRoot.getQuestionsListViewControllerMock()
-        SUT = QuestionsListController(questionsListViewModel, questionsListViewController, navDrawerHelper, screensNavigator)
+        SUT = QuestionsListController(
+            questionsListViewModel,
+            questionsListViewController,
+            compositionRoot.navDrawer,
+            compositionRoot.screensNavigation
+        )
         Dispatchers.setMain(compositionRoot.getTestDispatcher())
     }
 

@@ -11,7 +11,7 @@ abstract class BaseObservableViewController<Listener>(
     layoutInflater: LayoutInflater,
     viewGroup: ViewGroup?,
     @LayoutRes rootViewId: Int
-) : IObservableViewController<Listener> {
+) : ObservableViewController<Listener> {
 
     private val rootView = layoutInflater.inflate(rootViewId, viewGroup, false)
     private val _listenersMap: MutableSet<Listener> by lazy { mutableSetOf() }

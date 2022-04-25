@@ -3,12 +3,9 @@ package com.ocjadan.exhibitandroid.dependencyinjection
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerHelperMock
-import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerWrapperMock
 import com.ocjadan.exhibitandroid.common.TimeProviderMock
-import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerHelper
-import com.ocjadan.exhibitandroid.common.screensNavigator.INavControllerWrapper
-import com.ocjadan.exhibitandroid.common.screensNavigator.NavControllerHelper
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
+import com.ocjadan.exhibitandroid.common.screensNavigator.NavigationHelper
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
 import com.ocjadan.exhibitandroid.database.questions.QuestionsDaoMock
@@ -34,14 +31,26 @@ import org.mockito.Mockito.*
 import org.mockito.kotlin.anyOrNull
 
 class CompositionRoot {
-    private val context: Context by lazy {
-        mock(Context::class.java)
-    }
-
     val layoutInflater: LayoutInflater by lazy {
         val inflater = mock(LayoutInflater::class.java)
         `when`(inflater.inflate(anyInt(), anyOrNull(), anyBoolean())).thenReturn(View(context))
         inflater
+    }
+
+    val navDrawer: NavDrawer by lazy {
+        mock(NavDrawer::class.java)
+    }
+
+    val screensNavigation: ScreensNavigator by lazy {
+        ScreensNavigator(navigationHelper)
+    }
+
+    private val context: Context by lazy {
+        mock(Context::class.java)
+    }
+
+    private val navigationHelper: NavigationHelper by lazy {
+        mock(NavigationHelper::class.java)
     }
 
     @ExperimentalCoroutinesApi
@@ -71,9 +80,6 @@ class CompositionRoot {
         )
     }
 
-//    val layoutInflater: LayoutInflaterMock
-//        get() = LayoutInflaterMock(context)
-
     @ExperimentalCoroutinesApi
     fun getFetchQuestionAnswersEndpointMock(): FetchQuestionAnswersEndpointMock {
         return FetchQuestionAnswersEndpointMock(getStackOverflowApiMock().mock, getTestDispatcher())
@@ -96,26 +102,6 @@ class CompositionRoot {
         return QuestionsListViewControllerMock()
     }
 
-    fun getNavDrawerHelper(): NavDrawerHelper {
-        return object : NavDrawerHelper {
-            override fun openDrawer() {
-                TODO("Not yet implemented")
-            }
-
-            override fun closeDrawer() {
-                TODO("Not yet implemented")
-            }
-
-            override fun isDrawerOpen(): Boolean {
-                TODO("Not yet implemented")
-            }
-        }
-    }
-
-    fun getScreensNavigator(): ScreensNavigator {
-        return ScreensNavigator(getNavControllerHelper())
-    }
-
     @ExperimentalCoroutinesApi
     fun getQuestionsCacheMock(): QuestionsCacheMock {
         return QuestionsCacheMock(getQuestionsDaoMock(), getTestDispatcher())
@@ -133,14 +119,6 @@ class CompositionRoot {
 
     fun getTimeProviderMock(): TimeProviderMock {
         return TimeProviderMock()
-    }
-
-    private fun getNavControllerHelper(): NavControllerHelper {
-        return NavControllerHelperMock(getNavControllerWrapper())
-    }
-
-    private fun getNavControllerWrapper(): INavControllerWrapper {
-        return NavControllerWrapperMock().mock
     }
 
     fun getQuestionsDaoMock(): QuestionsDaoMock {
