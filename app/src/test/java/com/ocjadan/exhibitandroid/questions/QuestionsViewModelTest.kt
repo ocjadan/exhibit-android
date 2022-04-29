@@ -41,7 +41,7 @@ internal class QuestionsViewModelTest {
 
     @Test
     fun loadQuestions_success_questionsReturnedAndNoError() = runTest {
-        SUT.loadQuestions()
+        SUT.fetchQuestions()
         val questions = SUT.questions.value ?: throw RuntimeException()
         val error = SUT.error.value
         assert(questions.isNotEmpty())
@@ -51,7 +51,7 @@ internal class QuestionsViewModelTest {
     @Test
     fun loadQuestions_networkError_noQuestionsAndNetworkError() = runTest {
         networkError()
-        SUT.loadQuestions()
+        SUT.fetchQuestions()
         val questions = SUT.questions.value ?: throw RuntimeException()
         val error = SUT.error.value
         assert(questions.isEmpty())
@@ -61,7 +61,7 @@ internal class QuestionsViewModelTest {
     @Test
     fun loadQuestions_generalError_noQuestionsAndGeneralError() = runTest {
         generalError()
-        SUT.loadQuestions()
+        SUT.fetchQuestions()
         val questions = SUT.questions.value ?: throw RuntimeException()
         val error = SUT.error.value
         assert(questions.isEmpty())

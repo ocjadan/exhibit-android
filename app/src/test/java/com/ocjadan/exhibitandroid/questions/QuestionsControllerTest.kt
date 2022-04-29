@@ -16,21 +16,23 @@ import org.junit.Test
 class QuestionsControllerTest {
 
     private lateinit var SUT: QuestionsController
-    private lateinit var questionsViewModel: QuestionsViewModel
-    private lateinit var questionsViewController: QuestionsViewController
+    private lateinit var questionsVC: QuestionsViewController
+    private lateinit var questionsVM: QuestionsViewModel
 
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        questionsViewModel = compositionRoot.getQuestionsListViewModelMock()
-        questionsViewController = compositionRoot.getQuestionsListViewControllerMock()
+        questionsVM = compositionRoot.questionsViewModel
+        questionsVC = compositionRoot.getQuestionsListViewControllerMock()
         SUT = QuestionsController(
-            questionsViewModel,
-            questionsViewController,
+            questionsVM,
+            questionsVC,
             compositionRoot.navDrawer,
             compositionRoot.screensNavigator
         )
-        Dispatchers.setMain(compositionRoot.getTestDispatcher())
+
+        SUT.onStart()
+        Dispatchers.setMain(compositionRoot.testDispatcher)
     }
 
     @After
@@ -39,19 +41,14 @@ class QuestionsControllerTest {
     }
 
     @Test
-    fun onStart_NoExceptions() {
-        SUT.onStart()
+    fun onStart_listening() {
+        assert(questionsVC.getListeners().contains(SUT))
     }
 
     @Test
-    fun onStart_viewControllerListenersNotEmpty() {
-        SUT.onStart()
-        assert(questionsViewController.getListeners().isNotEmpty())
-    }
-
-    @Test
-    fun onStop_viewControllerListenersIsEmpty() {
+    fun onStop_notListening() {
         SUT.onStop()
-        assert(questionsViewController.getListeners().isEmpty())
+        assert(!questionsVC.getListeners().contains(SUT))
+        assert(questionsVC.getListeners().isEmpty())
     }
 }

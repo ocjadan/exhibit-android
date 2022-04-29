@@ -1,67 +1,48 @@
 package com.ocjadan.exhibitandroid.questions
 
-import com.ocjadan.exhibitandroid.common.TimeProviderMock
-import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
-import com.ocjadan.exhibitandroid.database.owners.OwnersCacheMock
-import com.ocjadan.exhibitandroid.database.updates.UpdatesCacheMock
 import com.ocjadan.exhibitandroid.dependencyinjection.CompositionRoot
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
+
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.After
 
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-import org.mockito.Mock
-import org.mockito.Mockito.never
+import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.Mockito.never
 import org.mockito.kotlin.KArgumentCaptor
 import org.mockito.kotlin.argumentCaptor
 
 @ExperimentalCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
 internal class FetchQuestionsUseCaseTest {
 
     private lateinit var SUT: FetchQuestionsUseCaseImpl
-    private lateinit var questionsCaptor: KArgumentCaptor<List<Question>>
-
     private lateinit var fetchQuestionsEndpointMock: FetchQuestionsEndpointMock
-    private lateinit var questionsCacheMock: QuestionsCacheMock
-    private lateinit var ownersCacheMock: OwnersCacheMock
-    private lateinit var updatesCacheMock: UpdatesCacheMock
-    private lateinit var timeProviderMock: TimeProviderMock
 
-    @Mock
-    private lateinit var listenerOne: FetchQuestionsUseCase.Listener
-
-    @Mock
-    private lateinit var listenerTwo: FetchQuestionsUseCase.Listener
+    private val questionsCaptor: KArgumentCaptor<List<Question>> = argumentCaptor()
+    private val listenerOne = mock(FetchQuestionsUseCase.Listener::class.java)
+    private val listenerTwo = mock(FetchQuestionsUseCase.Listener::class.java)
 
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        val dispatcherBg = compositionRoot.getTestDispatcher()
-        fetchQuestionsEndpointMock = compositionRoot.getFetchQuestionsEndpointMock()
-        questionsCacheMock = compositionRoot.getQuestionsCacheMock()
-        ownersCacheMock = compositionRoot.getOwnersCacheMock()
-        updatesCacheMock = compositionRoot.getUpdatesCacheMock()
-        timeProviderMock = compositionRoot.getTimeProviderMock()
+        val dispatcherBg = compositionRoot.testDispatcher
 
+        fetchQuestionsEndpointMock = compositionRoot.getFetchQuestionsEndpointMock()
         SUT = FetchQuestionsUseCaseImpl(
             fetchQuestionsEndpointMock,
-            questionsCacheMock,
-            ownersCacheMock,
-            updatesCacheMock,
-            timeProviderMock,
+            compositionRoot.getQuestionsCacheMock(),
+            compositionRoot.getOwnersCacheMock(),
+            compositionRoot.getUpdatesCacheMock(),
+            compositionRoot.getTimeProviderMock(),
             dispatcherBg
         )
-        questionsCaptor = argumentCaptor()
 
         addListeners()
 
@@ -71,26 +52,6 @@ internal class FetchQuestionsUseCaseTest {
     @After
     fun tearDown() {
         Dispatchers.resetMain()
-    }
-
-    @Test
-    fun addListeners_allListenersAreAdded() {
-        assert(SUT.getListeners().contains(listenerOne))
-        assert(SUT.getListeners().contains(listenerTwo))
-    }
-
-    @Test
-    fun addListeners_removeAllListeners_noListenersRemain() {
-        removeAllListeners()
-        assert(!SUT.getListeners().contains(listenerOne))
-        assert(!SUT.getListeners().contains(listenerTwo))
-    }
-
-    @Test
-    fun addListeners_removeListener_listenerRemovedAndOtherListenerRemains() {
-        SUT.removeListener(listenerOne)
-        assert(!SUT.getListeners().contains(listenerOne))
-        assert(SUT.getListeners().contains(listenerTwo))
     }
 
     @Test
@@ -156,10 +117,6 @@ internal class FetchQuestionsUseCaseTest {
         verify(listenerOne, never()).onFetchQuestionsUseCaseNetworkError()
         verify(listenerTwo, never()).onFetchQuestionsUseCaseNetworkError()
     }
-
-    // ------------------------------------------------------------------------------------------------------------------
-    // Region: Helper Methods
-    // ------------------------------------------------------------------------------------------------------------------
 
     private fun generalError() {
         fetchQuestionsEndpointMock.isGeneralError = true

@@ -30,7 +30,7 @@ internal class FetchQuestionsEndpointTest {
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        val dispatcher = compositionRoot.getTestDispatcher()
+        val dispatcher = compositionRoot.testDispatcher
         stackOverflowApiMock = compositionRoot.getStackOverflowApiMock()
         SUT = FetchQuestionsEndpoint(stackOverflowApiMock.mock, dispatcher)
         Dispatchers.setMain(dispatcher)

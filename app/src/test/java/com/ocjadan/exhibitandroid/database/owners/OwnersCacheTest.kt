@@ -24,7 +24,7 @@ class OwnersCacheTest {
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        val dispatcher = compositionRoot.getTestDispatcher()
+        val dispatcher = compositionRoot.testDispatcher
 
         ownersDao = compositionRoot.getOwnersDaoMock()
         SUT = OwnersCache(ownersDao.mock, dispatcher)

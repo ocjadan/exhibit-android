@@ -25,7 +25,7 @@ class QuestionsCacheTest {
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        val dispatcher = compositionRoot.getTestDispatcher()
+        val dispatcher = compositionRoot.testDispatcher
 
         questionsDao = compositionRoot.getQuestionsDaoMock()
         SUT = QuestionsCache(questionsDao.mock, dispatcher)

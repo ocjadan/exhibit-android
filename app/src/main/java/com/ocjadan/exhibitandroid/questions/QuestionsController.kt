@@ -16,9 +16,12 @@ class QuestionsController(
         viewController.showQuestions(questions)
     }
 
+    fun fetchQuestions() {
+        viewModel.fetchQuestions()
+    }
+
     fun onStart() {
         viewController.addListener(this)
-        viewModel.loadQuestions()
     }
 
     fun onStop() {

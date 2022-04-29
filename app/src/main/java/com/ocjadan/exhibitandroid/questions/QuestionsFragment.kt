@@ -6,11 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+
 import com.ocjadan.exhibitandroid.common.BaseFragment
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.common.viewcontroller.ViewControllerFactory
 import com.ocjadan.exhibitandroid.common.viewmodel.ViewModelFactory
+
 import javax.inject.Inject
 
 class QuestionsFragment : BaseFragment() {
@@ -38,20 +40,15 @@ class QuestionsFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         questionsViewModel = ViewModelProvider(this, viewModelFactory)[QuestionsViewModel::class.java]
-
-        questionsViewModel.questions.observe(this) {
-            questionsController.showQuestions(it)
-        }
-
+        questionsViewModel.questions.observe(this) { questionsController.showQuestions(it) }
         questionsViewModel.error.observe(this) { }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
-        val questionsListViewController = viewControllerFactory.getQuestionsListViewController(container)
 
-        questionsController =
-            QuestionsController(questionsViewModel, questionsListViewController, navDrawer, screensNavigator)
+        val questionsListViewController = viewControllerFactory.getQuestionsListViewController(container)
+        questionsController = QuestionsController(questionsViewModel, questionsListViewController, navDrawer, screensNavigator)
 
         return questionsListViewController.getRootView()
     }
@@ -59,6 +56,7 @@ class QuestionsFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
         questionsController.onStart()
+        questionsController.fetchQuestions()
     }
 
     override fun onStop() {

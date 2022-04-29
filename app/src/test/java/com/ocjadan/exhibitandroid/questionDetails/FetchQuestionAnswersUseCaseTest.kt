@@ -35,7 +35,7 @@ class FetchQuestionAnswersUseCaseTest {
     @Before
     fun setUp() {
         val compositionRoot = CompositionRoot()
-        val dispatcher = compositionRoot.getTestDispatcher()
+        val dispatcher = compositionRoot.testDispatcher
 
         fetchQuestionAnswersEndpointMock = compositionRoot.getFetchQuestionAnswersEndpointMock()
         SUT = FetchQuestionAnswersUseCaseImpl(fetchQuestionAnswersEndpointMock, dispatcher)
@@ -75,7 +75,7 @@ class FetchQuestionAnswersUseCaseTest {
     @Test
     fun fetchAnswers_networkError_networkErrorNotified() = runTest {
         networkError()
-        
+
         SUT.fetchQuestionAnswers(QUESTION_ID)
 
         verify(listenerOne).onFetchQuestionAnswersNetworkError()

@@ -3,12 +3,9 @@ package com.ocjadan.exhibitandroid.dependencyinjection
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
 
 import com.ocjadan.exhibitandroid.common.TimeProviderMock
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
-import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerViewController
 import com.ocjadan.exhibitandroid.common.screensNavigator.NavigationHelper
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
@@ -23,6 +20,7 @@ import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpo
 import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCaseMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCaseMock
+import com.ocjadan.exhibitandroid.questions.QuestionsViewModel
 import com.ocjadan.exhibitandroid.questions.views.QuestionsViewController
 import com.ocjadan.exhibitandroid.questions.views.QuestionsViewControllerMock
 import com.ocjadan.exhibitandroid.questions.QuestionsViewModelMock
@@ -73,13 +71,13 @@ class CompositionRoot {
     }
 
     @ExperimentalCoroutinesApi
-    fun getTestDispatcher(): CoroutineDispatcher {
-        return StandardTestDispatcher()
+    val testDispatcher: CoroutineDispatcher by lazy {
+        StandardTestDispatcher()
     }
 
     @ExperimentalCoroutinesApi
     fun getFetchQuestionsEndpointMock(): FetchQuestionsEndpointMock {
-        return FetchQuestionsEndpointMock(getStackOverflowApiMock().mock, getTestDispatcher())
+        return FetchQuestionsEndpointMock(getStackOverflowApiMock().mock, testDispatcher)
     }
 
     @ExperimentalCoroutinesApi
@@ -87,15 +85,14 @@ class CompositionRoot {
 
     @ExperimentalCoroutinesApi
     fun getFetchQuestionAnswersEndpointMock(): FetchQuestionAnswersEndpointMock {
-        return FetchQuestionAnswersEndpointMock(getStackOverflowApiMock().mock, getTestDispatcher())
+        return FetchQuestionAnswersEndpointMock(getStackOverflowApiMock().mock, testDispatcher)
     }
 
     @ExperimentalCoroutinesApi
     fun getFetchQuestionAnswersUseCaseMock() = FetchQuestionAnswersUseCaseMock()
 
-    @ExperimentalCoroutinesApi
-    fun getQuestionsListViewModelMock(): QuestionsViewModelMock {
-        return QuestionsViewModelMock(getFetchQuestionsUseCaseMock())
+    val questionsViewModel: QuestionsViewModel by lazy {
+        mock(QuestionsViewModel::class.java)
     }
 
     fun getQuestionsListViewControllerMock(): QuestionsViewController {
@@ -104,17 +101,17 @@ class CompositionRoot {
 
     @ExperimentalCoroutinesApi
     fun getQuestionsCacheMock(): QuestionsCacheMock {
-        return QuestionsCacheMock(getQuestionsDaoMock(), getTestDispatcher())
+        return QuestionsCacheMock(getQuestionsDaoMock(), testDispatcher)
     }
 
     @ExperimentalCoroutinesApi
     fun getOwnersCacheMock(): OwnersCacheMock {
-        return OwnersCacheMock(getOwnersDaoMock().mock, getTestDispatcher())
+        return OwnersCacheMock(getOwnersDaoMock().mock, testDispatcher)
     }
 
     @ExperimentalCoroutinesApi
     fun getUpdatesCacheMock(): UpdatesCacheMock {
-        return UpdatesCacheMock(getUpdatesDaoMock(), getTestDispatcher())
+        return UpdatesCacheMock(getUpdatesDaoMock(), testDispatcher)
     }
 
     fun getTimeProviderMock(): TimeProviderMock {
