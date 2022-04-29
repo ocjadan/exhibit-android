@@ -3,8 +3,12 @@ package com.ocjadan.exhibitandroid.dependencyinjection
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
+
 import com.ocjadan.exhibitandroid.common.TimeProviderMock
 import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawer
+import com.ocjadan.exhibitandroid.common.navdrawer.NavDrawerViewController
 import com.ocjadan.exhibitandroid.common.screensNavigator.NavigationHelper
 import com.ocjadan.exhibitandroid.common.screensNavigator.ScreensNavigator
 import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
@@ -16,7 +20,6 @@ import com.ocjadan.exhibitandroid.database.updates.UpdatesDao
 import com.ocjadan.exhibitandroid.database.updates.UpdatesDaoMock
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpointMock
-import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCaseImpl
 import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCaseMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCaseMock
@@ -27,13 +30,18 @@ import com.ocjadan.exhibitandroid.questions.QuestionsViewModelMock
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
-import org.mockito.Mockito.*
+
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.anyInt
+import org.mockito.Mockito.anyBoolean
 import org.mockito.kotlin.anyOrNull
 
 class CompositionRoot {
     val layoutInflater: LayoutInflater by lazy {
         val inflater = mock(LayoutInflater::class.java)
-        `when`(inflater.inflate(anyInt(), anyOrNull(), anyBoolean())).thenReturn(View(context))
+        val viewMock = view // passing view directly into thenReturn doesn't work
+        `when`(inflater.inflate(anyInt(), anyOrNull(), anyBoolean())).thenReturn(viewMock)
         inflater
     }
 
@@ -41,8 +49,14 @@ class CompositionRoot {
         mock(NavDrawer::class.java)
     }
 
-    val screensNavigation: ScreensNavigator by lazy {
+    val screensNavigator: ScreensNavigator by lazy {
         ScreensNavigator(navigationHelper)
+    }
+
+    private val view: View by lazy {
+        val view = mock(View::class.java)
+        `when`(view.context).thenReturn(context)
+        view
     }
 
     private val context: Context by lazy {
@@ -69,16 +83,7 @@ class CompositionRoot {
     }
 
     @ExperimentalCoroutinesApi
-    fun getFetchQuestionsUseCaseMock(): FetchQuestionsUseCaseMock {
-        return FetchQuestionsUseCaseMock(
-            getFetchQuestionsEndpointMock(),
-            getQuestionsCacheMock(),
-            getOwnersCacheMock(),
-            getUpdatesCacheMock(),
-            getTimeProviderMock(),
-            getTestDispatcher()
-        )
-    }
+    fun getFetchQuestionsUseCaseMock() = FetchQuestionsUseCaseMock()
 
     @ExperimentalCoroutinesApi
     fun getFetchQuestionAnswersEndpointMock(): FetchQuestionAnswersEndpointMock {
@@ -86,12 +91,7 @@ class CompositionRoot {
     }
 
     @ExperimentalCoroutinesApi
-    fun getFetchQuestionAnswersUseCaseMock(): FetchQuestionAnswersUseCaseImpl {
-        return FetchQuestionAnswersUseCaseMock(
-            getFetchQuestionAnswersEndpointMock(),
-            getTestDispatcher()
-        )
-    }
+    fun getFetchQuestionAnswersUseCaseMock() = FetchQuestionAnswersUseCaseMock()
 
     @ExperimentalCoroutinesApi
     fun getQuestionsListViewModelMock(): QuestionsViewModelMock {

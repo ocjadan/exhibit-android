@@ -28,7 +28,7 @@ class QuestionsControllerTest {
             questionsViewModel,
             questionsViewController,
             compositionRoot.navDrawer,
-            compositionRoot.screensNavigation
+            compositionRoot.screensNavigator
         )
         Dispatchers.setMain(compositionRoot.getTestDispatcher())
     }

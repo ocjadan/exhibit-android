@@ -1,29 +1,9 @@
 package com.ocjadan.exhibitandroid.questions
 
 import com.ocjadan.exhibitandroid.common.TestData
-import com.ocjadan.exhibitandroid.common.TimeProviderMock
-import com.ocjadan.exhibitandroid.database.questions.QuestionsCacheMock
-import com.ocjadan.exhibitandroid.database.owners.OwnersCacheMock
-import com.ocjadan.exhibitandroid.database.updates.UpdatesCacheMock
-import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
-import kotlinx.coroutines.CoroutineDispatcher
+import com.ocjadan.exhibitandroid.common.observable.BaseObservable
 
-class FetchQuestionsUseCaseMock(
-    private val fetchQuestionsEndpointMock: FetchQuestionsEndpointMock,
-    private val questionsCacheMock: QuestionsCacheMock,
-    private val ownersCacheMock: OwnersCacheMock,
-    private val updatesCacheMock: UpdatesCacheMock,
-    private val timeProviderMock: TimeProviderMock,
-    private val dispatcherBg: CoroutineDispatcher
-) :
-    FetchQuestionsUseCaseImpl(
-        fetchQuestionsEndpointMock,
-        questionsCacheMock,
-        ownersCacheMock,
-        updatesCacheMock,
-        timeProviderMock,
-        dispatcherBg
-    ) {
+class FetchQuestionsUseCaseMock : FetchQuestionsUseCase, BaseObservable<FetchQuestionsUseCase.Listener>() {
     var isGeneralError = false
     var isNetworkError = false
 
@@ -36,20 +16,20 @@ class FetchQuestionsUseCaseMock(
     }
 
     private fun notifySuccess() {
-        for (listener in getListeners()) {
-            listener.onFetchQuestionsUseCaseSuccess(TestData.getQuestions())
-        }
+        notifyOnAllListeners { it.onFetchQuestionsUseCaseSuccess(TestData.getQuestions()) }
     }
 
     private fun notifyFailure() {
-        for (listener in getListeners()) {
-            listener.onFetchQuestionsUseCaseFailure()
-        }
+        notifyOnAllListeners { it.onFetchQuestionsUseCaseFailure() }
     }
 
     private fun notifyNetworkError() {
+        notifyOnAllListeners { it.onFetchQuestionsUseCaseNetworkError() }
+    }
+
+    private fun notifyOnAllListeners(action: (listener: FetchQuestionsUseCase.Listener) -> Unit) {
         for (listener in getListeners()) {
-            listener.onFetchQuestionsUseCaseNetworkError()
+            action(listener)
         }
     }
 }

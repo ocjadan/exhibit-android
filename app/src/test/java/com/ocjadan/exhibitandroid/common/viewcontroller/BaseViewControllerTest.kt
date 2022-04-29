@@ -13,28 +13,31 @@ class BaseViewControllerTest {
         private const val LAYOUT_ID = 123
     }
 
-    private val viewGroup: ViewGroup? = null
+    private val viewGroup = null
     private val attachToRoot = false
 
-    private lateinit var SUT: SUTMock
+    private lateinit var SUT: BaseViewController
     private lateinit var layoutInflater: LayoutInflater
 
     @Before
     fun setUp() {
         layoutInflater = CompositionRoot().layoutInflater
-        SUT = SUTMock(layoutInflater, viewGroup, LAYOUT_ID)
+        SUT = ViewControllerMock(layoutInflater, viewGroup, LAYOUT_ID)
     }
 
     @Test
-    fun onInitialize_getRootView_isInstanceOfInflatedView() {
+    fun init_getRootView_isInstanceOfInflatedView() {
         val inflatedView = layoutInflater.inflate(LAYOUT_ID, viewGroup, attachToRoot)
         assertTrue(SUT.getRootView()::class.isInstance(inflatedView))
     }
 
-    // ------------------------------------------------------------------------------------------------------------------
-    // Region: Helper Classes
-    // ------------------------------------------------------------------------------------------------------------------
+    @Test
+    fun init_getContext() {
+        (SUT as ViewControllerMock).testContext()
+    }
 
-    private class SUTMock(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, @LayoutRes rootViewId: Int) :
-        BaseViewController(layoutInflater, viewGroup, rootViewId)
+    private class ViewControllerMock(layoutInflater: LayoutInflater, viewGroup: ViewGroup?, @LayoutRes rootViewId: Int) :
+        BaseViewController(layoutInflater, viewGroup, rootViewId) {
+        fun testContext() = getContext()
+    }
 }

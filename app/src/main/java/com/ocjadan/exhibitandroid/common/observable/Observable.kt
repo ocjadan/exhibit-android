@@ -4,4 +4,5 @@ interface Observable<T> {
     fun addListener(listener: T)
     fun removeListener(listener: T)
     fun getListeners(): Set<T>
+    fun notifyAllListeners(action: (T) -> Unit)
 }

@@ -1,12 +1,9 @@
 package com.ocjadan.exhibitandroid.questionDetails
 
-import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpointMock
-import kotlinx.coroutines.CoroutineDispatcher
+import com.ocjadan.exhibitandroid.common.observable.BaseObservable
 
-class FetchQuestionAnswersUseCaseMock(
-    fetchQuestionAnswersEndpointMock: FetchQuestionAnswersEndpointMock,
-    dispatcher: CoroutineDispatcher
-) :
-    FetchQuestionAnswersUseCaseImpl(fetchQuestionAnswersEndpointMock, dispatcher) {
+class FetchQuestionAnswersUseCaseMock : FetchQuestionAnswersUseCase, BaseObservable<FetchQuestionAnswersUseCase.Listener>() {
+    override suspend fun fetchQuestionAnswers(id: Long) {
 
+    }
 }

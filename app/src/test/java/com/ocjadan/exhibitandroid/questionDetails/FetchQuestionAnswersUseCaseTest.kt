@@ -13,28 +13,24 @@ import org.junit.After
 
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-import org.mockito.Mock
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.Mockito.mock
 import org.mockito.kotlin.KArgumentCaptor
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.verify
 
 @ExperimentalCoroutinesApi
-@RunWith(MockitoJUnitRunner::class)
 class FetchQuestionAnswersUseCaseTest {
+    companion object {
+        private const val QUESTION_ID: Long = 123
+    }
 
     private lateinit var SUT: FetchQuestionAnswersUseCaseImpl
     private lateinit var answersCaptor: KArgumentCaptor<List<QuestionAnswer>>
-
     private lateinit var fetchQuestionAnswersEndpointMock: FetchQuestionAnswersEndpointMock
 
-    @Mock
-    private lateinit var listenerOne: FetchQuestionAnswersUseCase.Listener
-
-    @Mock
-    private lateinit var listenerTwo: FetchQuestionAnswersUseCase.Listener
+    private val listenerOne = mock(FetchQuestionAnswersUseCase.Listener::class.java)
+    private val listenerTwo = mock(FetchQuestionAnswersUseCase.Listener::class.java)
 
     @Before
     fun setUp() {
@@ -45,7 +41,7 @@ class FetchQuestionAnswersUseCaseTest {
         SUT = FetchQuestionAnswersUseCaseImpl(fetchQuestionAnswersEndpointMock, dispatcher)
         answersCaptor = argumentCaptor()
 
-        allListeners()
+        addAllListeners()
 
         Dispatchers.setMain(dispatcher)
     }
@@ -56,42 +52,21 @@ class FetchQuestionAnswersUseCaseTest {
     }
 
     @Test
-    fun addListeners_allListenersAdded() {
-        assert(SUT.getListeners().containsAll(listOf(listenerOne, listenerTwo)))
-    }
-
-    @Test
-    fun addListeners_removeAllListeners_noListenersRemain() {
-        removeAllListeners()
-        assert(SUT.getListeners().isEmpty())
-    }
-
-    @Test
-    fun addListeners_removeOneListener_otherListenerRemains() {
-        removeListenerOne()
-        val listeners = SUT.getListeners()
-        assert(listeners.contains(listenerTwo))
-        assert(listeners.count() == 1)
-    }
-
-    @Test
     fun fetchAnswers_successNotifiedWithAnswers() = runTest {
-        SUT.fetchQuestionAnswers(0)
+        SUT.fetchQuestionAnswers(QUESTION_ID)
 
         verify(listenerOne).onFetchQuestionAnswersSuccess(answersCaptor.capture())
         verify(listenerTwo).onFetchQuestionAnswersSuccess(answersCaptor.capture())
 
-        val answersOne = answersCaptor.firstValue
-        val answersTwo = answersCaptor.secondValue
-
-        assert(answersOne.isNotEmpty())
-        assert(answersTwo.isNotEmpty())
+        assert(answersCaptor.firstValue.isNotEmpty())
+        assert(answersCaptor.secondValue.isNotEmpty())
     }
 
     @Test
     fun fetchAnswers_generalError_failureNotified() = runTest {
         generalError()
-        SUT.fetchQuestionAnswers(0)
+
+        SUT.fetchQuestionAnswers(QUESTION_ID)
 
         verify(listenerOne).onFetchQuestionAnswersFailure()
         verify(listenerTwo).onFetchQuestionAnswersFailure()
@@ -100,28 +75,16 @@ class FetchQuestionAnswersUseCaseTest {
     @Test
     fun fetchAnswers_networkError_networkErrorNotified() = runTest {
         networkError()
-        SUT.fetchQuestionAnswers(0)
+        
+        SUT.fetchQuestionAnswers(QUESTION_ID)
 
         verify(listenerOne).onFetchQuestionAnswersNetworkError()
         verify(listenerTwo).onFetchQuestionAnswersNetworkError()
     }
 
-    // ------------------------------------------------------------------------------------------------------------------
-    // Region: Helper Methods
-    // ------------------------------------------------------------------------------------------------------------------
-
-    private fun allListeners() {
+    private fun addAllListeners() {
         SUT.addListener(listenerOne)
         SUT.addListener(listenerTwo)
-    }
-
-    private fun removeListenerOne() {
-        SUT.removeListener(listenerOne)
-    }
-
-    private fun removeAllListeners() {
-        SUT.removeListener(listenerOne)
-        SUT.removeListener(listenerTwo)
     }
 
     private fun generalError() {

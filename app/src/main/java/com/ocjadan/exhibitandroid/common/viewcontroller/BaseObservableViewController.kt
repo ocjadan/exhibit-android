@@ -25,12 +25,14 @@ abstract class BaseObservableViewController<Listener>(
     }
 
     override fun addListener(listener: Listener) {
+        if (_listenersMap.contains(listener))
+            throw ListenerAlreadyExists()
         _listenersMap.add(listener)
     }
 
     override fun removeListener(listener: Listener) {
         if (!_listenersMap.contains(listener))
-            throw ListenerNotFound()
+            throw ListenerDoesNotExist()
         _listenersMap.remove(listener)
     }
 
@@ -38,5 +40,11 @@ abstract class BaseObservableViewController<Listener>(
         return _listenersMap.toSet()
     }
 
-    class ListenerNotFound : RuntimeException()
+    override fun notifyAllListeners(action: (Listener) -> Unit) {
+        for (listener in getListeners())
+            action(listener)
+    }
+
+    class ListenerAlreadyExists : RuntimeException()
+    class ListenerDoesNotExist : RuntimeException()
 }

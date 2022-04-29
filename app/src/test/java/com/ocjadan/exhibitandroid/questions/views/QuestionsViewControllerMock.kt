@@ -22,6 +22,10 @@ class QuestionsViewControllerMock : QuestionsViewController {
         this.map.remove(listener)
     }
 
+    override fun notifyAllListeners(action: (QuestionsViewController.Listener) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     override fun getRootView(): View {
         TODO("Not yet implemented")
     }
