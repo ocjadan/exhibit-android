@@ -28,25 +28,21 @@ open class FetchQuestionAnswersUseCase(
     }
 
     private suspend fun notifySuccess(questionAnswers: List<QuestionAnswer>) = withContext(dispatcher) {
-        for (listener in getListeners()) {
-            launch {
-                listener.onFetchQuestionAnswersSuccess(questionAnswers)
-            }
-        }
+        launchOnAllListeners { it.onFetchQuestionAnswersSuccess(questionAnswers) }
     }
 
     private suspend fun notifyFailure() = withContext(dispatcher) {
-        for (listener in getListeners()) {
-            launch {
-                listener.onFetchQuestionAnswersFailure()
-            }
-        }
+        launchOnAllListeners { it.onFetchQuestionAnswersFailure() }
     }
 
     private suspend fun notifyNetworkError() = withContext(dispatcher) {
+        launchOnAllListeners { it.onFetchQuestionAnswersNetworkError() }
+    }
+
+    private suspend fun launchOnAllListeners(action: (listener: Listener) -> Unit) = withContext(dispatcher) {
         for (listener in getListeners()) {
             launch {
-                listener.onFetchQuestionAnswersNetworkError()
+                action(listener)
             }
         }
     }

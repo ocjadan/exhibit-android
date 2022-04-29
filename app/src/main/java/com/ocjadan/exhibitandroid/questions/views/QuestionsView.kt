@@ -26,15 +26,15 @@ internal fun QuestionsView(
     ExhibitAndroidTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
             Column {
-                ComposeToolbar(onAvatarClicked)
-                ComposeQuestions(questions, onQuestionClicked)
+                Toolbar(onAvatarClicked)
+                Questions(questions, onQuestionClicked)
             }
         }
     }
 }
 
 @Composable
-private fun ComposeToolbar(onAvatarClicked: () -> Unit) {
+private fun Toolbar(onAvatarClicked: () -> Unit) {
     Toolbar(
         modifier = Modifier
             .fillMaxWidth()
@@ -47,7 +47,7 @@ private fun ComposeToolbar(onAvatarClicked: () -> Unit) {
 }
 
 @Composable
-private fun ComposeQuestions(questions: List<Question>, onQuestionClicked: (question: Question) -> Unit) {
+private fun Questions(questions: List<Question>, onQuestionClicked: (question: Question) -> Unit) {
     if (questions.isEmpty())
         Text("No questions")
 

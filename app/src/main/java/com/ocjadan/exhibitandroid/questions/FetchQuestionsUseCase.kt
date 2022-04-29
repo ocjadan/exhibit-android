@@ -77,25 +77,21 @@ open class FetchQuestionsUseCase(
     }
 
     private suspend fun notifySuccess(questions: List<Question>) = withContext(dispatcher) {
-        for (listener in getListeners()) {
-            launch {
-                listener.onFetchQuestionsUseCaseSuccess(questions)
-            }
-        }
+        launchOnAllListeners { it.onFetchQuestionsUseCaseSuccess(questions) }
     }
 
     private suspend fun notifyFailure() = withContext(dispatcher) {
-        for (listener in getListeners()) {
-            launch {
-                listener.onFetchQuestionsUseCaseFailure()
-            }
-        }
+        launchOnAllListeners { it.onFetchQuestionsUseCaseFailure() }
     }
 
     private suspend fun notifyNetworkError() = withContext(dispatcher) {
+        launchOnAllListeners { it.onFetchQuestionsUseCaseNetworkError() }
+    }
+
+    private suspend fun launchOnAllListeners(action: (listener: Listener) -> Unit) = withContext(dispatcher) {
         for (listener in getListeners()) {
             launch {
-                listener.onFetchQuestionsUseCaseNetworkError()
+                action(listener)
             }
         }
     }
