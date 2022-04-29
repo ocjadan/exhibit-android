@@ -28,7 +28,7 @@ import org.mockito.kotlin.argumentCaptor
 @RunWith(MockitoJUnitRunner::class)
 internal class FetchQuestionsUseCaseTest {
 
-    private lateinit var SUT: FetchQuestionsUseCase
+    private lateinit var SUT: FetchQuestionsUseCaseImpl
     private lateinit var questionsCaptor: KArgumentCaptor<List<Question>>
 
     private lateinit var fetchQuestionsEndpointMock: FetchQuestionsEndpointMock
@@ -53,7 +53,7 @@ internal class FetchQuestionsUseCaseTest {
         updatesCacheMock = compositionRoot.getUpdatesCacheMock()
         timeProviderMock = compositionRoot.getTimeProviderMock()
 
-        SUT = FetchQuestionsUseCase(
+        SUT = FetchQuestionsUseCaseImpl(
             fetchQuestionsEndpointMock,
             questionsCacheMock,
             ownersCacheMock,

@@ -16,7 +16,7 @@ class FetchQuestionsUseCaseMock(
     private val timeProviderMock: TimeProviderMock,
     private val dispatcherBg: CoroutineDispatcher
 ) :
-    FetchQuestionsUseCase(
+    FetchQuestionsUseCaseImpl(
         fetchQuestionsEndpointMock,
         questionsCacheMock,
         ownersCacheMock,

@@ -25,7 +25,7 @@ import org.mockito.kotlin.verify
 @RunWith(MockitoJUnitRunner::class)
 class FetchQuestionAnswersUseCaseTest {
 
-    private lateinit var SUT: FetchQuestionAnswersUseCase
+    private lateinit var SUT: FetchQuestionAnswersUseCaseImpl
     private lateinit var answersCaptor: KArgumentCaptor<List<QuestionAnswer>>
 
     private lateinit var fetchQuestionAnswersEndpointMock: FetchQuestionAnswersEndpointMock
@@ -42,7 +42,7 @@ class FetchQuestionAnswersUseCaseTest {
         val dispatcher = compositionRoot.getTestDispatcher()
 
         fetchQuestionAnswersEndpointMock = compositionRoot.getFetchQuestionAnswersEndpointMock()
-        SUT = FetchQuestionAnswersUseCase(fetchQuestionAnswersEndpointMock, dispatcher)
+        SUT = FetchQuestionAnswersUseCaseImpl(fetchQuestionAnswersEndpointMock, dispatcher)
         answersCaptor = argumentCaptor()
 
         allListeners()

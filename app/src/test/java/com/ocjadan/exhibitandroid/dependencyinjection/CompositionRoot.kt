@@ -16,7 +16,7 @@ import com.ocjadan.exhibitandroid.database.updates.UpdatesDao
 import com.ocjadan.exhibitandroid.database.updates.UpdatesDaoMock
 import com.ocjadan.exhibitandroid.networking.StackOverflowApiMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionAnswersEndpointMock
-import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCase
+import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCaseImpl
 import com.ocjadan.exhibitandroid.questionDetails.FetchQuestionAnswersUseCaseMock
 import com.ocjadan.exhibitandroid.networking.questions.FetchQuestionsEndpointMock
 import com.ocjadan.exhibitandroid.questions.FetchQuestionsUseCaseMock
@@ -86,7 +86,7 @@ class CompositionRoot {
     }
 
     @ExperimentalCoroutinesApi
-    fun getFetchQuestionAnswersUseCaseMock(): FetchQuestionAnswersUseCase {
+    fun getFetchQuestionAnswersUseCaseMock(): FetchQuestionAnswersUseCaseImpl {
         return FetchQuestionAnswersUseCaseMock(
             getFetchQuestionAnswersEndpointMock(),
             getTestDispatcher()

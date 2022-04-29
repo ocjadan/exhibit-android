@@ -7,6 +7,6 @@ class FetchQuestionAnswersUseCaseMock(
     fetchQuestionAnswersEndpointMock: FetchQuestionAnswersEndpointMock,
     dispatcher: CoroutineDispatcher
 ) :
-    FetchQuestionAnswersUseCase(fetchQuestionAnswersEndpointMock, dispatcher) {
+    FetchQuestionAnswersUseCaseImpl(fetchQuestionAnswersEndpointMock, dispatcher) {
 
 }
